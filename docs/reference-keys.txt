@@ -1,0 +1,12 @@
+descriptive-statistics
+introduction
+downloadable-dataset-for-this-exercise
+reading-list
+frequency-distribution
+computing-frequencies-cumulative-frequency-and-proportions
+using-a-barplot-and-piechart
+descriptive-analysis-using-measures-for-central-tendency-dispersion
+summary-estimates-using-summary
+using-a-boxplot-and-hist
+generating-tables-shells-in-rstudio
+questions

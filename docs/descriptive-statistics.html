@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="1 Descriptive Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#moodle"><i class="fa fa-check"></i>Moodle</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#office-hours-for-geog0125"><i class="fa fa-check"></i>Office hours for GEOG0125</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>1</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#downloadable-dataset-for-this-exercise"><i class="fa fa-check"></i><b>1.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="1.1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#reading-list"><i class="fa fa-check"></i><b>1.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#frequency-distribution"><i class="fa fa-check"></i><b>1.2</b> Frequency distribution</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#computing-frequencies-cumulative-frequency-and-proportions"><i class="fa fa-check"></i><b>1.2.1</b> Computing frequencies, cumulative frequency and proportions</a></li>
+<li class="chapter" data-level="1.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-barplot-and-piechart"><i class="fa fa-check"></i><b>1.2.2</b> Using a <code>barplot()</code> and <code>piechart()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#descriptive-analysis-using-measures-for-central-tendency-dispersion"><i class="fa fa-check"></i><b>1.3</b> Descriptive analysis using measures for central tendency &amp; dispersion</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#summary-estimates-using-summary"><i class="fa fa-check"></i><b>1.3.1</b> Summary estimates using <code>summary()</code></a></li>
+<li class="chapter" data-level="1.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-boxplot-and-hist"><i class="fa fa-check"></i><b>1.3.2</b> Using a <code>boxplot()</code> and <code>hist()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#generating-tables-shells-in-rstudio"><i class="fa fa-check"></i><b>1.4</b> Generating tables shells in RStudio</a></li>
+<li class="chapter" data-level="1.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#questions"><i class="fa fa-check"></i><b>1.5</b> Questions</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="descriptive-statistics" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Descriptive Statistics</h1>
+<p><strong>Theme: Fatal encounters with Police (USA)</strong>
+<img src="images/general/Nighttime_police_image.jpeg" width="100%" style="display: block; margin: auto;" /></p>
+<div id="introduction" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<p>This week is a simple exercise. We take a look at how descriptive analyses are applied to data with regards to fatal encounters with the police in the United States of America. The use of deadly force or excessive violence by those affiliated with the law enforcement against suspects and civilians is a problematic matter in America’s society. It is a social problem that predominately affects people who are already disadvantaged in life, and are in deprived areas where the social-dynamic and relationship between the police and citizen are fractured.</p>
+<p>We can going to use an excerpt data from a brilliant source, <a href="https://fatalencounters.org"><strong>Fatal Encounters Database</strong></a>, which is an open source database containing details about deaths through police interaction in the United States. These records have been documented since January 1st, 2000. We will carry out some simple descriptive analysis to examine the burden of such fatal encounters in the USA from 2013 and 2020, inclusively. At the end of this session, you should be able to perform the following:</p>
+<ol style="list-style-type: decimal">
+<li>Descriptive analysis using frequency distribution tables in RStudio</li>
+<li>Descriptive analysis of continuous variables with central tendency &amp; dispersion measures</li>
+<li>How to create customizable descriptive summary tables in RStudio</li>
+<li>Graphical visualisations using various plots</li>
+</ol>
+<div id="downloadable-dataset-for-this-exercise" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Downloadable dataset for this exercise</h3>
+<p>Make sure to download the data set for Week 1 from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip"><strong>HERE</strong></a>. The data file is named <code>WK01 - Fatal Encounters with Police.csv</code> Here is the data descriptor:</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Variable Name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UniqueID</td>
+<td>Unique identification number</td>
+</tr>
+<tr class="even">
+<td>Name</td>
+<td>Name of victim</td>
+</tr>
+<tr class="odd">
+<td>Age</td>
+<td>Age of victim (in years)</td>
+</tr>
+<tr class="even">
+<td>Gender</td>
+<td>“Male” or “Female”</td>
+</tr>
+<tr class="odd">
+<td>City</td>
+<td>City location of fatal encounter</td>
+</tr>
+<tr class="even">
+<td>State</td>
+<td>State of fatal encounter</td>
+</tr>
+<tr class="odd">
+<td>ZipCode</td>
+<td>Zip code</td>
+</tr>
+<tr class="even">
+<td>County</td>
+<td>County of fatal encounter</td>
+</tr>
+<tr class="odd">
+<td>Latitude</td>
+<td>Latitude (in decimal degrees)</td>
+</tr>
+<tr class="even">
+<td>Longitude</td>
+<td>Longitude (in decimal degrees)</td>
+</tr>
+<tr class="odd">
+<td>LethalForceType</td>
+<td>Type of lethal force used by Police</td>
+</tr>
+<tr class="even">
+<td>FleeingStatus</td>
+<td>Was the suspect or civilian trying to flee?</td>
+</tr>
+<tr class="odd">
+<td>ArmedStatus</td>
+<td>Was the suspect or civilian carrying a weapon?</td>
+</tr>
+<tr class="even">
+<td>AggressionSign</td>
+<td>Did the victim aggressive?</td>
+</tr>
+<tr class="odd">
+<td>Ethnicity</td>
+<td>Ethnicity</td>
+</tr>
+<tr class="even">
+<td>DeathYear</td>
+<td>Year of death due to police encounter</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="reading-list" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Reading list</h3>
+<p>Please find reading list for this week:</p>
+<ol style="list-style-type: decimal">
+<li><p>Recommended Book: Dalgaard, P. (2008). <strong>Introductory Statistics with R (Second Edition)</strong>. Chapter 4: Descriptive statistics and graphics. Pages 67 to 93 <a href="https://link.springer.com/book/10.1007/978-0-387-79054-1">(<strong>Download Ebook here</strong>)</a></p></li>
+<li><p>Recommended Book: Zuur, A.F., Ieno, E.N. &amp; Meesters, E.H.W.G., (2009). <strong>A Beginner’s Guide to R. Chapter 7: Graphing Tools</strong>. Pages 127 to 167 <a href="https://link.springer.com/book/10.1007/978-0-387-93837-0">(<strong>Download Ebook here</strong>)</a></p></li>
+</ol>
+</div>
+</div>
+<div id="frequency-distribution" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Frequency distribution</h2>
+<p>Let us begin by importing our week’s 1 data set into RStudio and calling the data frame <code>FatalEncounters</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="descriptive-statistics.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your own directory using setwd() function</span></span>
+<span id="cb1-2"><a href="descriptive-statistics.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into RStudio using read.csv(). The spreadsheet is stored in the object called &#39;FatalEncounters&#39;</span></span>
+<span id="cb1-3"><a href="descriptive-statistics.html#cb1-3" aria-hidden="true" tabindex="-1"></a>FatalEncounters <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;WK01 - Fatal Encounters with Police.csv&quot;</span>)</span></code></pre></div>
+<p>The simplest operation of a descriptive analysis is a <strong>frequency distribution</strong>. The frequency table allows the user to display the frequency of various outcomes in a sample. There are <code>9,119</code> deaths in this data set - each row in this data set represents a death of a civilian or suspect caused police using lethal force.</p>
+<p>One can easily generate a summary frequency tables for the number of fatal encounters based on a nominal or ordinal categorical characteristic using the <code>table()</code> of the fly.</p>
+<p>For instance, suppose if you wanted to tabulate the frequency of fatal encounters based on the type of lethal force used by a law enforcer. You can type the following code:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="descriptive-statistics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulating number of fatal encounters using a nominal variable</span></span>
+<span id="cb2-2"><a href="descriptive-statistics.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(FatalEncounters<span class="sc">$</span>LethalForceType)</span></code></pre></div>
+<pre><code>## 
+##          Gunshot Physical Assault          Vehicle 
+##             6609              602             1908</code></pre>
+<p>This shows the absolute number of fatal encounters with the police. You can report the prevalence of death based on the type of deadly force simply by using the <code>prop.table()</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptive-statistics.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To get the prevalence (or proportions) of fatal encounters based on a nominal variable</span></span>
+<span id="cb4-2"><a href="descriptive-statistics.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --- tabulate result and pass it into the prop.table() function</span></span>
+<span id="cb4-3"><a href="descriptive-statistics.html#cb4-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">table</span>(FatalEncounters<span class="sc">$</span>LethalForceType)</span>
+<span id="cb4-4"><a href="descriptive-statistics.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(result)</span></code></pre></div>
+<pre><code>## 
+##          Gunshot Physical Assault          Vehicle 
+##       0.72475052       0.06601601       0.20923347</code></pre>
+<p>We have the absolute numbers and the proportions separated - we can bring these results together by using the <code>transform()</code> which is much useful:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descriptive-statistics.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To get the prevalence (or proportions) of fatal encounters based on a nominal variable</span></span>
+<span id="cb6-2"><a href="descriptive-statistics.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --- tabulate result and pass it into the transform() function. The Proportion is an argument with</span></span>
+<span id="cb6-3"><a href="descriptive-statistics.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- prop.table(Freq) always</span></span>
+<span id="cb6-4"><a href="descriptive-statistics.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="descriptive-statistics.html#cb6-5" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">table</span>(FatalEncounters<span class="sc">$</span>LethalForceType)</span>
+<span id="cb6-6"><a href="descriptive-statistics.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(result, <span class="at">Proportions =</span> <span class="fu">prop.table</span>(Freq))</span></code></pre></div>
+<pre><code>##               Var1 Freq Proportions
+## 1          Gunshot 6609  0.72475052
+## 2 Physical Assault  602  0.06601601
+## 3          Vehicle 1908  0.20923347</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>: In the United States, the use of either a gun, a vehicle or physical force by police resulted in the deaths of <code>6,609 (73%)</code>, <code>1,908 (21%)</code> or <code>602 (6%)</code> suspects (or civilians) respectively.</p>
+</div>
+<p><br></p>
+<div id="computing-frequencies-cumulative-frequency-and-proportions" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Computing frequencies, cumulative frequency and proportions</h3>
+<p>Suppose we want to compute the frequency distribution of these fatal encounters based on some continuous variable such as age (in years). We can perform this univariable analysis to summarise the number of deaths with the age distribution with fixed ranges to compute frequency, cumulative frequency and proportions.</p>
+<p>To do this, we first create bins (or groups) for the age ranges by gauging the the minimum and maximum age value with <code>min()</code> and <code>max()</code> function, and create the bins with the <code>cut()</code> function using some interval.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptive-statistics.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(FatalEncounters<span class="sc">$</span>Age)</span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptive-statistics.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(FatalEncounters<span class="sc">$</span>Age)</span></code></pre></div>
+<pre><code>## [1] 107</code></pre>
+<p>The victim with the lowest age was 10 years, and the oldest was 101 years. Now, we create a new <code>Bins</code> column from 5 (based from lowest value) to 110 (i.e., based on the highest which is 101) at intervals of 10 years to look something like <code>10-20</code>, <code>21-30</code>, <code>31-40</code>, <code>41-50</code>, <code>51-60</code>,<code>61-70</code>, <code>71-80</code>, <code>81-90</code>, <code>91-100</code> and <code>101-110</code> by cutting the <code>Age</code> variable using the <code>cut()</code> function. This will help us to create the desired frequency distribution table in RStudio.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="descriptive-statistics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># starting from 5 to ensure lowest number 10 is counted in the breaks and vice versa for highest</span></span>
+<span id="cb12-2"><a href="descriptive-statistics.html#cb12-2" aria-hidden="true" tabindex="-1"></a>FatalEncounters<span class="sc">$</span>Bins <span class="ot">&lt;-</span> <span class="fu">cut</span>(FatalEncounters<span class="sc">$</span>Age, <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>, <span class="dv">110</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;&lt;20&quot;</span>,<span class="st">&quot;21-30&quot;</span>,<span class="st">&quot;31-40&quot;</span>,<span class="st">&quot;41-50&quot;</span>,<span class="st">&quot;51-60&quot;</span>,<span class="st">&quot;61-70&quot;</span>,<span class="st">&quot;71-80&quot;</span>,<span class="st">&quot;81-90&quot;</span>,<span class="st">&quot;91-100&quot;</span>,<span class="st">&quot;101-110&quot;</span>))</span></code></pre></div>
+<p>Now, lets create the frequency table that shows the following: (1.) the frequency of deaths based on age ranges; (2.) Cumulative frequency of deaths; and (3.) proportions of deaths falling in those age ranges.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="descriptive-statistics.html#cb13-1" aria-hidden="true" tabindex="-1"></a>freqtable <span class="ot">&lt;-</span> <span class="fu">table</span>(FatalEncounters<span class="sc">$</span>Bins)</span>
+<span id="cb13-2"><a href="descriptive-statistics.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># see frequency of deaths by age Bins (i.e., age group only)</span></span>
+<span id="cb13-3"><a href="descriptive-statistics.html#cb13-3" aria-hidden="true" tabindex="-1"></a>freqtable</span></code></pre></div>
+<pre><code>## 
+##     &lt;20   21-30   31-40   41-50   51-60   61-70   71-80   81-90  91-100 101-110 
+##     855    2725    2474    1606     911     378     122      41       5       2</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="descriptive-statistics.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># now, add the cumulative frequency and proportion to get table output in RStudio</span></span>
+<span id="cb15-2"><a href="descriptive-statistics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>Output <span class="ot">&lt;-</span> <span class="fu">transform</span>(freqtable, <span class="at">CumuFreq =</span> <span class="fu">cumsum</span>(Freq), <span class="at">Proportions=</span><span class="fu">prop.table</span>(Freq))</span>
+<span id="cb15-3"><a href="descriptive-statistics.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># see final output</span></span>
+<span id="cb15-4"><a href="descriptive-statistics.html#cb15-4" aria-hidden="true" tabindex="-1"></a>Output</span></code></pre></div>
+<pre><code>##       Var1 Freq CumuFreq  Proportions
+## 1      &lt;20  855      855 0.0937602807
+## 2    21-30 2725     3580 0.2988266257
+## 3    31-40 2474     6054 0.2713016778
+## 4    41-50 1606     7660 0.1761158022
+## 5    51-60  911     8571 0.0999013050
+## 6    61-70  378     8949 0.0414519136
+## 7    71-80  122     9071 0.0133786599
+## 8    81-90   41     9112 0.0044961070
+## 9   91-100    5     9117 0.0005483057
+## 10 101-110    2     9119 0.0002193223</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>: Fatal encounters with the police were more pronounced in victims (i.e., suspect or civilian) of the following age bracket: <code>21-30 years (2,725, 29.8%)</code>, <code>31-40 years (2,474, 27.1%)</code> and <code>41-50 years (1,606, 17.6%)</code>.</p>
+</div>
+</div>
+<div id="using-a-barplot-and-piechart" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Using a <code>barplot()</code> and <code>piechart()</code></h3>
+<p>Visually, the above bins or categories for the frequencies by age group can easily be represented using a <code>barplot()</code> or a <code>piechart()</code>. This code demonstrates how to create a barplot in RStudio:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="descriptive-statistics.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># capture the values from table(). </span></span>
+<span id="cb17-2"><a href="descriptive-statistics.html#cb17-2" aria-hidden="true" tabindex="-1"></a>tableAgeGroups <span class="ot">&lt;-</span> <span class="fu">table</span>(FatalEncounters<span class="sc">$</span>Bins)</span>
+<span id="cb17-3"><a href="descriptive-statistics.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># feed the tableAgeGroups into barplot() function</span></span>
+<span id="cb17-4"><a href="descriptive-statistics.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tableAgeGroups, </span>
+<span id="cb17-5"><a href="descriptive-statistics.html#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Age (in years)&quot;</span>, </span>
+<span id="cb17-6"><a href="descriptive-statistics.html#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Fatal Encounters: Age distributions&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>This code also demonstrates how to create a piechart in RStudio:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="descriptive-statistics.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pie Chart with Percentages</span></span>
+<span id="cb18-2"><a href="descriptive-statistics.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># capture the values from table(). </span></span>
+<span id="cb18-3"><a href="descriptive-statistics.html#cb18-3" aria-hidden="true" tabindex="-1"></a>tableAgeGroups <span class="ot">&lt;-</span> <span class="fu">table</span>(FatalEncounters<span class="sc">$</span>Bins)</span>
+<span id="cb18-4"><a href="descriptive-statistics.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create vector for labelling pie chart</span></span>
+<span id="cb18-5"><a href="descriptive-statistics.html#cb18-5" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;20&quot;</span>,<span class="st">&quot;21-30&quot;</span>,<span class="st">&quot;31-40&quot;</span>,<span class="st">&quot;41-50&quot;</span>,<span class="st">&quot;51-60&quot;</span>,<span class="st">&quot;61-70&quot;</span>,<span class="st">&quot;71-80&quot;</span>,<span class="st">&quot;81-90&quot;</span>,<span class="st">&quot;91-100&quot;</span>,<span class="st">&quot;101-110&quot;</span>)</span>
+<span id="cb18-6"><a href="descriptive-statistics.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate percentage</span></span>
+<span id="cb18-7"><a href="descriptive-statistics.html#cb18-7" aria-hidden="true" tabindex="-1"></a>pct <span class="ot">&lt;-</span> <span class="fu">round</span>(tableAgeGroups<span class="sc">/</span><span class="fu">sum</span>(tableAgeGroups)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb18-8"><a href="descriptive-statistics.html#cb18-8" aria-hidden="true" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">paste</span>(labels, pct) <span class="co"># add percents to labels </span></span>
+<span id="cb18-9"><a href="descriptive-statistics.html#cb18-9" aria-hidden="true" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">paste</span>(lbls,<span class="st">&quot;%&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>) <span class="co"># ad % to labels </span></span>
+<span id="cb18-10"><a href="descriptive-statistics.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(tableAgeGroups,<span class="at">labels =</span> lbls, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="fu">length</span>(lbls)),</span>
+<span id="cb18-11"><a href="descriptive-statistics.html#cb18-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">main=</span><span class="st">&quot;Fatal Encounters: Age distributions&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+</div>
+<div id="descriptive-analysis-using-measures-for-central-tendency-dispersion" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Descriptive analysis using measures for central tendency &amp; dispersion</h2>
+<div id="summary-estimates-using-summary" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Summary estimates using <code>summary()</code></h3>
+<p>The <strong>central tendency</strong> refers to the tendency for the values of a continuous variable to be clustered round its mean or median. The arithmetic <strong>mean</strong> is a useful measure to describe this central tendency especially in the case when data is normally distributed. While the <strong>median</strong> is best for describing data when its skewed.</p>
+<p>Dispersion on the other hand refers to the extent of how the distribution of the data either stretched or squeezed. The term is also interchangeable with words <strong>variability</strong>, <strong>scatter</strong>, or <strong>spread</strong>.</p>
+<p>Computing these measures in RStudio are incredibly easy. Here’s a list of functions and what they do:</p>
+<ul>
+<li><code>mean()</code>: this calculates the average value (central measure)</li>
+<li><code>median()</code>: this calculates the middle-most value (or data point at the 50th percentile) (central measure)</li>
+<li><code>min()</code>: this finds the lowest value in the distribution (dispersion/range value)</li>
+<li><code>max()</code>: this finds the highest value in the distribution (dispersion/range value)</li>
+<li><code>IQR()</code>: this calculates the interquartile range by taking the difference using 25th- from 75th percentile values (dispersion/range)</li>
+<li><code>var()</code>: this calculates the variance - square root the value to get standard deviation (variability measure)</li>
+<li><code>sd()</code>: this calculates the standard deviation (variability measure)</li>
+</ul>
+<p>You can use the above functions especially if you need to tease out a particular value if you are writing a recursive function. But you can easily compute these summary statistics simply by using the <code>summary()</code> code. Let’s obtain the central tendency and range values for the only continuous variable in the data set which is the <code>Age</code> column.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="descriptive-statistics.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute summary() function to get central and range values</span></span>
+<span id="cb19-2"><a href="descriptive-statistics.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(FatalEncounters<span class="sc">$</span>Age)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.00   26.00   34.00   36.44   45.00  107.00</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="descriptive-statistics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the standard deviation sd()</span></span>
+<span id="cb21-2"><a href="descriptive-statistics.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(FatalEncounters<span class="sc">$</span>Age)</span></code></pre></div>
+<pre><code>## [1] 13.7431</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>: The overall average age of someone being killed due to a fatal encounter with the police in America is <code>36.44 [sd of ±13.74, range: 10 (minimum) to 107 (maximum)]</code> years, with IQRs between <code>26-45</code> years of age.</p>
+</div>
+</div>
+<div id="using-a-boxplot-and-hist" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Using a <code>boxplot()</code> and <code>hist()</code></h3>
+<p>Visually, the above summary estimates can easily be represented using a box plot. You can use this <code>boxplot()</code> to create the desired output:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="descriptive-statistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creates a boxplot(). This reproduces the estimates from summary() but graphically</span></span>
+<span id="cb23-2"><a href="descriptive-statistics.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(FatalEncounters<span class="sc">$</span>Age, </span>
+<span id="cb23-3"><a href="descriptive-statistics.html#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Age (in years)&quot;</span>, </span>
+<span id="cb23-4"><a href="descriptive-statistics.html#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Fatal Encounters: Age distributions&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="descriptive-statistics.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creates a hist() this shows the shape of the age distribution</span></span>
+<span id="cb24-2"><a href="descriptive-statistics.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(FatalEncounters<span class="sc">$</span>Age, </span>
+<span id="cb24-3"><a href="descriptive-statistics.html#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;`Age (in years)&quot;</span>,</span>
+<span id="cb24-4"><a href="descriptive-statistics.html#cb24-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Fatal Encounters: Age distributions&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+<div id="generating-tables-shells-in-rstudio" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Generating tables shells in RStudio</h2>
+<p>There are a lot of categorical variables in this data set e.g., <code>Gender</code>, <code>LethalForceType</code>, <code>ArmedStatus</code>, <code>FleeingStatus</code>, <code>AggressionSign</code> and <code>Ethnicity</code>. You can generate custom made tables in RStudio saving you a whole bunch of time creating them in Word document. You can create them in R and export the result to word to make further modifications. You can install the package <code>gtsummary</code> and <code>dplyr</code></p>
+<ul>
+<li><code>gtsummary</code>: provides functions for making tables from RStudio and pasted into a document</li>
+<li><code>dplyr</code>: provides access to further data management functions</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="descriptive-statistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package()</span></span>
+<span id="cb25-2"><a href="descriptive-statistics.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gtsummary&quot;</span>)</span>
+<span id="cb25-3"><a href="descriptive-statistics.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb25-4"><a href="descriptive-statistics.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># activate package</span></span>
+<span id="cb25-5"><a href="descriptive-statistics.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gtsummary&quot;</span>)</span>
+<span id="cb25-6"><a href="descriptive-statistics.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<p>Installing the <code>gtsummary</code> package gives us access to the <code>tbl_summary()</code> function which is a brilliant function to performing descriptive analyses and churning the results out in to a table from RStudio. The coding is quite involved though because it uses a bit of <code>tidyverse</code> syntax.</p>
+<p>Let’s create a table report only numbers by categories to get the basic ideas of the coding style:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="descriptive-statistics.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step 1: list of the variables you want to be generated in the table in the select() function for the original data.frame</span></span>
+<span id="cb26-2"><a href="descriptive-statistics.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># step 2: pipe (%&gt;%) into a new object called tableOutput</span></span>
+<span id="cb26-3"><a href="descriptive-statistics.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># step 3: view tableOutput with tbl_summary() function</span></span>
+<span id="cb26-4"><a href="descriptive-statistics.html#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="descriptive-statistics.html#cb26-5" aria-hidden="true" tabindex="-1"></a>tableOutput <span class="ot">&lt;-</span> FatalEncounters <span class="sc">%&gt;%</span> <span class="fu">select</span>(Age, AggressionSign, ArmedStatus, Gender, Ethnicity, FleeingStatus, LethalForceType)</span>
+<span id="cb26-6"><a href="descriptive-statistics.html#cb26-6" aria-hidden="true" tabindex="-1"></a>tableOutput <span class="sc">%&gt;%</span> <span class="fu">tbl_summary</span>()</span></code></pre></div>
+<p>The result will appear in the <code>Viewer</code> window. For further exploration, we can perform a descriptive analysis for the demographic characteristics of the victims with their <code>Gender</code>, <code>Age</code> and <code>Ethnicity</code> broken down by type of lethal force used (i.e., <code>LethalForceType</code>) as an outcome. The outcome variable will be used as the split variable in the <code>by=</code> argument.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="descriptive-statistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example --- update tableOutput to lethalforcetype, gender, age, skin colour &amp; include by=&#39;LethalForceType&#39;</span></span>
+<span id="cb27-2"><a href="descriptive-statistics.html#cb27-2" aria-hidden="true" tabindex="-1"></a>tableOutput <span class="ot">&lt;-</span> FatalEncounters <span class="sc">%&gt;%</span> <span class="fu">select</span>(Age, Gender, Ethnicity, LethalForceType)</span>
+<span id="cb27-3"><a href="descriptive-statistics.html#cb27-3" aria-hidden="true" tabindex="-1"></a>tableOutput <span class="sc">%&gt;%</span> <span class="fu">tbl_summary</span>(<span class="at">by=</span>LethalForceType)</span></code></pre></div>
+<p>You can copy the table generated in RStudio’s viewer directly and paste it into a Word document, and make the further modifications.</p>
+<p><img src="images/general/tableExport.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="questions" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Questions</h2>
+<ol style="list-style-type: decimal">
+<li>What do you think about the results displayed in the frequency table?</li>
+<li>What conclusion do you draw from this table?</li>
+</ol>
+<p>Critical thinking: Discuss among yourselves whether the information provided in the final table is sufficient to make the conclusions in Question 2.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/01-WEEK_1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
