@@ -7,16 +7,16 @@ knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images
 
 ## Introduction
 
-This week we will learn how to perform conduct hypothesis testing on a data containing additional health information on 654 individuals from aged 50+ years. This data is an "altered" excerpt extracted from the [**Clinical Practice Research Datalink (CPRD)**](https://www.cprd.com) in 2014/15. The blood pressure and lung capacity readings are additional health outcomes routine recorded by GP practices and logged into the CPRD database. An individual becomes at risk of these outcomes with the advancement of age, and especially when one enters the age bracket of 50s. We want carry out a series of basic hypothesis test to examining which demographic and environmental risks factors effect these outcomes.At the end of this session, you should be able to perform the following:
+This week we will learn how to perform hypothesis testing on a dataset containing additional health information on 654 individuals from aged 50+ years. This data is an "altered" excerpt extracted from the [**Clinical Practice Research Datalink (CPRD)**](https://www.cprd.com) in 2014/15. The blood pressure and lung capacity readings are additional health outcomes that are routinely recorded by GP practices and logged into the CPRD database. An individual becomes at risk of these outcomes with the advancement of age, and especially when one enters the age bracket of 50s. We will carry out a series of basic hypothesis tests to examine which demographic and environmental risk factors effect these outcomes.At the end of this session, you should be able to perform the following:
 
-1. How the null and alternative hypothesis should be framed. 
-2. How to test the assumptions for parametric test
-3. Selection of the appropriate statistical test
-4. Interpretation of p-values & concluding acceptance or rejection of null hypothesis.
+1. You will know how the null and alternative hypothesis should be framed. 
+2. You will be able to test the assumptions for parametric test
+3. You will know how to select the appropriate statistical test
+4. You will know how to interpret the p-values & accept or reject of null hypothesis.
 
 ### Downloadable dataset for this exercise
 
-Make sure to download the data set for Week 1 from [**HERE**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip). The data file is named `WK02 - Lung & BP Data.csv` Here is the data descriptor:
+Make sure to download the data set for Week 1 from [**HERE**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip). The data file is named `WK02 - Lung & BP Data.csv`. Here is the data descriptor:
 
 **Variable Name** | **Description**
 ------------------|------------------
@@ -40,15 +40,13 @@ Please find reading list for this week:
 
 ## Some data managing ettiquttes
 
-Let us begin by importing our week's 2 data set into RStudio and calling the data frame `healthdata`. 
+Let us begin by importing the week 2 data set into RStudio. Let's call the data frame `healthdata`. 
 
 ```{r}
 # Set your own directory using setwd() function
 # Load data into RStudio using read.csv(). The spreadsheet is stored in the object called 'healdata'
 healthdata <- read.csv("WK02 - Lung & BP Data.csv")
 ```
-
-This data contains a cohort of up to 654 elderly people. The lung capacity (a measure of lung function) was taken at the start of the study. Information about their gender, age (years) and altitude (low or high land) was recorded. Later on, a follow-up was performed to get a second reading of their lung capacity. The data also contains before and after systolic blood pressure readings as well.
 
 ### Logical Operators
 
@@ -153,18 +151,21 @@ boxplot(healthdata$initialLCV ~ healthdata$altitude, xlab = "Altitude type", yla
 **Answer**: For the `high land` category is looks OK. For the `low land` category, the initial lung capacity outcome variable (`initialLCV`) seems to be marginally dispersed. We can turn a blind eye on this one and assume that the outliers are minor here. For this assumption, we can say its not violated.
 </div>
 
-**Assumption 4**: Are the data from each of the 2 groups follow a normal distribution? Here, use the Shapiro-Wilk’s test to see if the p-value is above 0.05. This would mean that the distribution of the data is normal. This assumption is strict.
+**Assumption 4**: Are the data from each of the 2 groups follow a normal distribution? Here, use the Kolmogorov-Smirnov test’s test to see if the p-value is above 0.05. We have chosen this over the Shapiro-Wilk's test because we are dealing with a large sample `n > 50` for both groups. This would mean that the distribution of the data is normal. This assumption is strict.
 
-```{r}
-# Shapiro-Wilk normality test for "high land" 
-shapiro.test(healthdata$initialLCV[healthdata$altitude== "high land"]) 
+```{r, warning=FALSE, message=FALSE}
+groupHigh <- healthdata$initialLCV[healthdata$altitude== "high land"]
+groupLow <- healthdata$initialLCV[healthdata$altitude== "low land"]
 
-# Shapiro-Wilk normality test for neighbourhood B weights 
-shapiro.test(healthdata$initialLCV[healthdata$altitude== "low land"])
+# K-S normality test for "high land" 
+ks.test(groupHigh, "pnorm", mean=mean(groupHigh), sd=sd(groupHigh)) 
+
+# K-S normality test for "low land" 
+ks.test(groupLow, "pnorm", mean=mean(groupLow), sd=sd(groupLow))
 ```
 
 <div class="note">
-**Answer**: The values for initial LCV are normal when altitude is `"high land"` with a `p-value = 0.1427 > 0.05`. However, its not normal when altitude is `"low land"` (i.e., `p-value < 0.001`). Therefore, this assumption has been violated.
+**Answer**: The values for initial LCV are normal when altitude is `"high land"` with a `p-value = 0.5727 > 0.05`. However, its not normal when altitude is `"low land"` (i.e., `p-value = 0.043 < 0.05` very marginal). Therefore, this assumption has been violated.
 </div>
 
 Ideally, we stop here and proceed with using a nonparametric test. But, nevertheless, here is how you test the last assumption. 
@@ -251,17 +252,21 @@ table(healthdata$agegroup)
 boxplot(healthdata$initialLCV ~ healthdata$agegroup, xlab = "Age Group", ylab = "Baseline LCV")
 ```
 
-**Assumption 4**: Are the data from each of the 3 groups follow a normal distribution? **VIOLATED**
+**Assumption 4**: Are the data from each of the 3 groups follow a normal distribution? **CHECK**
 
-```{r}
-# Shapiro-Wilk normality test for "<55" 
-shapiro.test(healthdata$initialLCV[healthdata$agegroup== "<55 years"]) 
+```{r, warning=FALSE, message=FALSE}
+group55less <- healthdata$initialLCV[healthdata$agegroup== "<55 years"]
+group55_59 <- healthdata$initialLCV[healthdata$agegroup== "55-59 years"]
+group60plus <- healthdata$initialLCV[healthdata$agegroup== "60+ years"]
 
-# Shapiro-Wilk normality test for "55-59"
-shapiro.test(healthdata$initialLCV[healthdata$agegroup== "55-59 years"])
+# K-S normality test for "<55 years" 
+ks.test(group55less, "pnorm", mean=mean(group55less), sd=sd(group55less)) 
 
-# Shapiro-Wilk normality test for "60+"
-shapiro.test(healthdata$initialLCV[healthdata$agegroup== "60+ years"])
+# K-S normality test for "55-59 years" 
+ks.test(group55_59, "pnorm", mean=mean(group55_59), sd=sd(group55_59)) 
+
+# K-S normality test for "60+ years" 
+ks.test(group60plus, "pnorm", mean=mean(group60plus), sd=sd(group60plus)) 
 
 ```
 
@@ -274,30 +279,22 @@ shapiro.test(healthdata$initialLCV[healthdata$agegroup== "60+ years"])
 knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/TestLists.png') 
 ```
 
-Again, the assumption concerning normality was violated. In this scenario, we again choose a nonparametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a **Kruskal-Wallis test**.
+in this instance, all the assumptions were met. In this scenario, we therefore choose a parametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a **One-way ANOVA test**.
 
-<div class="note">
-**Important note**: Always modify the hypothesis statement since we will be performing the analysis within a nonparametric framework. Again, instead of using the term **mean**, we use **medians**:
-
-- **Null hypothesis (H0)**: The median for the initial lung capacity across the three age groups are EQUAL
-
-- **Alternative hypothesis (H1)**: The median for the initial lung capacity across the three age groups are NOT EQUAL
-</div>
-
-Let's perform a Kruskal-Wallis test using the `kruskal.test()` function. No options as the code is straight forward! 
+Let's perform a 1-way ANONA test using the `aov()` function. No options as the code is straight forward! 
 
 ```{r}
 # Mann-Whitney test for independent groups
-kruskal.test(healthdata$initialLCV ~ healthdata$agegroup)
+summary(aov(healthdata$initialLCV ~ healthdata$agegroup))
 ```
 
 <div class="note">
-**Interpretation**: The p-value of the test is 2.2e-11 (very small), which is far less than the threshold for deeming statistical significance (i.e., p < 0.05). Hence, we can reject the null hypothesis that the baseline LCV in people across the three different age groups are similar. We therefore accept the alternative hypothesis and conclude that there's significant difference in the measured LCV across the age categories. 
+**Interpretation**: The p-value of the test is 2.2e-16 (very small), which is far less than the threshold for deeming statistical significance (i.e., p < 0.05). Hence, we can reject the null hypothesis that the baseline LCV in people across the three different age groups are similar. We therefore accept the alternative hypothesis and conclude that there's significant difference in the measured LCV across the age categories. 
 </div>
 
 ### Questions
 
-Use a unpaired test to determine whether there are any significant difference for baseline blood pressure measured across the three age groups:
+Use an unpaired test to determine whether there are any significant difference for baseline blood pressure measured across the three age groups:
 
 1. What is the null and alternative hypothesis?
 
