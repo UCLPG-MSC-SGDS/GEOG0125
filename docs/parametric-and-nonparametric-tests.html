@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="2 Parametric and Nonparametric Tests | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descriptive-statistics.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#moodle"><i class="fa fa-check"></i>Moodle</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#office-hours-for-geog0125"><i class="fa fa-check"></i>Office hours for GEOG0125</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>1</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#downloadable-dataset-for-this-exercise"><i class="fa fa-check"></i><b>1.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="1.1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#reading-list"><i class="fa fa-check"></i><b>1.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#frequency-distribution"><i class="fa fa-check"></i><b>1.2</b> Frequency distribution</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#computing-frequencies-cumulative-frequency-and-proportions"><i class="fa fa-check"></i><b>1.2.1</b> Computing frequencies, cumulative frequency and proportions</a></li>
+<li class="chapter" data-level="1.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-barplot-and-piechart"><i class="fa fa-check"></i><b>1.2.2</b> Using a <code>barplot()</code> and <code>piechart()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#descriptive-analysis-using-measures-for-central-tendency-dispersion"><i class="fa fa-check"></i><b>1.3</b> Descriptive analysis using measures for central tendency &amp; dispersion</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#summary-estimates-using-summary"><i class="fa fa-check"></i><b>1.3.1</b> Summary estimates using <code>summary()</code></a></li>
+<li class="chapter" data-level="1.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-boxplot-and-hist"><i class="fa fa-check"></i><b>1.3.2</b> Using a <code>boxplot()</code> and <code>hist()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#generating-tables-shells-in-rstudio"><i class="fa fa-check"></i><b>1.4</b> Generating tables shells in RStudio</a></li>
+<li class="chapter" data-level="1.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#questions"><i class="fa fa-check"></i><b>1.5</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html"><i class="fa fa-check"></i><b>2</b> Parametric and Nonparametric Tests</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#downloadable-dataset-for-this-exercise-1"><i class="fa fa-check"></i><b>2.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="2.1.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#reading-list-1"><i class="fa fa-check"></i><b>2.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#some-data-managing-ettiquttes"><i class="fa fa-check"></i><b>2.2</b> Some data managing ettiquttes</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#logical-operators"><i class="fa fa-check"></i><b>2.2.1</b> Logical Operators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-2-groups"><i class="fa fa-check"></i><b>2.3</b> Hypothesis testing for 2 groups</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#assumption-checking"><i class="fa fa-check"></i><b>2.3.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="2.3.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests"><i class="fa fa-check"></i><b>2.3.2</b> Selection of tests</a></li>
+<li class="chapter" data-level="2.3.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-1"><i class="fa fa-check"></i><b>2.3.3</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-3-or-more-groups"><i class="fa fa-check"></i><b>2.4</b> Hypothesis testing for 3 or more groups</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#asssumption-checking"><i class="fa fa-check"></i><b>2.4.1</b> Asssumption Checking</a></li>
+<li class="chapter" data-level="2.4.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests-1"><i class="fa fa-check"></i><b>2.4.2</b> Selection of tests</a></li>
+<li class="chapter" data-level="2.4.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-2"><i class="fa fa-check"></i><b>2.4.3</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#conclusions"><i class="fa fa-check"></i><b>2.5</b> Conclusions</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="parametric-and-nonparametric-tests" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Parametric and Nonparametric Tests</h1>
+<p><strong>Theme: Cardiopulmonary System</strong>
+<img src="images/general/Cardiopulmonary_image.jpeg" width="100%" style="display: block; margin: auto;" /></p>
+<div id="introduction-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<p>This week we will learn how to perform conduct hypothesis testing on a data containing additional health information on 654 individuals from aged 50+ years. This data is an “altered” excerpt extracted from the <a href="https://www.cprd.com"><strong>Clinical Practice Research Datalink (CPRD)</strong></a> in 2014/15. The blood pressure and lung capacity readings are additional health outcomes routine recorded by GP practices and logged into the CPRD database. An individual becomes at risk of these outcomes with the advancement of age, and especially when one enters the age bracket of 50s. We want carry out a series of basic hypothesis test to examining which demographic and environmental risks factors effect these outcomes.At the end of this session, you should be able to perform the following:</p>
+<ol style="list-style-type: decimal">
+<li>How the null and alternative hypothesis should be framed.</li>
+<li>How to test the assumptions for parametric test</li>
+<li>Selection of the appropriate statistical test</li>
+<li>Interpretation of p-values &amp; concluding acceptance or rejection of null hypothesis.</li>
+</ol>
+<div id="downloadable-dataset-for-this-exercise-1" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Downloadable dataset for this exercise</h3>
+<p>Make sure to download the data set for Week 1 from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip"><strong>HERE</strong></a>. The data file is named <code>WK02 - Lung &amp; BP Data.csv</code> Here is the data descriptor:</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Variable Name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>Unique identification number</td>
+</tr>
+<tr class="even">
+<td>age</td>
+<td>Age (in years)</td>
+</tr>
+<tr class="odd">
+<td>agegroup</td>
+<td>Age groups”: &lt;55 years”, “55-59 years” &amp; “60+ years”</td>
+</tr>
+<tr class="even">
+<td>gender</td>
+<td>Sex: “male” &amp; “female”</td>
+</tr>
+<tr class="odd">
+<td>altitudetype</td>
+<td>Residing on “lowland” or “highland”</td>
+</tr>
+<tr class="even">
+<td>initialBP</td>
+<td>Initial systolic blood pressure reading</td>
+</tr>
+<tr class="odd">
+<td>postBP</td>
+<td>Post systolic blood pressure reading</td>
+</tr>
+<tr class="even">
+<td>initialLCV</td>
+<td>Initial lung capacity air reading</td>
+</tr>
+<tr class="odd">
+<td>folllowupLCV</td>
+<td>Post lung capacity air reading</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="reading-list-1" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Reading list</h3>
+<p>Please find reading list for this week:</p>
+<ol style="list-style-type: decimal">
+<li><p>Recommended Book: Dalgaard, P. (2008). <strong>Introductory Statistics with R (Second Edition)</strong>. Chapter 5: One- and two-sample tests. Pages 95 to 107 <a href="https://link.springer.com/book/10.1007/978-0-387-79054-1">(<strong>Download Ebook here</strong>)</a></p></li>
+<li><p>Recommended Book: Dalgaard, P. (2008). <strong>Introductory Statistics with R (Second Edition)</strong>. Chapter 7: Analysis of variance and the Kruskal-Wallis test. Pages 127 to 143 <a href="https://link.springer.com/book/10.1007/978-0-387-79054-1">(<strong>Download Ebook here</strong>)</a></p></li>
+</ol>
+</div>
+</div>
+<div id="some-data-managing-ettiquttes" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Some data managing ettiquttes</h2>
+<p>Let us begin by importing our week’s 2 data set into RStudio and calling the data frame <code>healthdata</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="parametric-and-nonparametric-tests.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your own directory using setwd() function</span></span>
+<span id="cb28-2"><a href="parametric-and-nonparametric-tests.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into RStudio using read.csv(). The spreadsheet is stored in the object called &#39;healdata&#39;</span></span>
+<span id="cb28-3"><a href="parametric-and-nonparametric-tests.html#cb28-3" aria-hidden="true" tabindex="-1"></a>healthdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;WK02 - Lung &amp; BP Data.csv&quot;</span>)</span></code></pre></div>
+<p>This data contains a cohort of up to 654 elderly people. The lung capacity (a measure of lung function) was taken at the start of the study. Information about their gender, age (years) and altitude (low or high land) was recorded. Later on, a follow-up was performed to get a second reading of their lung capacity. The data also contains before and after systolic blood pressure readings as well.</p>
+<div id="logical-operators" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Logical Operators</h3>
+<p>Before we start, let us take a quick detour and cover some logical operators that can be used to make a set of conditions in R:</p>
+<ul>
+<li><p>The symbol <code>&lt;</code> mean quantity is less than something</p></li>
+<li><p>The symbol <code>&lt;=</code> mean a quantity is less than and equal to something</p></li>
+<li><p>The symbol <code>&gt;</code> mean a quantity is greater than to something</p></li>
+<li><p>The symbol <code>&gt;=</code> mean a quantity is greater than and equal to something</p></li>
+<li><p>The symbol <code>==</code> mean exactly identical to something</p></li>
+<li><p>The symbol <code>!=</code> mean not identical to something</p></li>
+<li><p>The symbol <code>&amp;</code> means AND</p></li>
+<li><p>The symbol <code>|</code> mean OR</p></li>
+<li><p>The symbol <code>~</code> is called a tilde. It is used for showing a relationship (e.g. <code>x~y</code>, <code>cancer ~ lifestyle + hereditary + smokingstatus</code> and etc.)</p></li>
+</ul>
+<p>The list of logical operators are useful if we want to apply conditional statements or subset of records based on certain characteristics of our data. Let see how we can use these logical operators to create a subset of data from the health dataset we loaded into R.</p>
+<p>Suppose we want to create the health data set where the rows in the column for the gender only keeps values that are ‘male.’ We use the <code>==</code> logical operator to perform this task:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="parametric-and-nonparametric-tests.html#cb29-1" aria-hidden="true" tabindex="-1"></a>healthdata_males <span class="ot">&lt;-</span> healthdata[healthdata<span class="sc">$</span>gender<span class="sc">==</span><span class="st">&quot;male&quot;</span>,]</span></code></pre></div>
+<div class="note">
+<p><strong>IMPORTANT NOTES</strong>: <code>healthdata_males</code> data frame is a new object of records corresponding to males only. The code <code>healthdata[rows, columns]</code> format; here, we are telling R to use the <code>healthdata</code> data frame and inside the square brackets of the code i.e. <code>healthdata$gender=="male"</code> it appears BEFORE the comma (on the left). We are telling R to select the variable gender and where in the row for gender to filter values that are exactly identical to <code>“male”</code>.</p>
+</div>
+<p><br></p>
+<p>Suppose we want to create an object from the <code>healthdata</code> data frame where the rows in the column for age only keep values that are less than and equal to 55. We use the <code>&lt;=</code> logical operator to perform this task:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="parametric-and-nonparametric-tests.html#cb30-1" aria-hidden="true" tabindex="-1"></a>healthdata_age55 <span class="ot">&lt;-</span> healthdata[healthdata<span class="sc">$</span>age <span class="sc">&lt;=</span> <span class="dv">55</span>,]</span></code></pre></div>
+<p>We can create compound statements. For instance, suppose we want to create from the <code>healthdata</code> that keeps <code>"females"</code> and residing on <code>"high land"</code> only. We use both the <code>==</code> and <code>&amp;</code> logical operators to perform this task:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="parametric-and-nonparametric-tests.html#cb31-1" aria-hidden="true" tabindex="-1"></a>FemLowLand <span class="ot">&lt;-</span> healthdata[healthdata<span class="sc">$</span>gender <span class="sc">==</span> <span class="st">&quot;female&quot;</span> <span class="sc">&amp;</span> healthdata<span class="sc">$</span>altitude <span class="sc">==</span> <span class="st">&quot;low land&quot;</span>,]</span></code></pre></div>
+</div>
+</div>
+<div id="hypothesis-testing-for-2-groups" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Hypothesis testing for 2 groups</h2>
+<p>Suppose we want to investigate the impact of attitude (i.e. residing on high land or low land) on lung capacity measured at baseline, and to see whether the baseline lung capacity in the groups are <strong>different or not</strong>. It is definitely preferred to use a parametric test.</p>
+<p>We first start by writing out the hypothesis statement which typically looks something like:</p>
+<div class="note">
+<ul>
+<li><p><strong>Null hypothesis (H0)</strong>: The mean for the initial lung capacity by altitude (i.e. low and high land) are EQUAL</p></li>
+<li><p><strong>Alternative hypothesis (H1)</strong>: The mean for the initial lung capacity by attitude (i.e. low and high land) are NOT EQUAL</p></li>
+</ul>
+</div>
+<p>Then, we check the following assumptions to ensure that the use of a parametric test is valid. Here are the list of assumptions we should test:</p>
+<ul>
+<li><p>Is the main outcome a continuous variable (i.e., it exists as either an interval or ratio variable)?</p></li>
+<li><p>Is the sample size of group has <code>n ≥ 30</code>?</p></li>
+<li><p>Are there any outliers present for each group?</p></li>
+<li><p>Is the outcome from a Gaussian (aka normal distribution) for each group?</p></li>
+<li><p>Are the variances equal variances?</p></li>
+</ul>
+<p>If any of the above assumptions are violated - you will need to use a nonparametric test.</p>
+<div id="assumption-checking" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Assumption checking</h3>
+<p><strong>Assumption 1</strong>: Is the main outcome a continuous variable (i.e., it exists as either an interval or ratio variable)?</p>
+<div class="note">
+<p><strong>Answer</strong>: Yes, the initial lung capacity outcome variable (<code>initialLCV</code>) is an example of a ratio variable, with independent groups (i.e., s<code>altitude</code> variable)</p>
+</div>
+<p><strong>Assumption 2</strong>: For each group, is n &gt; 30?</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="parametric-and-nonparametric-tests.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate to see the number of individuals for each group</span></span>
+<span id="cb32-2"><a href="parametric-and-nonparametric-tests.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(healthdata<span class="sc">$</span>altitude)</span></code></pre></div>
+<pre><code>## 
+## high land  low land 
+##        65       589</code></pre>
+<div class="note">
+<p><strong>Answer</strong>: Yes, both groups are above 30</p>
+</div>
+<p><strong>Assumption 3</strong>: Are there any outliers presence for each group?</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="parametric-and-nonparametric-tests.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate boxplots for each group and visualise in same plot window</span></span>
+<span id="cb34-2"><a href="parametric-and-nonparametric-tests.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">xlab =</span> <span class="st">&quot;Altitude type&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Baseline LCV&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="note">
+<p><strong>Answer</strong>: For the <code>high land</code> category is looks OK. For the <code>low land</code> category, the initial lung capacity outcome variable (<code>initialLCV</code>) seems to be marginally dispersed. We can turn a blind eye on this one and assume that the outliers are minor here. For this assumption, we can say its not violated.</p>
+</div>
+<p><strong>Assumption 4</strong>: Are the data from each of the 2 groups follow a normal distribution? Here, use the Shapiro-Wilk’s test to see if the p-value is above 0.05. This would mean that the distribution of the data is normal. This assumption is strict.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parametric-and-nonparametric-tests.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;high land&quot; </span></span>
+<span id="cb35-2"><a href="parametric-and-nonparametric-tests.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;high land&quot;</span>]) </span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  healthdata$initialLCV[healthdata$altitude == &quot;high land&quot;]
+## W = 0.97175, p-value = 0.1427</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parametric-and-nonparametric-tests.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for neighbourhood B weights </span></span>
+<span id="cb37-2"><a href="parametric-and-nonparametric-tests.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;low land&quot;</span>])</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  healthdata$initialLCV[healthdata$altitude == &quot;low land&quot;]
+## W = 0.96363, p-value = 6.712e-11</code></pre>
+<div class="note">
+<p><strong>Answer</strong>: The values for initial LCV are normal when altitude is <code>"high land"</code> with a <code>p-value = 0.1427 &gt; 0.05</code>. However, its not normal when altitude is <code>"low land"</code> (i.e., <code>p-value &lt; 0.001</code>). Therefore, this assumption has been violated.</p>
+</div>
+<p>Ideally, we stop here and proceed with using a nonparametric test. But, nevertheless, here is how you test the last assumption.</p>
+<p><strong>Assumption 5</strong>: Do the two populations have the same variances? Here, use the F-test to see if the p-value is above 0.05. This would mean that the two group’s variance’s are the same. This assumption is also a strict assumption to test if the the fourth one passes.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="parametric-and-nonparametric-tests.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">data =</span> healthdata)</span></code></pre></div>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  healthdata$initialLCV by healthdata$altitude
+## F = 0.77756, num df = 64, denom df = 588, p-value = 0.2094
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.5533558 1.1540197
+## sample estimates:
+## ratio of variances 
+##          0.7775639</code></pre>
+<div class="note">
+<p><strong>Answer</strong>: Yes, the population has equal variance and because the spread in the data is somewhat reflected in the boxplots, and the <code>p-value = 0.2094 &gt; 0.05</code>.</p>
+</div>
+</div>
+<div id="selection-of-tests" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Selection of tests</h3>
+<p><strong>Statistical tests for Parametric and Nonparametric tests</strong>
+<br></p>
+<p><img src="images/general/TestLists.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The assumption concerning normality was violated. We need to therefore choose a nonparametric approach. The structure of the data has two groups which are independent. The approach is a <strong>Mann-Whitney test</strong>.</p>
+<div class="note">
+<p><strong>Important note</strong>: There will be a slight modification to the hypothesis statement since we will be performing the analysis within a nonparametric framework. Instead using the term <strong>mean</strong>, we instead use <strong>medians</strong>:</p>
+<ul>
+<li><p><strong>Null hypothesis (H0)</strong>: The median for the initial lung capacity by altitude (i.e. low and high land) are EQUAL</p></li>
+<li><p><strong>Alternative hypothesis (H1)</strong>: The median for the initial lung capacity by attitude (i.e. low and high land) are NOT EQUAL</p></li>
+</ul>
+</div>
+<p>Let’s perform a Mann-Whitney test using the <code>wilcox.test()</code> with the following options <code>exact = FALSE</code> (to suppress an infuriatingly stupid buggy message) and <code>paired = FALSE</code></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="parametric-and-nonparametric-tests.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
+<span id="cb41-2"><a href="parametric-and-nonparametric-tests.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">exact =</span> <span class="cn">FALSE</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  healthdata$initialLCV by healthdata$altitude
+## W = 28686, p-value = 4.071e-11
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>: The p-value of the test is 6.712e-11 (very small), which is less than the threshold for deeming significance (i.e., p &lt; 0.05). We can reject the null hypothesis that the baseline LCV in people living in high altitude areas are the same as those living on low altitude lands. We can therefore accept the alternative and conclude that there’s significant difference of measured LCV between the groups.</p>
+</div>
+</div>
+<div id="questions-1" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Questions</h3>
+<p>Use a paired test to determine whether there are any significant difference between measure for lung capacity measured at baseline and follow-up.</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the null and alternative hypothesis?</p></li>
+<li><p>What would be the appropriate statistical test for testing this hypothesis?</p></li>
+<li><p>What is the interpretation and conclusions for this test?</p></li>
+</ol>
+</div>
+</div>
+<div id="hypothesis-testing-for-3-or-more-groups" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Hypothesis testing for 3 or more groups</h2>
+<p>Suppose we want to investigate the impact of age groups on lung capacity measured at baseline, and to see whether the baseline lung capacity in the groups are <strong>different or same across the three age groups</strong>.</p>
+<p>Again, we aim to use a parametric test and hypothesis statement will read something like:</p>
+<div class="note">
+<ul>
+<li><p><strong>Null hypothesis (H0)</strong>: The mean for the initial lung capacity across the different age groups are EQUAL</p></li>
+<li><p><strong>Alternative hypothesis (H1)</strong>: The mean for the initial lung capacity across the different age groups are DIFFERENT</p></li>
+</ul>
+</div>
+<div id="asssumption-checking" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Asssumption Checking</h3>
+<p>Again, we check the following assumptions to ensure that the use of a parametric test is valid. Here are the list of assumptions we should test:</p>
+<p><strong>Assumption 1</strong>: Is the main outcome a continuous variable? <strong>CHECK</strong></p>
+<p><strong>Assumption 2</strong>: For each group, is n &gt; 30? <strong>CHECK</strong></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="parametric-and-nonparametric-tests.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate to see the number of individuals for each group</span></span>
+<span id="cb43-2"><a href="parametric-and-nonparametric-tests.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(healthdata<span class="sc">$</span>agegroup)</span></code></pre></div>
+<pre><code>## 
+##   &lt;55 years 55-59 years   60+ years 
+##         130         407         117</code></pre>
+<p><strong>Assumption 3</strong>: Are there any outliers presence for each group? <strong>CHECK</strong></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="parametric-and-nonparametric-tests.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate boxplots for each group and visualise in same plot window</span></span>
+<span id="cb45-2"><a href="parametric-and-nonparametric-tests.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup, <span class="at">xlab =</span> <span class="st">&quot;Age Group&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Baseline LCV&quot;</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><strong>Assumption 4</strong>: Are the data from each of the 3 groups follow a normal distribution? <strong>VIOLATED</strong></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="parametric-and-nonparametric-tests.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;&lt;55&quot; </span></span>
+<span id="cb46-2"><a href="parametric-and-nonparametric-tests.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;&lt;55 years&quot;</span>]) </span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  healthdata$initialLCV[healthdata$agegroup == &quot;&lt;55 years&quot;]
+## W = 0.98308, p-value = 0.1057</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="parametric-and-nonparametric-tests.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;55-59&quot;</span></span>
+<span id="cb48-2"><a href="parametric-and-nonparametric-tests.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;55-59 years&quot;</span>])</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  healthdata$initialLCV[healthdata$agegroup == &quot;55-59 years&quot;]
+## W = 0.97218, p-value = 5.177e-07</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="parametric-and-nonparametric-tests.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;60+&quot;</span></span>
+<span id="cb50-2"><a href="parametric-and-nonparametric-tests.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;60+ years&quot;</span>])</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  healthdata$initialLCV[healthdata$agegroup == &quot;60+ years&quot;]
+## W = 0.97764, p-value = 0.04785</code></pre>
+</div>
+<div id="selection-of-tests-1" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Selection of tests</h3>
+<p><strong>Statistical tests for Parametric and Nonparametric tests</strong>
+<br></p>
+<p><img src="images/general/TestLists.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Again, the assumption concerning normality was violated. In this scenario, we again choose a nonparametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a <strong>Kruskal-Wallis test</strong>.</p>
+<div class="note">
+<p><strong>Important note</strong>: Always modify the hypothesis statement since we will be performing the analysis within a nonparametric framework. Again, instead of using the term <strong>mean</strong>, we use <strong>medians</strong>:</p>
+<ul>
+<li><p><strong>Null hypothesis (H0)</strong>: The median for the initial lung capacity across the three age groups are EQUAL</p></li>
+<li><p><strong>Alternative hypothesis (H1)</strong>: The median for the initial lung capacity across the three age groups are NOT EQUAL</p></li>
+</ul>
+</div>
+<p>Let’s perform a Kruskal-Wallis test using the <code>kruskal.test()</code> function. No options as the code is straight forward!</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="parametric-and-nonparametric-tests.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
+<span id="cb52-2"><a href="parametric-and-nonparametric-tests.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup)</span></code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  healthdata$initialLCV by healthdata$agegroup
+## Kruskal-Wallis chi-squared = 317.41, df = 2, p-value &lt; 2.2e-16</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>: The p-value of the test is 2.2e-11 (very small), which is far less than the threshold for deeming statistical significance (i.e., p &lt; 0.05). Hence, we can reject the null hypothesis that the baseline LCV in people across the three different age groups are similar. We therefore accept the alternative hypothesis and conclude that there’s significant difference in the measured LCV across the age categories.</p>
+</div>
+</div>
+<div id="questions-2" class="section level3" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Questions</h3>
+<p>Use a unpaired test to determine whether there are any significant difference for baseline blood pressure measured across the three age groups:</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the null and alternative hypothesis?</p></li>
+<li><p>What would be the appropriate statistical test for testing this hypothesis?</p></li>
+<li><p>What is the interpretation and conclusions for this test?</p></li>
+</ol>
+</div>
+</div>
+<div id="conclusions" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Conclusions</h2>
+<p>This is how hypothesis tests are carried out. Its very easy as you can see - the only tedious part is the assumptions testing. Be very strict when testing for normality especially, if this is violated, then go for the nonparametric test. So far, we have been performing two-tailed tests but you can conduct a one-tail test in your own time (see recommended readings).</p>
+<p>Next week, we will learn more about multivariable regression models and the different families of models based on the outcome types.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descriptive-statistics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/02-WEEK_2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
