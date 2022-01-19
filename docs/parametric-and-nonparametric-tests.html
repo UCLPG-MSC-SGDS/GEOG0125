@@ -211,16 +211,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/general/Cardiopulmonary_image.jpeg" width="100%" style="display: block; margin: auto;" /></p>
 <div id="introduction-1" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Introduction</h2>
-<p>This week we will learn how to perform conduct hypothesis testing on a data containing additional health information on 654 individuals from aged 50+ years. This data is an “altered” excerpt extracted from the <a href="https://www.cprd.com"><strong>Clinical Practice Research Datalink (CPRD)</strong></a> in 2014/15. The blood pressure and lung capacity readings are additional health outcomes routine recorded by GP practices and logged into the CPRD database. An individual becomes at risk of these outcomes with the advancement of age, and especially when one enters the age bracket of 50s. We want carry out a series of basic hypothesis test to examining which demographic and environmental risks factors effect these outcomes.At the end of this session, you should be able to perform the following:</p>
+<p>This week we will learn how to perform hypothesis testing on a dataset containing additional health information on 654 individuals from aged 50+ years. This data is an “altered” excerpt extracted from the <a href="https://www.cprd.com"><strong>Clinical Practice Research Datalink (CPRD)</strong></a> in 2014/15. The blood pressure and lung capacity readings are additional health outcomes that are routinely recorded by GP practices and logged into the CPRD database. An individual becomes at risk of these outcomes with the advancement of age, and especially when one enters the age bracket of 50s. We will carry out a series of basic hypothesis tests to examine which demographic and environmental risk factors effect these outcomes.At the end of this session, you should be able to perform the following:</p>
 <ol style="list-style-type: decimal">
-<li>How the null and alternative hypothesis should be framed.</li>
-<li>How to test the assumptions for parametric test</li>
-<li>Selection of the appropriate statistical test</li>
-<li>Interpretation of p-values &amp; concluding acceptance or rejection of null hypothesis.</li>
+<li>You will know how the null and alternative hypothesis should be framed.</li>
+<li>You will be able to test the assumptions for parametric test</li>
+<li>You will know how to select the appropriate statistical test</li>
+<li>You will know how to interpret the p-values &amp; accept or reject of null hypothesis.</li>
 </ol>
 <div id="downloadable-dataset-for-this-exercise-1" class="section level3" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> Downloadable dataset for this exercise</h3>
-<p>Make sure to download the data set for Week 1 from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip"><strong>HERE</strong></a>. The data file is named <code>WK02 - Lung &amp; BP Data.csv</code> Here is the data descriptor:</p>
+<p>Make sure to download the data set for Week 1 from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip"><strong>HERE</strong></a>. The data file is named <code>WK02 - Lung &amp; BP Data.csv</code>. Here is the data descriptor:</p>
 <table>
 <thead>
 <tr class="header">
@@ -279,11 +279,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="some-data-managing-ettiquttes" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Some data managing ettiquttes</h2>
-<p>Let us begin by importing our week’s 2 data set into RStudio and calling the data frame <code>healthdata</code>.</p>
+<p>Let us begin by importing the week 2 data set into RStudio. Let’s call the data frame <code>healthdata</code>.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="parametric-and-nonparametric-tests.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your own directory using setwd() function</span></span>
 <span id="cb28-2"><a href="parametric-and-nonparametric-tests.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into RStudio using read.csv(). The spreadsheet is stored in the object called &#39;healdata&#39;</span></span>
 <span id="cb28-3"><a href="parametric-and-nonparametric-tests.html#cb28-3" aria-hidden="true" tabindex="-1"></a>healthdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;WK02 - Lung &amp; BP Data.csv&quot;</span>)</span></code></pre></div>
-<p>This data contains a cohort of up to 654 elderly people. The lung capacity (a measure of lung function) was taken at the start of the study. Information about their gender, age (years) and altitude (low or high land) was recorded. Later on, a follow-up was performed to get a second reading of their lung capacity. The data also contains before and after systolic blood pressure readings as well.</p>
 <div id="logical-operators" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Logical Operators</h3>
 <p>Before we start, let us take a quick detour and cover some logical operators that can be used to make a set of conditions in R:</p>
@@ -352,23 +351,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="note">
 <p><strong>Answer</strong>: For the <code>high land</code> category is looks OK. For the <code>low land</code> category, the initial lung capacity outcome variable (<code>initialLCV</code>) seems to be marginally dispersed. We can turn a blind eye on this one and assume that the outliers are minor here. For this assumption, we can say its not violated.</p>
 </div>
-<p><strong>Assumption 4</strong>: Are the data from each of the 2 groups follow a normal distribution? Here, use the Shapiro-Wilk’s test to see if the p-value is above 0.05. This would mean that the distribution of the data is normal. This assumption is strict.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parametric-and-nonparametric-tests.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;high land&quot; </span></span>
-<span id="cb35-2"><a href="parametric-and-nonparametric-tests.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;high land&quot;</span>]) </span></code></pre></div>
+<p><strong>Assumption 4</strong>: Are the data from each of the 2 groups follow a normal distribution? Here, use the Kolmogorov-Smirnov test’s test to see if the p-value is above 0.05. We have chosen this over the Shapiro-Wilk’s test because we are dealing with a large sample <code>n &gt; 50</code> for both groups. This would mean that the distribution of the data is normal. This assumption is strict.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parametric-and-nonparametric-tests.html#cb35-1" aria-hidden="true" tabindex="-1"></a>groupHigh <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;high land&quot;</span>]</span>
+<span id="cb35-2"><a href="parametric-and-nonparametric-tests.html#cb35-2" aria-hidden="true" tabindex="-1"></a>groupLow <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;low land&quot;</span>]</span>
+<span id="cb35-3"><a href="parametric-and-nonparametric-tests.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="parametric-and-nonparametric-tests.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;high land&quot; </span></span>
+<span id="cb35-5"><a href="parametric-and-nonparametric-tests.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupHigh, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupHigh), <span class="at">sd=</span><span class="fu">sd</span>(groupHigh)) </span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  One-sample Kolmogorov-Smirnov test
 ## 
-## data:  healthdata$initialLCV[healthdata$altitude == &quot;high land&quot;]
-## W = 0.97175, p-value = 0.1427</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parametric-and-nonparametric-tests.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for neighbourhood B weights </span></span>
-<span id="cb37-2"><a href="parametric-and-nonparametric-tests.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;low land&quot;</span>])</span></code></pre></div>
+## data:  groupHigh
+## D = 0.097068, p-value = 0.5727
+## alternative hypothesis: two-sided</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parametric-and-nonparametric-tests.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;low land&quot; </span></span>
+<span id="cb37-2"><a href="parametric-and-nonparametric-tests.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupLow, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupLow), <span class="at">sd=</span><span class="fu">sd</span>(groupLow))</span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  One-sample Kolmogorov-Smirnov test
 ## 
-## data:  healthdata$initialLCV[healthdata$altitude == &quot;low land&quot;]
-## W = 0.96363, p-value = 6.712e-11</code></pre>
+## data:  groupLow
+## D = 0.056699, p-value = 0.04533
+## alternative hypothesis: two-sided</code></pre>
 <div class="note">
-<p><strong>Answer</strong>: The values for initial LCV are normal when altitude is <code>"high land"</code> with a <code>p-value = 0.1427 &gt; 0.05</code>. However, its not normal when altitude is <code>"low land"</code> (i.e., <code>p-value &lt; 0.001</code>). Therefore, this assumption has been violated.</p>
+<p><strong>Answer</strong>: The values for initial LCV are normal when altitude is <code>"high land"</code> with a <code>p-value = 0.5727 &gt; 0.05</code>. However, its not normal when altitude is <code>"low land"</code> (i.e., <code>p-value = 0.043 &lt; 0.05</code> very marginal). Therefore, this assumption has been violated.</p>
 </div>
 <p>Ideally, we stop here and proceed with using a nonparametric test. But, nevertheless, here is how you test the last assumption.</p>
 <p><strong>Assumption 5</strong>: Do the two populations have the same variances? Here, use the F-test to see if the p-value is above 0.05. This would mean that the two group’s variance’s are the same. This assumption is also a strict assumption to test if the the fourth one passes.</p>
@@ -448,57 +452,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="parametric-and-nonparametric-tests.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate boxplots for each group and visualise in same plot window</span></span>
 <span id="cb45-2"><a href="parametric-and-nonparametric-tests.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup, <span class="at">xlab =</span> <span class="st">&quot;Age Group&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Baseline LCV&quot;</span>)</span></code></pre></div>
 <p><img src="GEOG0125_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<p><strong>Assumption 4</strong>: Are the data from each of the 3 groups follow a normal distribution? <strong>VIOLATED</strong></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="parametric-and-nonparametric-tests.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;&lt;55&quot; </span></span>
-<span id="cb46-2"><a href="parametric-and-nonparametric-tests.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;&lt;55 years&quot;</span>]) </span></code></pre></div>
+<p><strong>Assumption 4</strong>: Are the data from each of the 3 groups follow a normal distribution? <strong>CHECK</strong></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="parametric-and-nonparametric-tests.html#cb46-1" aria-hidden="true" tabindex="-1"></a>group55less <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;&lt;55 years&quot;</span>]</span>
+<span id="cb46-2"><a href="parametric-and-nonparametric-tests.html#cb46-2" aria-hidden="true" tabindex="-1"></a>group55_59 <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;55-59 years&quot;</span>]</span>
+<span id="cb46-3"><a href="parametric-and-nonparametric-tests.html#cb46-3" aria-hidden="true" tabindex="-1"></a>group60plus <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;60+ years&quot;</span>]</span>
+<span id="cb46-4"><a href="parametric-and-nonparametric-tests.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="parametric-and-nonparametric-tests.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;&lt;55 years&quot; </span></span>
+<span id="cb46-6"><a href="parametric-and-nonparametric-tests.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55less, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55less), <span class="at">sd=</span><span class="fu">sd</span>(group55less)) </span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  One-sample Kolmogorov-Smirnov test
 ## 
-## data:  healthdata$initialLCV[healthdata$agegroup == &quot;&lt;55 years&quot;]
-## W = 0.98308, p-value = 0.1057</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="parametric-and-nonparametric-tests.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;55-59&quot;</span></span>
-<span id="cb48-2"><a href="parametric-and-nonparametric-tests.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;55-59 years&quot;</span>])</span></code></pre></div>
+## data:  group55less
+## D = 0.075608, p-value = 0.4472
+## alternative hypothesis: two-sided</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="parametric-and-nonparametric-tests.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;55-59 years&quot; </span></span>
+<span id="cb48-2"><a href="parametric-and-nonparametric-tests.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55_59, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55_59), <span class="at">sd=</span><span class="fu">sd</span>(group55_59)) </span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  One-sample Kolmogorov-Smirnov test
 ## 
-## data:  healthdata$initialLCV[healthdata$agegroup == &quot;55-59 years&quot;]
-## W = 0.97218, p-value = 5.177e-07</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="parametric-and-nonparametric-tests.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for &quot;60+&quot;</span></span>
-<span id="cb50-2"><a href="parametric-and-nonparametric-tests.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;60+ years&quot;</span>])</span></code></pre></div>
+## data:  group55_59
+## D = 0.048842, p-value = 0.2861
+## alternative hypothesis: two-sided</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="parametric-and-nonparametric-tests.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;60+ years&quot; </span></span>
+<span id="cb50-2"><a href="parametric-and-nonparametric-tests.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group60plus, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group60plus), <span class="at">sd=</span><span class="fu">sd</span>(group60plus)) </span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  One-sample Kolmogorov-Smirnov test
 ## 
-## data:  healthdata$initialLCV[healthdata$agegroup == &quot;60+ years&quot;]
-## W = 0.97764, p-value = 0.04785</code></pre>
+## data:  group60plus
+## D = 0.071874, p-value = 0.5813
+## alternative hypothesis: two-sided</code></pre>
 </div>
 <div id="selection-of-tests-1" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Selection of tests</h3>
 <p><strong>Statistical tests for Parametric and Nonparametric tests</strong>
 <br></p>
 <p><img src="images/general/TestLists.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Again, the assumption concerning normality was violated. In this scenario, we again choose a nonparametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a <strong>Kruskal-Wallis test</strong>.</p>
-<div class="note">
-<p><strong>Important note</strong>: Always modify the hypothesis statement since we will be performing the analysis within a nonparametric framework. Again, instead of using the term <strong>mean</strong>, we use <strong>medians</strong>:</p>
-<ul>
-<li><p><strong>Null hypothesis (H0)</strong>: The median for the initial lung capacity across the three age groups are EQUAL</p></li>
-<li><p><strong>Alternative hypothesis (H1)</strong>: The median for the initial lung capacity across the three age groups are NOT EQUAL</p></li>
-</ul>
-</div>
-<p>Let’s perform a Kruskal-Wallis test using the <code>kruskal.test()</code> function. No options as the code is straight forward!</p>
+<p>in this instance, all the assumptions were met. In this scenario, we therefore choose a parametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a <strong>One-way ANOVA test</strong>.</p>
+<p>Let’s perform a 1-way ANONA test using the <code>aov()</code> function. No options as the code is straight forward!</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="parametric-and-nonparametric-tests.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
-<span id="cb52-2"><a href="parametric-and-nonparametric-tests.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup)</span></code></pre></div>
-<pre><code>## 
-##  Kruskal-Wallis rank sum test
-## 
-## data:  healthdata$initialLCV by healthdata$agegroup
-## Kruskal-Wallis chi-squared = 317.41, df = 2, p-value &lt; 2.2e-16</code></pre>
+<span id="cb52-2"><a href="parametric-and-nonparametric-tests.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup))</span></code></pre></div>
+<pre><code>##                      Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## healthdata$agegroup   2   2027  1013.3   275.8 &lt;2e-16 ***
+## Residuals           651   2392     3.7                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="note">
-<p><strong>Interpretation</strong>: The p-value of the test is 2.2e-11 (very small), which is far less than the threshold for deeming statistical significance (i.e., p &lt; 0.05). Hence, we can reject the null hypothesis that the baseline LCV in people across the three different age groups are similar. We therefore accept the alternative hypothesis and conclude that there’s significant difference in the measured LCV across the age categories.</p>
+<p><strong>Interpretation</strong>: The p-value of the test is 2.2e-16 (very small), which is far less than the threshold for deeming statistical significance (i.e., p &lt; 0.05). Hence, we can reject the null hypothesis that the baseline LCV in people across the three different age groups are similar. We therefore accept the alternative hypothesis and conclude that there’s significant difference in the measured LCV across the age categories.</p>
 </div>
 </div>
 <div id="questions-2" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Questions</h3>
-<p>Use a unpaired test to determine whether there are any significant difference for baseline blood pressure measured across the three age groups:</p>
+<p>Use an unpaired test to determine whether there are any significant difference for baseline blood pressure measured across the three age groups:</p>
 <ol style="list-style-type: decimal">
 <li><p>What is the null and alternative hypothesis?</p></li>
 <li><p>What would be the appropriate statistical test for testing this hypothesis?</p></li>
