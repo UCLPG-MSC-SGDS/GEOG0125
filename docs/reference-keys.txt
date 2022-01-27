@@ -25,3 +25,10 @@ asssumption-checking
 selection-of-tests-1
 questions-2
 conclusions
+generalized-linear-models
+introduction-2
+downloadable-dataset-for-this-exercise-2
+reading-list-2
+poisson-regression-modelling
+selecting-the-appropriate-poisson-model
+logistic-regression

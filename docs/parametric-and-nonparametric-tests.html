@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="descriptive-statistics.html"/>
-
+<link rel="next" href="generalized-linear-models.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -187,6 +187,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-2"><i class="fa fa-check"></i><b>2.4.3</b> Questions</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#conclusions"><i class="fa fa-check"></i><b>2.5</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>3</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#downloadable-dataset-for-this-exercise-2"><i class="fa fa-check"></i><b>3.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="3.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#reading-list-2"><i class="fa fa-check"></i><b>3.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.2</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.2.1</b> Selecting the appropriate Poisson model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a></li>
 </ul></li>
 </ul>
 
@@ -356,27 +369,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb35-2"><a href="parametric-and-nonparametric-tests.html#cb35-2" aria-hidden="true" tabindex="-1"></a>groupLow <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>altitude<span class="sc">==</span> <span class="st">&quot;low land&quot;</span>]</span>
 <span id="cb35-3"><a href="parametric-and-nonparametric-tests.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="parametric-and-nonparametric-tests.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;high land&quot; </span></span>
-<span id="cb35-5"><a href="parametric-and-nonparametric-tests.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupHigh, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupHigh), <span class="at">sd=</span><span class="fu">sd</span>(groupHigh)) </span></code></pre></div>
-<pre><code>## 
-##  One-sample Kolmogorov-Smirnov test
-## 
-## data:  groupHigh
-## D = 0.097068, p-value = 0.5727
-## alternative hypothesis: two-sided</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parametric-and-nonparametric-tests.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;low land&quot; </span></span>
-<span id="cb37-2"><a href="parametric-and-nonparametric-tests.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupLow, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupLow), <span class="at">sd=</span><span class="fu">sd</span>(groupLow))</span></code></pre></div>
-<pre><code>## 
-##  One-sample Kolmogorov-Smirnov test
-## 
-## data:  groupLow
-## D = 0.056699, p-value = 0.04533
-## alternative hypothesis: two-sided</code></pre>
+<span id="cb35-5"><a href="parametric-and-nonparametric-tests.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupHigh, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupHigh), <span class="at">sd=</span><span class="fu">sd</span>(groupHigh)) </span>
+<span id="cb35-6"><a href="parametric-and-nonparametric-tests.html#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="parametric-and-nonparametric-tests.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;low land&quot; </span></span>
+<span id="cb35-8"><a href="parametric-and-nonparametric-tests.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(groupLow, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(groupLow), <span class="at">sd=</span><span class="fu">sd</span>(groupLow))</span></code></pre></div>
 <div class="note">
 <p><strong>Answer</strong>: The values for initial LCV are normal when altitude is <code>"high land"</code> with a <code>p-value = 0.5727 &gt; 0.05</code>. However, its not normal when altitude is <code>"low land"</code> (i.e., <code>p-value = 0.043 &lt; 0.05</code> very marginal). Therefore, this assumption has been violated.</p>
 </div>
 <p>Ideally, we stop here and proceed with using a nonparametric test. But, nevertheless, here is how you test the last assumption.</p>
 <p><strong>Assumption 5</strong>: Do the two populations have the same variances? Here, use the F-test to see if the p-value is above 0.05. This would mean that the two group’s variance’s are the same. This assumption is also a strict assumption to test if the the fourth one passes.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="parametric-and-nonparametric-tests.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">data =</span> healthdata)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="parametric-and-nonparametric-tests.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">data =</span> healthdata)</span></code></pre></div>
 <pre><code>## 
 ##  F test to compare two variances
 ## 
@@ -406,8 +408,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <p>Let’s perform a Mann-Whitney test using the <code>wilcox.test()</code> with the following options <code>exact = FALSE</code> (to suppress an infuriatingly stupid buggy message) and <code>paired = FALSE</code></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="parametric-and-nonparametric-tests.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
-<span id="cb41-2"><a href="parametric-and-nonparametric-tests.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">exact =</span> <span class="cn">FALSE</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="parametric-and-nonparametric-tests.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
+<span id="cb38-2"><a href="parametric-and-nonparametric-tests.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>altitude, <span class="at">exact =</span> <span class="cn">FALSE</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
 ## 
@@ -443,44 +445,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Again, we check the following assumptions to ensure that the use of a parametric test is valid. Here are the list of assumptions we should test:</p>
 <p><strong>Assumption 1</strong>: Is the main outcome a continuous variable? <strong>CHECK</strong></p>
 <p><strong>Assumption 2</strong>: For each group, is n &gt; 30? <strong>CHECK</strong></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="parametric-and-nonparametric-tests.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate to see the number of individuals for each group</span></span>
-<span id="cb43-2"><a href="parametric-and-nonparametric-tests.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(healthdata<span class="sc">$</span>agegroup)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="parametric-and-nonparametric-tests.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate to see the number of individuals for each group</span></span>
+<span id="cb40-2"><a href="parametric-and-nonparametric-tests.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(healthdata<span class="sc">$</span>agegroup)</span></code></pre></div>
 <pre><code>## 
 ##   &lt;55 years 55-59 years   60+ years 
 ##         130         407         117</code></pre>
 <p><strong>Assumption 3</strong>: Are there any outliers presence for each group? <strong>CHECK</strong></p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="parametric-and-nonparametric-tests.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate boxplots for each group and visualise in same plot window</span></span>
-<span id="cb45-2"><a href="parametric-and-nonparametric-tests.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup, <span class="at">xlab =</span> <span class="st">&quot;Age Group&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Baseline LCV&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="parametric-and-nonparametric-tests.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate boxplots for each group and visualise in same plot window</span></span>
+<span id="cb42-2"><a href="parametric-and-nonparametric-tests.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup, <span class="at">xlab =</span> <span class="st">&quot;Age Group&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Baseline LCV&quot;</span>)</span></code></pre></div>
 <p><img src="GEOG0125_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p><strong>Assumption 4</strong>: Are the data from each of the 3 groups follow a normal distribution? <strong>CHECK</strong></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="parametric-and-nonparametric-tests.html#cb46-1" aria-hidden="true" tabindex="-1"></a>group55less <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;&lt;55 years&quot;</span>]</span>
-<span id="cb46-2"><a href="parametric-and-nonparametric-tests.html#cb46-2" aria-hidden="true" tabindex="-1"></a>group55_59 <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;55-59 years&quot;</span>]</span>
-<span id="cb46-3"><a href="parametric-and-nonparametric-tests.html#cb46-3" aria-hidden="true" tabindex="-1"></a>group60plus <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;60+ years&quot;</span>]</span>
-<span id="cb46-4"><a href="parametric-and-nonparametric-tests.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="parametric-and-nonparametric-tests.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;&lt;55 years&quot; </span></span>
-<span id="cb46-6"><a href="parametric-and-nonparametric-tests.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55less, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55less), <span class="at">sd=</span><span class="fu">sd</span>(group55less)) </span></code></pre></div>
-<pre><code>## 
-##  One-sample Kolmogorov-Smirnov test
-## 
-## data:  group55less
-## D = 0.075608, p-value = 0.4472
-## alternative hypothesis: two-sided</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="parametric-and-nonparametric-tests.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;55-59 years&quot; </span></span>
-<span id="cb48-2"><a href="parametric-and-nonparametric-tests.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55_59, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55_59), <span class="at">sd=</span><span class="fu">sd</span>(group55_59)) </span></code></pre></div>
-<pre><code>## 
-##  One-sample Kolmogorov-Smirnov test
-## 
-## data:  group55_59
-## D = 0.048842, p-value = 0.2861
-## alternative hypothesis: two-sided</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="parametric-and-nonparametric-tests.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;60+ years&quot; </span></span>
-<span id="cb50-2"><a href="parametric-and-nonparametric-tests.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group60plus, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group60plus), <span class="at">sd=</span><span class="fu">sd</span>(group60plus)) </span></code></pre></div>
-<pre><code>## 
-##  One-sample Kolmogorov-Smirnov test
-## 
-## data:  group60plus
-## D = 0.071874, p-value = 0.5813
-## alternative hypothesis: two-sided</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="parametric-and-nonparametric-tests.html#cb43-1" aria-hidden="true" tabindex="-1"></a>group55less <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;&lt;55 years&quot;</span>]</span>
+<span id="cb43-2"><a href="parametric-and-nonparametric-tests.html#cb43-2" aria-hidden="true" tabindex="-1"></a>group55_59 <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;55-59 years&quot;</span>]</span>
+<span id="cb43-3"><a href="parametric-and-nonparametric-tests.html#cb43-3" aria-hidden="true" tabindex="-1"></a>group60plus <span class="ot">&lt;-</span> healthdata<span class="sc">$</span>initialLCV[healthdata<span class="sc">$</span>agegroup<span class="sc">==</span> <span class="st">&quot;60+ years&quot;</span>]</span>
+<span id="cb43-4"><a href="parametric-and-nonparametric-tests.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="parametric-and-nonparametric-tests.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;&lt;55 years&quot; </span></span>
+<span id="cb43-6"><a href="parametric-and-nonparametric-tests.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55less, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55less), <span class="at">sd=</span><span class="fu">sd</span>(group55less)) </span>
+<span id="cb43-7"><a href="parametric-and-nonparametric-tests.html#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="parametric-and-nonparametric-tests.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;55-59 years&quot; </span></span>
+<span id="cb43-9"><a href="parametric-and-nonparametric-tests.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group55_59, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group55_59), <span class="at">sd=</span><span class="fu">sd</span>(group55_59)) </span>
+<span id="cb43-10"><a href="parametric-and-nonparametric-tests.html#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="parametric-and-nonparametric-tests.html#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># K-S normality test for &quot;60+ years&quot; </span></span>
+<span id="cb43-12"><a href="parametric-and-nonparametric-tests.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(group60plus, <span class="st">&quot;pnorm&quot;</span>, <span class="at">mean=</span><span class="fu">mean</span>(group60plus), <span class="at">sd=</span><span class="fu">sd</span>(group60plus)) </span></code></pre></div>
 </div>
 <div id="selection-of-tests-1" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Selection of tests</h3>
@@ -489,8 +475,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="images/general/TestLists.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>in this instance, all the assumptions were met. In this scenario, we therefore choose a parametric approach. The structure of the data has three groups which are also independent. This time the approach is going to be a <strong>One-way ANOVA test</strong>.</p>
 <p>Let’s perform a 1-way ANONA test using the <code>aov()</code> function. No options as the code is straight forward!</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="parametric-and-nonparametric-tests.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
-<span id="cb52-2"><a href="parametric-and-nonparametric-tests.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup))</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="parametric-and-nonparametric-tests.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney test for independent groups</span></span>
+<span id="cb44-2"><a href="parametric-and-nonparametric-tests.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(healthdata<span class="sc">$</span>initialLCV <span class="sc">~</span> healthdata<span class="sc">$</span>agegroup))</span></code></pre></div>
 <pre><code>##                      Df Sum Sq Mean Sq F value Pr(&gt;F)    
 ## healthdata$agegroup   2   2027  1013.3   275.8 &lt;2e-16 ***
 ## Residuals           651   2392     3.7                   
@@ -522,8 +508,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="descriptive-statistics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="descriptive-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

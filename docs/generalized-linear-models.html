@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="3 Generalized Linear Models | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="parametric-and-nonparametric-tests.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#moodle"><i class="fa fa-check"></i>Moodle</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#office-hours-for-geog0125"><i class="fa fa-check"></i>Office hours for GEOG0125</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>1</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#downloadable-dataset-for-this-exercise"><i class="fa fa-check"></i><b>1.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="1.1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#reading-list"><i class="fa fa-check"></i><b>1.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#frequency-distribution"><i class="fa fa-check"></i><b>1.2</b> Frequency distribution</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#computing-frequencies-cumulative-frequency-and-proportions"><i class="fa fa-check"></i><b>1.2.1</b> Computing frequencies, cumulative frequency and proportions</a></li>
+<li class="chapter" data-level="1.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-barplot-and-piechart"><i class="fa fa-check"></i><b>1.2.2</b> Using a <code>barplot()</code> and <code>piechart()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#descriptive-analysis-using-measures-for-central-tendency-dispersion"><i class="fa fa-check"></i><b>1.3</b> Descriptive analysis using measures for central tendency &amp; dispersion</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#summary-estimates-using-summary"><i class="fa fa-check"></i><b>1.3.1</b> Summary estimates using <code>summary()</code></a></li>
+<li class="chapter" data-level="1.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-boxplot-and-hist"><i class="fa fa-check"></i><b>1.3.2</b> Using a <code>boxplot()</code> and <code>hist()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#generating-tables-shells-in-rstudio"><i class="fa fa-check"></i><b>1.4</b> Generating tables shells in RStudio</a></li>
+<li class="chapter" data-level="1.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#questions"><i class="fa fa-check"></i><b>1.5</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html"><i class="fa fa-check"></i><b>2</b> Parametric and Nonparametric Tests</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#downloadable-dataset-for-this-exercise-1"><i class="fa fa-check"></i><b>2.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="2.1.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#reading-list-1"><i class="fa fa-check"></i><b>2.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#some-data-managing-ettiquttes"><i class="fa fa-check"></i><b>2.2</b> Some data managing ettiquttes</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#logical-operators"><i class="fa fa-check"></i><b>2.2.1</b> Logical Operators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-2-groups"><i class="fa fa-check"></i><b>2.3</b> Hypothesis testing for 2 groups</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#assumption-checking"><i class="fa fa-check"></i><b>2.3.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="2.3.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests"><i class="fa fa-check"></i><b>2.3.2</b> Selection of tests</a></li>
+<li class="chapter" data-level="2.3.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-1"><i class="fa fa-check"></i><b>2.3.3</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-3-or-more-groups"><i class="fa fa-check"></i><b>2.4</b> Hypothesis testing for 3 or more groups</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#asssumption-checking"><i class="fa fa-check"></i><b>2.4.1</b> Asssumption Checking</a></li>
+<li class="chapter" data-level="2.4.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests-1"><i class="fa fa-check"></i><b>2.4.2</b> Selection of tests</a></li>
+<li class="chapter" data-level="2.4.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-2"><i class="fa fa-check"></i><b>2.4.3</b> Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#conclusions"><i class="fa fa-check"></i><b>2.5</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>3</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#downloadable-dataset-for-this-exercise-2"><i class="fa fa-check"></i><b>3.1.1</b> Downloadable dataset for this exercise</a></li>
+<li class="chapter" data-level="3.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#reading-list-2"><i class="fa fa-check"></i><b>3.1.2</b> Reading list</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.2</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.2.1</b> Selecting the appropriate Poisson model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generalized-linear-models" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Generalized Linear Models</h1>
+<p><strong>Theme: Crime, Livelihoods and Urban Poverty in Nigeria</strong>
+<img src="images/general/Vigilante%20group.png" width="100%" style="display: block; margin: auto;" />
+<a href="https://opendocs.ids.ac.uk/opendocs/bitstream/handle/20.500.12413/14390/R4PP_UrbanResilience.pdf?sequence=1&amp;isAllowed=y">Photo: David Modugu; Malali Civilian JTF, Kaduna, Nigeria</a></p>
+<div id="introduction-2" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<p>This week we will learn how to perform generalised linear modelling to quantitative data focused on crime victimization in Africa. Context of our study: conventional analyses of crime, based on European research models, are often poorly suited to assessing the specific dimensions of criminality in Africa. the <a href="https://www.urbantransformations.ox.ac.uk/project/development-frontiers-in-crime-livelihoods-and-urban-poverty-in-nigeria-fclp/"><strong>Development Frontiers in Crime, Livelihoods and Urban Poverty in Nigeria (FCLP)</strong></a> aims to provide an alternative framework for understanding the specific drivers of criminality in a West African urban context. This research project uses a mixed-methods approach for combining statistical modeling, geovisualisation and ethnography, and attempts to situates insecurity and crime against a broader backdrop of rapid urban growth, seasonal migration, youth unemployment and informality. The study typically provide researchers both in Nigeria and internationally with richer and more nuanced evidence base on the particular dynamics of crime in African cities.</p>
+<p>In this practical, you will utilised the anoynmised data for the following:</p>
+<ol style="list-style-type: decimal">
+<li>Selection of the appropriate Poisson-based model for count or rate data</li>
+<li>Interpretation of coefficients i.e., <strong>Odds Ratios (OR)</strong> and <strong>Risk Ratios (RR)</strong></li>
+<li>Running <code>glm()</code> for logistic regression model</li>
+</ol>
+<div id="downloadable-dataset-for-this-exercise-2" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Downloadable dataset for this exercise</h3>
+<p>Make sure to download the data sets for Week 3 from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip"><strong>HERE</strong></a>.</p>
+</div>
+<div id="reading-list-2" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Reading list</h3>
+<p>Please find reading list for this week:</p>
+<p>Recommended Book (sections): Dalgaard, P. (2008). <strong>Introductory Statistics with R (Second Edition)</strong>, <a href="https://link.springer.com/book/10.1007/978-0-387-79054-1">(<strong>Download Ebook here</strong>)</a></p>
+<ol style="list-style-type: decimal">
+<li><p>Chapter 12: Linear Models. Pages 195 to 224</p></li>
+<li><p>Chapter 13: Logistic Regression. Pages 227 to 247</p></li>
+<li><p>Chapter 15: Rates and Poisson regression. Pages 259 to 274</p></li>
+</ol>
+</div>
+</div>
+<div id="poisson-regression-modelling" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Poisson Regression Modelling</h2>
+<p>Let’s try out fitting a Poisson-type model some counts of households reporting to have been victims of burglary. Load the data into RStudio can call the object <code>burglaryDataset</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="generalized-linear-models.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your own directory using setwd() function</span></span>
+<span id="cb46-2"><a href="generalized-linear-models.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into RStudio using read.csv(). The spreadsheet is stored in the object called &#39;burglaryData&#39;</span></span>
+<span id="cb46-3"><a href="generalized-linear-models.html#cb46-3" aria-hidden="true" tabindex="-1"></a>burglaryDataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;WK03 - Street Burglary Data in Nigeria.csv&quot;</span>)</span>
+<span id="cb46-4"><a href="generalized-linear-models.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(burglaryDataset)</span></code></pre></div>
+<pre><code>##  [1] &quot;StreetID&quot;         &quot;Burglary&quot;         &quot;HousesVictim&quot;     &quot;denominators&quot;    
+##  [5] &quot;connectivity&quot;     &quot;choice_q&quot;         &quot;integ_q&quot;          &quot;business_q&quot;      
+##  [9] &quot;socioeconomic_q&quot;  &quot;log_denominators&quot;</code></pre>
+<div id="selecting-the-appropriate-poisson-model" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Selecting the appropriate Poisson model</h3>
+<p>There are three different types of Poisson models, and implementation of one of these models are highly dependent on how the frequency distribution of the count response variable are displayed. If there is any evidence of over-dispersion, you are safe to use the <strong>Negative Binomial Poisson regression</strong>.</p>
+<p><img src="images/general/Plot_test_poisson.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Let’s check the frequency distribution of the outcome variable <code>Burglary</code> which corresponds to the number of reported instances a property on a street was burgled. You can simply use a histogram to examine its distribution:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="generalized-linear-models.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(burglaryDataset<span class="sc">$</span>Burglary, <span class="at">breaks=</span><span class="dv">20</span>)</span></code></pre></div>
+<p><img src="GEOG0125_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>The plot show evidence of over-dispersion. It indicates that streets in Kaduna have less frequency of burglaries. Here, we consider use a <strong>Negative Binomial Poisson regression model</strong> over the standard version (i.e., scenario 1). We will need to run the <code>glm.nb()</code> which can be accessed after installing the <code>MASS</code> package.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="generalized-linear-models.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;MASS&quot;</span>)</span></code></pre></div>
+<p>We are going to fit the following risk factors for street accessibility (i.e., <code>distance</code>, <code>connectivity</code>, <code>closeness centrality</code> and <code>betweeness centrality</code>) as well as levels of commercial activity and socioeconomic status, to determine the level of risk of burglary victimisation and whether they are significantly associated with such burden of crime events.</p>
+<p>Use the <code>glm.nb()</code> function:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="generalized-linear-models.html#cb50-1" aria-hidden="true" tabindex="-1"></a>model_burglary <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(Burglary <span class="sc">~</span> connectivity <span class="sc">+</span> <span class="fu">as.factor</span>(choice_q) <span class="sc">+</span> <span class="fu">as.factor</span>(integ_q) <span class="sc">+</span> <span class="fu">as.factor</span>(business_q) <span class="sc">+</span> <span class="fu">as.factor</span>(socioeconomic_q), <span class="fu">offset</span>(log_denominators), <span class="at">data =</span> burglaryDataset)</span>
+<span id="cb50-2"><a href="generalized-linear-models.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_burglary)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm.nb(formula = Burglary ~ connectivity + as.factor(choice_q) + 
+##     as.factor(integ_q) + as.factor(business_q) + as.factor(socioeconomic_q), 
+##     data = burglaryDataset, weights = offset(log_denominators), 
+##     init.theta = 0.4320699677, link = log)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.7187  -1.5823  -1.0841   0.1554   5.2391  
+## 
+## Coefficients:
+##                             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                 -0.22578    0.17902  -1.261  0.20723    
+## connectivity                 0.06698    0.01459   4.589 4.45e-06 ***
+## as.factor(choice_q)2         0.13299    0.14500   0.917  0.35905    
+## as.factor(choice_q)3         0.45134    0.14555   3.101  0.00193 ** 
+## as.factor(choice_q)4         0.43299    0.18946   2.285  0.02229 *  
+## as.factor(integ_q)2         -0.38723    0.12962  -2.987  0.00281 ** 
+## as.factor(integ_q)3         -0.19788    0.13159  -1.504  0.13265    
+## as.factor(integ_q)4         -0.39527    0.14208  -2.782  0.00540 ** 
+## as.factor(business_q)2      -0.19583    0.16607  -1.179  0.23832    
+## as.factor(business_q)3      -0.26510    0.14751  -1.797  0.07231 .  
+## as.factor(business_q)4       0.36246    0.14393   2.518  0.01179 *  
+## as.factor(business_q)5       0.23496    0.14873   1.580  0.11415    
+## as.factor(socioeconomic_q)2  0.12752    0.14055   0.907  0.36425    
+## as.factor(socioeconomic_q)3 -0.05552    0.14288  -0.389  0.69758    
+## as.factor(socioeconomic_q)4 -0.23991    0.14445  -1.661  0.09673 .  
+## as.factor(socioeconomic_q)5 -0.11055    0.14526  -0.761  0.44661    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(0.4321) family taken to be 1)
+## 
+##     Null deviance: 1667.4  on 733  degrees of freedom
+## Residual deviance: 1491.2  on 718  degrees of freedom
+## AIC: 5163.5
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  0.4321 
+##           Std. Err.:  0.0268 
+## 
+##  2 x log-likelihood:  -5129.4770</code></pre>
+<p>We the resulting estimates for the coefficient. Let extract the results for the coefficient and 95% confidence interval, and convert them to <strong>risk ratios (RR)</strong> using the <code>exp()</code> function.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="generalized-linear-models.html#cb52-1" aria-hidden="true" tabindex="-1"></a>estimates_b <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Estimate =</span> <span class="fu">coef</span>(model_burglary), <span class="fu">confint</span>(model_burglary))</span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="generalized-linear-models.html#cb54-1" aria-hidden="true" tabindex="-1"></a>IRR_b <span class="ot">&lt;-</span> <span class="fu">exp</span>(estimates_b)</span>
+<span id="cb54-2"><a href="generalized-linear-models.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># report risk ratios (RRs) from NB model</span></span>
+<span id="cb54-3"><a href="generalized-linear-models.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates from model</span></span>
+<span id="cb54-4"><a href="generalized-linear-models.html#cb54-4" aria-hidden="true" tabindex="-1"></a>IRR_b</span></code></pre></div>
+<pre><code>##                              Estimate     2.5 %    97.5 %
+## (Intercept)                 0.7978901 0.5721526 1.1187344
+## connectivity                1.0692691 1.0396767 1.1002334
+## as.factor(choice_q)2        1.1422400 0.8623915 1.5124151
+## as.factor(choice_q)3        1.5704135 1.1739365 2.1007452
+## as.factor(choice_q)4        1.5418684 1.0534077 2.2604048
+## as.factor(integ_q)2         0.6789374 0.5229902 0.8808479
+## as.factor(integ_q)3         0.8204698 0.6222413 1.0818248
+## as.factor(integ_q)4         0.6734948 0.4958594 0.9139292
+## as.factor(business_q)2      0.8221517 0.5934210 1.1383763
+## as.factor(business_q)3      0.7671307 0.5705697 1.0299236
+## as.factor(business_q)4      1.4368589 1.0866198 1.8968155
+## as.factor(business_q)5      1.2648633 0.9485132 1.6848248
+## as.factor(socioeconomic_q)2 1.1360033 0.8588107 1.5019597
+## as.factor(socioeconomic_q)3 0.9459926 0.7141379 1.2522731
+## as.factor(socioeconomic_q)4 0.7866948 0.5864396 1.0541278
+## as.factor(socioeconomic_q)5 0.8953407 0.6685331 1.1973841</code></pre>
+<div class="note">
+<p><strong>Interpretation</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Intercept:</strong> Our model indicates an overall reduction in the occurrence for burglary by 21% (Model Intercept: CRR 0.79, 95% CI: 0.57–1.11) when all other risk factors show no influence. OR you can say it 0.79 times lower.</p></li>
+<li><p><strong>Connectivity (cont.)</strong>: For a unit increase in the number of connections on a street segment significantly increases the risk of burglaries by 6% (CRR 1.06, 95% CI: 1.03–1.10). or you can say the risk for burglaries in relation to a unit increase in the number of connections on a street are 1.06 times higher</p></li>
+<li><p><strong>Betweenness centrality or “Choice” (cat.)</strong>: Is strongly associated with an increased risk of victimization. It shows the risk of burglary is at least 57% higher for residential properties located on street segments whose betweenness value falls in the 3rd (CRR: 1.57, 95% CI: 1.17–2.10) and 4th quartile (CRR: 1.54, 95% CI: 1.05–2.26) relative to the referent category.</p></li>
+<li><p><strong>Closeness centrality or “Integration” (cat.)</strong>: It shows an overall reduction in the risk of burglary regardless of the quartile categories for this variable. The relationship for here in particular appears unclear as the pattern for risk is akin to an inverted v-shape and so we cannot conclude something about this variable.</p></li>
+</ol>
+</div>
+<p><strong>Question(s)</strong></p>
+<ol style="list-style-type: decimal">
+<li>What would be the appropriate interpretation for the <strong>Business activity index</strong> and <strong>Socioeconomic Status</strong></li>
+</ol>
+</div>
+</div>
+<div id="logistic-regression" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Logistic Regression</h2>
+<p>Running a <code>glm()</code> for a logistic regression is very easy. As you will see when implementing it to the additional dataset we have provided. It has household-level information regarding the security status of a property. Here are the list of variables:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>Gate</code>: Is the property gated? (1 = yes, 0 = no)</p></li>
+<li><p><code>Garage</code>: Does the property contains a garage? (1 = yes, 0 = no)</p></li>
+<li><p><code>Outdoor_sitting</code>: Does property have an outdoor sitting? (1 = yes, 0 = no)</p></li>
+<li><p><code>Security_lights</code>: Are security lights attached to property? (1 = yes, 0 = no)</p></li>
+<li><p><code>TypeOFliving</code>: Categorised as a ‘Single,’ ‘Compound,’ ‘Extended’ or ‘Person’</p></li>
+<li><p><code>BurglaryStatus</code>: Whether the household has been a victim of burglary (1 = yes, 0 = no) - outcome variable.</p></li>
+</ol>
+<p>Load the data <code>WK03 - Household victimisation data in Nigeria.csv</code> and attempt to implement the <code>glm()</code> function on your own with the family option <code>binomial("logit")</code> specified accordingly. Make sure to use the <code>BurglaryStatus</code> variable as the dependent in the model.</p>
+<p><strong>Question(s)</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>What would be the appropriate interpretation for the coefficients from this model.</p></li>
+<li><p>Are we interpreting risk ratios or odds ratios?</p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="parametric-and-nonparametric-tests.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/03-WEEK_3.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
