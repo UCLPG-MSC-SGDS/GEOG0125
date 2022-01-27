@@ -1,0 +1,128 @@
+# Generalized Linear Models
+
+**Theme: Crime, Livelihoods and Urban Poverty in Nigeria**
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Vigilante group.png') 
+```
+[Photo: David Modugu; Malali Civilian JTF, Kaduna, Nigeria](https://opendocs.ids.ac.uk/opendocs/bitstream/handle/20.500.12413/14390/R4PP_UrbanResilience.pdf?sequence=1&isAllowed=y)
+
+## Introduction
+
+This week we will learn how to perform generalised linear modelling to quantitative data focused on crime victimization in Africa. Context of our study: conventional analyses of crime, based on European research models, are often poorly suited to assessing the specific dimensions of criminality in Africa. the [**Development Frontiers in Crime, Livelihoods and Urban Poverty in Nigeria (FCLP)**](https://www.urbantransformations.ox.ac.uk/project/development-frontiers-in-crime-livelihoods-and-urban-poverty-in-nigeria-fclp/) aims to provide an alternative framework for understanding the specific drivers of criminality in a West African urban context. This research project uses a mixed-methods approach for combining statistical modeling, geovisualisation and ethnography, and attempts to situates insecurity and crime against a broader backdrop of rapid urban growth, seasonal migration, youth unemployment and informality. The study typically provide researchers both in Nigeria and internationally with richer and more nuanced evidence base on the particular dynamics of crime in African cities.
+
+In this practical, you will utilised the anoynmised data for the following:
+
+1. Selection of the appropriate Poisson-based model for count or rate data
+2. Interpretation of coefficients i.e., **Odds Ratios (OR)** and **Risk Ratios (RR)**
+3. Running `glm()` for logistic regression model
+
+### Downloadable dataset for this exercise
+
+Make sure to download the data sets for Week 3 from [**HERE**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset.zip).
+
+### Reading list
+
+Please find reading list for this week:
+
+Recommended Book (sections): Dalgaard, P. (2008). **Introductory Statistics with R (Second Edition)**, [(**Download Ebook here**)](https://link.springer.com/book/10.1007/978-0-387-79054-1)
+
+1. Chapter 12: Linear Models. Pages 195 to 224
+
+2. Chapter 13: Logistic Regression. Pages 227 to 247
+
+3. Chapter 15: Rates and Poisson regression. Pages 259 to 274
+
+## Poisson Regression Modelling
+
+Let's try out fitting a Poisson-type model some counts of households reporting to have been victims of burglary. Load the data into RStudio can call the object `burglaryDataset`.
+
+```{r}
+# Set your own directory using setwd() function
+# Load data into RStudio using read.csv(). The spreadsheet is stored in the object called 'burglaryData'
+burglaryDataset <- read.csv("WK03 - Street Burglary Data in Nigeria.csv")
+names(burglaryDataset)
+```
+
+### Selecting the appropriate Poisson model
+
+There are three different types of Poisson models, and implementation of one of these models are highly dependent on how the frequency distribution of the count response variable are displayed. If there is any evidence of over-dispersion, you are safe to use the **Negative Binomial Poisson regression**.
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Plot_test_poisson.png') 
+```
+
+Let's check the frequency distribution of the outcome variable `Burglary` which corresponds to the number of reported instances a property on a street was burgled. You can simply use a histogram to examine its distribution:
+
+```{r}
+hist(burglaryDataset$Burglary, breaks=20)
+```
+
+The plot show evidence of over-dispersion. It indicates that streets in Kaduna have less frequency of burglaries. Here, we consider use a **Negative Binomial Poisson regression model** over the standard version (i.e., scenario 1). We will need to run the `glm.nb()` which can be accessed after installing the `MASS` package.
+
+```{r, eval=FALSE}
+install.packages("MASS")
+```
+
+```{r, include = FALSE}
+library("MASS")
+```
+
+We are going to fit the following risk factors for street accessibility (i.e., `distance`, `connectivity`, `closeness centrality` and `betweeness centrality`) as well as levels of commercial activity and socioeconomic status, to determine the level of risk of burglary victimisation and whether they are significantly associated with such burden of crime events.
+
+Use the `glm.nb()` function:
+
+```{r}
+model_burglary <- glm.nb(Burglary ~ connectivity + as.factor(choice_q) + as.factor(integ_q) + as.factor(business_q) + as.factor(socioeconomic_q), offset(log_denominators), data = burglaryDataset)
+summary(model_burglary)
+```
+
+We the resulting estimates for the coefficient. Let extract the results for the coefficient and 95% confidence interval, and convert them to **risk ratios (RR)** using the `exp()` function.
+
+```{r}
+estimates_b <- cbind(Estimate = coef(model_burglary), confint(model_burglary))
+IRR_b <- exp(estimates_b)
+# report risk ratios (RRs) from NB model
+# estimates from model
+IRR_b
+```
+
+<div class="note">
+**Interpretation**:
+
+1. **Intercept:** Our model indicates an overall reduction in the occurrence for burglary by 21% (Model Intercept: CRR 0.79, 95% CI: 0.57–1.11) when all other risk factors show no influence. OR you can say it 0.79 times lower. 
+
+2. **Connectivity (cont.)**: For a unit increase in the number of connections on a street segment significantly increases the risk of burglaries by 6% (CRR 1.06, 95% CI: 1.03–1.10). or you can say the risk for burglaries in relation to a unit increase in the number of connections on a street are 1.06 times higher 
+
+3. **Betweenness centrality or "Choice" (cat.)**: Is strongly associated with an increased risk of victimization. It shows the risk of burglary is at least 57% higher for residential properties located on street segments whose betweenness value falls in the 3rd (CRR: 1.57, 95% CI: 1.17–2.10) and 4th quartile (CRR: 1.54, 95% CI: 1.05–2.26) relative to the referent category. 
+
+4. **Closeness centrality or "Integration" (cat.)**: It shows an overall reduction in the risk of burglary regardless of the quartile categories for this variable. The relationship for here in particular appears unclear as the pattern for risk is akin to an inverted v-shape and so we cannot conclude something about this variable.
+
+</div>
+
+**Question(s)**
+
+1. What would be the appropriate interpretation for the **Business activity index** and **Socioeconomic Status** 
+
+## Logistic Regression
+
+Running a `glm()` for a logistic regression is very easy. As you will see when implementing it to the additional dataset we have provided. It has household-level information regarding the security status of a property. Here are the list of variables:
+
+1. `Gate`: Is the property gated? (1 = yes, 0 = no) 
+
+2. `Garage`: Does the property contains a garage? (1 = yes, 0 = no) 
+
+3. `Outdoor_sitting`: Does property have an outdoor sitting? (1 = yes, 0 = no) 
+
+4. `Security_lights`: Are security lights attached to property? (1 = yes, 0 = no)
+
+5. `TypeOFliving`: Categorised as a 'Single', 'Compound', 'Extended' or 'Person'
+
+6. `BurglaryStatus`: Whether the household has been a victim of burglary (1 = yes, 0 = no) - outcome variable. 
+
+Load the data `WK03 - Household victimisation data in Nigeria.csv` and attempt to implement the `glm()` function on your own with the family option `binomial("logit")` specified accordingly. Make sure to use the `BurglaryStatus` variable as the dependent in the model.
+
+**Question(s)**
+
+1. What would be the appropriate interpretation for the coefficients from this model.
+
+2. Are we interpreting risk ratios or odds ratios?
