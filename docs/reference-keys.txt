@@ -32,3 +32,10 @@ reading-list-2
 poisson-regression-modelling
 selecting-the-appropriate-poisson-model
 logistic-regression
+introduction-to-bayesian-statistics
+probability-theory
+application-long-term-environmental-exposure-to-soil-arsenic-risk-of-metallic-poisoning.
+bayes-theorem
+applying-bayes-rule-on-the-metallic-poisoning-data
+bayesian-inference-with-probability-functions
+bayesian-inference-with-binomial-beta-distribution
