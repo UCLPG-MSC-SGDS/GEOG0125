@@ -325,7 +325,7 @@ proc.time() - ptm
 **NOTE**: Depending on how the meshes were set, as well as the size of the projection matrix - it might take sometime for the `inla()` to complete the posterior estimation. This model was fitted in approximately `9 mins` in a desktop with 3 GHz 6-core Intel Core i5 processor with 32 GB of RAM memory. It will be interesting to see how long it takes on a standard UCL desktop or on your personal laptops. Here is the ideal time for a coffee break while it churns. 
 </div>
 
-## Results from fixed effects {-}
+### Results from fixed effects {-}
 
 To obtained the results for the fixed effects - you can simply call the `summary()` on the object `res`. You can exponentiate the values to report them as odds ratios.
 
@@ -342,7 +342,7 @@ This is an example of results turning up to be incredibly disappointing - can yo
 
 Lets wrap this up by checking out the maps for predicted prevalence and exceedance probabilities. 
 
-## Geostatistical prediction of the Malaria prevalence for Madagascar {-}
+### Geostatistical prediction of the Malaria prevalence for Madagascar {-}
 
 The estimates are on the log odds scale, we will need to extract the them for the object `res` and transform them to probabilities (i.e., prevalence).
 
@@ -409,7 +409,7 @@ mdg.malaria.prevalence_recl <- reclassify(mdg.malaria.prevalence, reclassifyRast
 knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Image 5 - Posterior Prevalence.png')
 ```
 
-## Exceedance Probabilities for regions with prevalence classified as "Mesoendemic" (p > 10%) {-}
+### Exceedance Probabilities for regions with prevalence classified as "Mesoendemic" (p > 10%) {-}
 
 This is computed by using the `marginals.fitted.value column` from the `res` object. Similarly, we can rasterize these values as follows: 
 
