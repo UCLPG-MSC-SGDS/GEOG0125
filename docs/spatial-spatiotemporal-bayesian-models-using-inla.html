@@ -254,10 +254,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#descriptive-analysis-geographical-distribution-of-malaria-prevalence-in-madagascar"><i class="fa fa-check"></i><b>6.4</b> Descriptive analysis: Geographical distribution of malaria prevalence in Madagascar</a></li>
 <li class="chapter" data-level="6.5" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#data-preparation-2"><i class="fa fa-check"></i><b>6.5</b> Data preparation</a></li>
 <li class="chapter" data-level="6.6" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#mesh-and-projection-matrix-construction"><i class="fa fa-check"></i><b>6.6</b> Mesh and Projection matrix construction</a></li>
-<li class="chapter" data-level="6.7" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#bayesian-inference-using-inla-spde"><i class="fa fa-check"></i><b>6.7</b> Bayesian inference using INLA-SPDE</a></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#bayesian-inference-using-inla-spde"><i class="fa fa-check"></i><b>6.7</b> Bayesian inference using INLA-SPDE</a>
+<ul>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#results-from-fixed-effects"><i class="fa fa-check"></i>Results from fixed effects</a></li>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#geostatistical-prediction-of-the-malaria-prevalence-for-madagascar"><i class="fa fa-check"></i>Geostatistical prediction of the Malaria prevalence for Madagascar</a></li>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#exceedance-probabilities-for-regions-with-prevalence-classified-as-mesoendemic-p-10"><i class="fa fa-check"></i>Exceedance Probabilities for regions with prevalence classified as “Mesoendemic” (p &gt; 10%)</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -479,10 +481,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    analysis_data_nontemp, &quot;, &quot; E = expected, control.compute = list(dic = 
 ##    TRUE), control.predictor = list(compute = TRUE))&quot; ) 
 ## Time used:
-##     Pre = 2.77, Running = 0.916, Post = 0.188, Total = 3.87 
+##     Pre = 2.77, Running = 0.931, Post = 0.184, Total = 3.89 
 ## Fixed effects:
 ##               mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-## (Intercept) -0.011 0.018     -0.048    -0.01      0.026 -0.009   0
+## (Intercept) -0.011 0.019     -0.049    -0.01      0.026 -0.009   0
 ## 
 ## Random effects:
 ##   Name     Model
@@ -493,12 +495,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Precision for uI 1.702 0.157      1.411    1.697       2.03 1.69
 ## Phi for uI       0.998 0.003      0.992    0.999       1.00 1.00
 ## 
-## Expected number of effective parameters(stdev): 299.29(0.105)
+## Expected number of effective parameters(stdev): 299.30(0.111)
 ## Number of equivalent replicates : 1.01 
 ## 
-## Deviance Information Criterion (DIC) ...............: 3353.99
-## Deviance Information Criterion (DIC, saturated) ....: 667.74
-## Effective number of parameters .....................: 299.32
+## Deviance Information Criterion (DIC) ...............: 3353.69
+## Deviance Information Criterion (DIC, saturated) ....: 667.45
+## Effective number of parameters .....................: 299.37
 ## 
 ## Marginal log-Likelihood:  -2255.08 
 ## Posterior marginals for the linear predictor and
@@ -520,27 +522,27 @@ following code:</p>
 <span id="cb86-3"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb86-3" aria-hidden="true" tabindex="-1"></a>riskratio <span class="ot">&lt;-</span> riskestimates<span class="sc">$</span>summary.fitted.values</span>
 <span id="cb86-4"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(riskratio, <span class="at">n=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##                           mean         sd 0.025quant  0.5quant 0.975quant
-## fitted.Predictor.001 0.6427163 0.02847729  0.5879709 0.6423315  0.6996345
-## fitted.Predictor.002 0.7937451 0.02536792  0.7447217 0.7934977  0.8441914
-## fitted.Predictor.003 0.6804381 0.02450437  0.6331621 0.6801688  0.7292488
-## fitted.Predictor.004 0.6357264 0.01942257  0.5981648 0.6355452  0.6743265
-## fitted.Predictor.005 0.9145458 0.03192817  0.8529214 0.9142055  0.9781165
-## fitted.Predictor.006 0.8092001 0.02718076  0.7567128 0.8089214  0.8632891
-## fitted.Predictor.007 1.0464783 0.02422316  0.9994690 1.0463066  1.0944451
-## fitted.Predictor.008 1.4328185 0.03326275  1.3682680 1.4325821  1.4986881
-## fitted.Predictor.009 1.2911312 0.03320758  1.2267573 1.2908702  1.3569786
-## fitted.Predictor.010 1.0088329 0.02075682  0.9685100 1.0087023  1.0498963
+## fitted.Predictor.001 0.6427141 0.02847749  0.5879683 0.6423292  0.6996326
+## fitted.Predictor.002 0.7937434 0.02536801  0.7447198 0.7934961  0.8441898
+## fitted.Predictor.003 0.6804318 0.02450469  0.6331555 0.6801624  0.7292434
+## fitted.Predictor.004 0.6357190 0.01942279  0.5981572 0.6355377  0.6743198
+## fitted.Predictor.005 0.9145363 0.03192830  0.8529107 0.9141962  0.9781065
+## fitted.Predictor.006 0.8091975 0.02718110  0.7567097 0.8089188  0.8632874
+## fitted.Predictor.007 1.0464879 0.02422357  0.9994778 1.0463163  1.0944556
+## fitted.Predictor.008 1.4328263 0.03326320  1.3682744 1.4325901  1.4986966
+## fitted.Predictor.009 1.2911292 0.03320759  1.2267554 1.2908682  1.3569767
+## fitted.Predictor.010 1.0088324 0.02075680  0.9685097 1.0087018  1.0498959
 ##                           mode
-## fitted.Predictor.001 0.6415600
-## fitted.Predictor.002 0.7930011
-## fitted.Predictor.003 0.6796286
-## fitted.Predictor.004 0.6351813
-## fitted.Predictor.005 0.9135228
-## fitted.Predictor.006 0.8083621
-## fitted.Predictor.007 1.0459622
-## fitted.Predictor.008 1.4321078
-## fitted.Predictor.009 1.2903470
-## fitted.Predictor.010 1.0084403</code></pre>
+## fitted.Predictor.001 0.6415578
+## fitted.Predictor.002 0.7929996
+## fitted.Predictor.003 0.6796221
+## fitted.Predictor.004 0.6351736
+## fitted.Predictor.005 0.9135141
+## fitted.Predictor.006 0.8083594
+## fitted.Predictor.007 1.0459718
+## fitted.Predictor.008 1.4321161
+## fitted.Predictor.009 1.2903450
+## fitted.Predictor.010 1.0084397</code></pre>
 <p>The important estimates here are the posterior mean and 95% CrI results from the <code>riskratio</code> object. We can extract as add them to the spatial data frame <code>analysis_data_notemp</code> object. These estimates are already in alignment with the areas in the shapefile, and so do not worry.</p>
 <p>Let us realign the results in the shape file accordingly:</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb88-1" aria-hidden="true" tabindex="-1"></a>analysis_data_nontemp<span class="sc">$</span>RR <span class="ot">&lt;-</span> riskratio[, <span class="st">&quot;mean&quot;</span>]       <span class="co"># Relative risk</span></span>
@@ -561,19 +563,19 @@ following code:</p>
 ## 5 E06000005        5           Darlington           Darlington        817
 ## 6 E06000006        6               Halton               Halton        882
 ##   population  expected                       geometry uI        RR        LL
-## 1     559103  788.3403 MULTIPOLYGON (((447213.9 53...  1 0.6427163 0.5879709
-## 2     843085 1230.5828 MULTIPOLYGON (((448489.9 52...  2 0.7937451 0.7447217
-## 3     817921 1127.9226 MULTIPOLYGON (((455525.9 52...  3 0.6804381 0.6331621
-## 4    1179553 1679.3618 MULTIPOLYGON (((444157 5279...  4 0.6357264 0.5981648
-## 5     639443  893.8510 MULTIPOLYGON (((423496.6 52...  5 0.9145458 0.8529214
-## 6     769221 1090.9852 MULTIPOLYGON (((351539.9 38...  6 0.8092001 0.7567128
+## 1     559103  788.3403 MULTIPOLYGON (((447213.9 53...  1 0.6427141 0.5879683
+## 2     843085 1230.5828 MULTIPOLYGON (((448489.9 52...  2 0.7937434 0.7447198
+## 3     817921 1127.9226 MULTIPOLYGON (((455525.9 52...  3 0.6804318 0.6331555
+## 4    1179553 1679.3618 MULTIPOLYGON (((444157 5279...  4 0.6357190 0.5981572
+## 5     639443  893.8510 MULTIPOLYGON (((423496.6 52...  5 0.9145363 0.8529107
+## 6     769221 1090.9852 MULTIPOLYGON (((351539.9 38...  6 0.8091975 0.7567097
 ##          UL
-## 1 0.6996345
-## 2 0.8441914
-## 3 0.7292488
-## 4 0.6743265
-## 5 0.9781165
-## 6 0.8632891</code></pre>
+## 1 0.6996326
+## 2 0.8441898
+## 3 0.7292434
+## 4 0.6743198
+## 5 0.9781065
+## 6 0.8632874</code></pre>
 <p>Let’s visual the areas with low and high risks as well as show a map that indicators which areas are statistically significant. The following code is creating maps that are publication-worthy. We will do the following:</p>
 <ul>
 <li><strong>Step 1</strong>: Create the column for the divergent legends</li>
@@ -581,7 +583,7 @@ following code:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a feel of the lower and highest value of RR</span></span>
 <span id="cb90-2"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(analysis_data_nontemp<span class="sc">$</span>RR)</span></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 0.007374 0.773613 1.022299 1.060020 1.338424 3.097025</code></pre>
+## 0.007331 0.773605 1.022293 1.059994 1.338425 3.097140</code></pre>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co">#min:0.007379</span></span>
 <span id="cb92-2"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="co">#max:3.097010</span></span>
 <span id="cb92-3"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#cb92-3" aria-hidden="true" tabindex="-1"></a></span>

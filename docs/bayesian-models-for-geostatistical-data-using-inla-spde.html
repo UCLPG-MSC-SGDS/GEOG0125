@@ -254,10 +254,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#descriptive-analysis-geographical-distribution-of-malaria-prevalence-in-madagascar"><i class="fa fa-check"></i><b>6.4</b> Descriptive analysis: Geographical distribution of malaria prevalence in Madagascar</a></li>
 <li class="chapter" data-level="6.5" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#data-preparation-2"><i class="fa fa-check"></i><b>6.5</b> Data preparation</a></li>
 <li class="chapter" data-level="6.6" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#mesh-and-projection-matrix-construction"><i class="fa fa-check"></i><b>6.6</b> Mesh and Projection matrix construction</a></li>
-<li class="chapter" data-level="6.7" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#bayesian-inference-using-inla-spde"><i class="fa fa-check"></i><b>6.7</b> Bayesian inference using INLA-SPDE</a></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#bayesian-inference-using-inla-spde"><i class="fa fa-check"></i><b>6.7</b> Bayesian inference using INLA-SPDE</a>
+<ul>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#results-from-fixed-effects"><i class="fa fa-check"></i>Results from fixed effects</a></li>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#geostatistical-prediction-of-the-malaria-prevalence-for-madagascar"><i class="fa fa-check"></i>Geostatistical prediction of the Malaria prevalence for Madagascar</a></li>
 <li class="chapter" data-level="" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#exceedance-probabilities-for-regions-with-prevalence-classified-as-mesoendemic-p-10"><i class="fa fa-check"></i>Exceedance Probabilities for regions with prevalence classified as “Mesoendemic” (p &gt; 10%)</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -504,9 +506,8 @@ This week’s practical you will demonstrate how Bayesian spatial models through
 <div class="note">
 <p><strong>NOTE</strong>: Depending on how the meshes were set, as well as the size of the projection matrix - it might take sometime for the <code>inla()</code> to complete the posterior estimation. This model was fitted in approximately <code>9 mins</code> in a desktop with 3 GHz 6-core Intel Core i5 processor with 32 GB of RAM memory. It will be interesting to see how long it takes on a standard UCL desktop or on your personal laptops. Here is the ideal time for a coffee break while it churns.</p>
 </div>
-</div>
-<div id="results-from-fixed-effects" class="section level2 unnumbered">
-<h2>Results from fixed effects</h2>
+<div id="results-from-fixed-effects" class="section level3 unnumbered">
+<h3>Results from fixed effects</h3>
 <p>To obtained the results for the fixed effects - you can simply call the <code>summary()</code> on the object <code>res</code>. You can exponentiate the values to report them as odds ratios.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span>
 <span id="cb127-2"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb127-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -516,8 +517,8 @@ This week’s practical you will demonstrate how Bayesian spatial models through
 <p>This is an example of results turning up to be incredibly disappointing - can you image after all that data wrangling, cleaning and time spent etc., <a href="https://www.youtube.com/watch?v=cdEQmpVIE4A"><strong>just to get this…</strong></a>.</p>
 <p>Lets wrap this up by checking out the maps for predicted prevalence and exceedance probabilities.</p>
 </div>
-<div id="geostatistical-prediction-of-the-malaria-prevalence-for-madagascar" class="section level2 unnumbered">
-<h2>Geostatistical prediction of the Malaria prevalence for Madagascar</h2>
+<div id="geostatistical-prediction-of-the-malaria-prevalence-for-madagascar" class="section level3 unnumbered">
+<h3>Geostatistical prediction of the Malaria prevalence for Madagascar</h3>
 <p>The estimates are on the log odds scale, we will need to extract the them for the object <code>res</code> and transform them to probabilities (i.e., prevalence).</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract index values from &#39;stack.full&#39; object corresponding to the predictions.</span></span>
 <span id="cb128-2"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb128-2" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">inla.stack.index</span>(<span class="at">stack =</span> stack.full, <span class="at">tag =</span> <span class="st">&quot;pred&quot;</span>)<span class="sc">$</span>data</span>
@@ -565,8 +566,8 @@ This week’s practical you will demonstrate how Bayesian spatial models through
 <span id="cb131-22"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb131-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <p><img src="images/general/Image%205%20-%20Posterior%20Prevalence.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="exceedance-probabilities-for-regions-with-prevalence-classified-as-mesoendemic-p-10" class="section level2 unnumbered">
-<h2>Exceedance Probabilities for regions with prevalence classified as “Mesoendemic” (p &gt; 10%)</h2>
+<div id="exceedance-probabilities-for-regions-with-prevalence-classified-as-mesoendemic-p-10" class="section level3 unnumbered">
+<h3>Exceedance Probabilities for regions with prevalence classified as “Mesoendemic” (p &gt; 10%)</h3>
 <p>This is computed by using the <code>marginals.fitted.value column</code> from the <code>res</code> object. Similarly, we can rasterize these values as follows:</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the exceedance probability and compute the marginal probability that a pixel exceeds threshold value of 0,1 (i.e., 10%)</span></span>
 <span id="cb132-2"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -605,6 +606,7 @@ This week’s practical you will demonstrate how Bayesian spatial models through
 <span id="cb133-28"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#cb133-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <p><img src="images/general/Exceendance%20Prob_cat.png" width="100%" style="display: block; margin: auto;" /></p>
 
+</div>
 </div>
 </div>
             </section>
