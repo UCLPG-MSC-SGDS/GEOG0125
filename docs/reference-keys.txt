@@ -54,3 +54,11 @@ bayesian-inference-using-inla
 spatiotemporal-bayesian-modelling
 data-preparation-1
 model-formation-inference-with-inla
+bayesian-models-for-geostatistical-data-using-inla-spde
+introduction-5
+installing-and-loading-packages-1
+loading-dataset-1
+descriptive-analysis-geographical-distribution-of-malaria-prevalence-in-madagascar
+data-preparation-2
+mesh-and-projection-matrix-construction
+bayesian-inference-using-inla-spde
