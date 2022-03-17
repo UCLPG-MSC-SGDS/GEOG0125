@@ -1,0 +1,460 @@
+
+# Bayesian Models for Geostatistical Data using INLA-SPDE
+
+**Theme: Malaria prevalence in Madagascar**
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/mosquito_gif23.gif')
+```
+**Animated Photo: Mother and her child shielded under mosquito bednetting**
+
+## Introduction
+
+Malaria is a life-threathening [**vector-borne infectious disease**](https://www.who.int/news-room/fact-sheets/detail/vector-borne-diseases) transmitted by the [**female Anopheles mosquito**](https://www.who.int/health-topics/malaria#tab=tab_1). Malaria, which is broadly a neglected tropical disease, occurs mostly in poor tropical and subtropical areas of the world (i.e., regions of the Global South in particular). In many of the countries affected by malaria, it is a leading cause of illness and death. In areas with high transmission, the most vulnerable groups are young children, who have not developed immunity to malaria yet, and pregnant women, whose immunity has been decreased by pregnancy. The costs of malaria – to individuals, families, communities, nations – are enormous.
+
+Bayesian spatial models are widely used to analyse point community survey data to predict the underlying spatial process. For example, we often implement such models to predict the prevalence of parasite diseases at unsampled locations to understand its geospatial distribution. Through exceedance probabilities, we use Bayesian models especially to support the decision making in determining which areas to implement public health interventions such as dissemination of mosquito bed nets for disease prevention. 
+
+**The learning objectives are:**
+This week's practical you will demonstrate how Bayesian spatial models through INLA stochastic partial differential equation (SPDEs) can be used to predict the malaria risk, we will use point community survey data from Madagascar and **R-INLA** to:
+
+1. How prepare a selected number of gridded environmental and demographic raster data to be used as covariates for this this analysis
+
+2. How to generate a mesh which will be the domain for making the geostatistical prediction of our outcome, as well as creating the points for making the predictions.
+
+3. How to construct the SPDE spatial model with the specified likelihood function
+
+4. How to estimate the risks of malaria associated with each independent variable and generate the prediction maps for prevalence and exceedance probabilities.
+
+### Downloadable dataset for this exercise {-}
+
+We will be using three types data sets for Week 9. They are:
+
+1. **Point data**: The main dataset is titled: `Malaria_Survey_Data_2013-16_MDG.csv`. It contains 648 communities surveyed throughout Madagascar, Africa. The information includes number of individuals with their malaria status detected positive with the [**Plasmodium Falciparum strain**](https://www.ncbi.nlm.nih.gov/books/NBK555962/) i.e., `pf_pos` and total number of people surveyed in that community i.e., `examined`. Each community has been spatially-referenced with a `longitude` and `latitude`.
+
+2. **Raster data**: The following gridded raster data (res. of 5km averaged from 2013 to 2016 inclusive) includes: Temperature `MDG_temp_5km.tif`, Precipitation `MDG_prec_5km.tif`, Land surface elevation `MDG_elev_5km.tif` and Population Density `MDG_popl_5km.tif`.
+
+3. **Vector data**: The national-level shape file for Madagascar is stored in `gadm40_MDG_0.shp`, and its state-level is from `gadm40_MDG_1.shp`.  
+
+All data sets for week 9 can be downloaded from [**HERE**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%209%20Datasets.zip)
+
+Data source(s):
+
+- All environmental data (i.e., temperature and precipitation) were obtained from [**WorldClim**](https://www.worldclim.org/data/index.html)
+
+- The elevation and population density can be found on [**Worldpop**](https://www.worldpop.org)
+
+- Community malaria survey data (see [**repository**](https://github.com/UCLPG-MSC-SGDS/Prevalence-Madagascar) and [**publication**](https://www.nature.com/articles/s41598-020-75189-0)).
+
+### Recommended reading list {-}
+
+1. Book: Moraga. P, (2020). **Geospatial Health Data: Modeling and Visualization with R-INLA & Shiny**, [(**Link to Ebook**)](https://www.paulamoraga.com/book-geospatial/)
+
+- Chapter 8: Geostatistical data
+
+- Chapter 9: Spatial modeling of geostatistical data: Malaria in The Gambia
+
+2. Book: Blangiardo. M, & Cameletti, M, (2015). **Spatial and Spatio-temporal Bayesian Models with R-INLA**. Wiley, ISBN: 978-1-118-32655-8. Access data sets [**HERE**](https://sites.google.com/a/r-inla.org/stbook/datasets). Download example R-codes [**HERE**](https://sites.google.com/a/r-inla.org/stbook/r-code)
+
+- Chapter 6: Spatial Modeling (from Section 6.4 to 6.12, pages 193 to 234)
+
+3. Book: Krainski. E.T, Gomez-Rubio. V, Bakka. H, Lenzi. A, Castro-Camilo. D, Simpson. D, Lindgren. F, Rue. H, (2019). **Advanced Spatial Modeling with Stochastic Differential Equations using R & INLA**. CRC Press, Taylor & Francis Group. ISBN: 978-0-367-57064-4. [(**Link to Ebook**)](https://becarioprecario.bitbucket.io/spde-gitbook/index.html)
+
+- Chapter 2: Introduction to Spatial Modeling
+
+
+## Installing and loading packages
+
+Here is the description of the following packages we will need for this exercise:
+
+- `sf`: Simple Features
+
+- `tmap`: Thematic Mapping
+
+- `spdep`: Spatial Dependence (Weighting schemes & Spatial Statistics)
+
+- `raster`: Reading, writing, manipulating, analyzing and modeling of spatial data. The package implements basic and high-level functions for raster data and for vector data operations such as intersections
+
+- `INLA`: Package for performing a full Bayesian analysis of additive models using Integrated Nested Laplace approximation
+
+You have already installed the packages `sf`, `tmap`, `raster` & `spdep` from previous sessions (i.e., **GEOG0114 Principles of Spatial Analysis**). Last week, we installed the `INLA`. We can simply load them into RStudio: 
+
+```{r, eval=FALSE}
+# Load packages using library() function
+library("INLA")
+library("sf")
+library("tmap")
+library("raster")
+library("spdep")
+```
+
+## Loading dataset
+
+Let us load all quantitative data describe in section 6.2. into RStudio:
+
+```{r, eval=FALSE}
+
+# load csv survey data
+survey_data <- read.csv("Malaria_Survey_Data_2013-16_MDG.csv")
+
+# load shapefiles of study area data
+mdg_national_boundaries <- read_sf("gadm40_MDG_0.shp")
+mdg_states_boundaries <- read_sf("gadm40_MDG_1.shp")
+
+# load all environmental raster data
+temp_5km <- raster("MDG_temp_5km.tif")
+prec_5km <- raster("MDG_prec_5km.tif")
+popl_5km <- raster("MDG_popl_5km.tif")
+elev_5km <- raster("MDG_elev_5km.tif")
+```
+
+## Descriptive analysis: Geographical distribution of malaria prevalence in Madagascar
+
+Let us provide a rapid visual to describe of the burden of malaria in accordance with the World Health Organisation's classification for malaria prevalence endemicity. The classification categories are: `<1%: Non-endemic`, `1-10%: Hypoendemic`, `11%-50% Mesoendemic`, `51-75%: hyperendemic` and `>75%: Holoendemic`:
+
+```{r, eval=FALSE}
+# calculate prevalence of malaria in each community
+survey_data$prevalence <- (survey_data$pf_pos/survey_data$examined)*100
+
+# generate WHO classification for endemicity
+survey_data$endemicity <- NA
+survey_data$endemicity[survey_data$prevalence>=0 & survey_data$prevalence<=1] <- 1
+survey_data$endemicity[survey_data$prevalence>1 & survey_data$prevalence<=10] <- 2
+survey_data$endemicity[survey_data$prevalence>10 & survey_data$prevalence<=50] <- 3
+survey_data$endemicity[survey_data$prevalence>50 & survey_data$prevalence<=75] <- 4
+survey_data$endemicity[survey_data$prevalence>75 & survey_data$prevalence<=100] <- 5
+
+# convert to point simple feature object
+survey_data_sf = st_as_sf(survey_data, coords = c("longitude", "latitude"), crs = 4326)
+
+# generate the endemicity map for Madagascar
+tm_shape(mdg_states_boundaries) + 
+	tm_polygons(alpha = 0, border.col = "black") + 
+	tm_shape(survey_data_sf) + 
+	tm_dots("endemicity", 
+					style="cat", 
+					title = "Endemicity Status",
+					palette = c("#41ab5d", "#fed976", "#fd8d3c", "#e31a1c", "#b10026"), 
+					labels=c("(<1%) Not endemic", "(1-10%) Hypoendemic", "(11-50%) Mesoendemic", "(51-75%) Hyperendemic", "(>75%) Holoendemic")) +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.text.size = 0.7, legend.title.size = 0.8)
+```
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Image 0 - EndemicityMalaria.png')
+```
+
+## Data preparation
+
+The community survey data with details containing the prevalence of malaria is not linked to the population density and environmental raster data. In order to determine the association between malaria and these selected covariates, we will need to overlay the points on top of the grids to extract the data. 
+
+**Step 1: Extracting and merging covariate data to points**
+
+All the raster are of same dimension (`nrow = 327`, `ncol = 174` & total `ncells = 56898`) and resolution (5km), and therefore we can stack them one on top of the other:
+
+```{r, eval=FALSE}
+# stack the independent variables to form a one large raster stack
+covariates <- stack(elev_5km, temp_5km, prec_5km, popl_5km)
+```
+
+Next, yes the original survey data frame object `survey_data` to declare it as a spatial point object using the `longitude` and `latitude` columns with the `coordinates()` function:
+
+```{r, eval=FALSE}
+coordinates(survey_data) <- ~ longitude + latitude
+```
+
+Next, we extract covariate data from the stack raster object `covariates` by overlaying the points and using the `extract()` function:
+
+```{r, eval=FALSE}
+extract_data <- extract(covariates, survey_data)
+```
+
+Now, we can combine the extracted raster values to the survey data (which will result in spatial data frame object):
+
+```{r, eval=FALSE}
+combined_data <- cbind(survey_data, extract_data)
+```
+
+**Step 2: Create grid points to specify locations to predict malaria prevalence**
+
+Here is the most important step! We need to extract all points from the raster grid. Note that the model will utilise the prevalence point data to predict it at unsampled locations. We can use the stacked raster to perform the extracts of all points that form each grid cell. You can use the function `rasterToPoints()` to perform this action:
+
+```{r, eval=FALSE}
+# convert to points using rasterToPoints()
+PredictionPoints <- rasterToPoints(covariates)
+
+# you visual the prediction template which consists of 30,664 points 
+plot(PredictionPoints, pch=0, cex=0.0001, col="red", main = "Prediction points = 30,664")
+```
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Image 2 - PredictionPoints.png')
+```
+
+This object in particular i.e., `PredictionPoints` we will certainly come back to this object later in the steps. Let's make a mental note of it. 
+
+## Mesh and Projection matrix construction
+
+**Step 1: Mesh building**
+
+For building the mesh that covers the study area, we use the `inla.mesh.2d()` function. As input parameters it takes the location coordinates that are used as a initial mesh vertices (`loc`). The values denoting the maximum allowed triangle edge length in the region and in the extension (`max.edge`) and minimum allowed distance between points (`cutoff`).
+
+Let us create a matrix object with the coordinates of the sites. In `inla.mesh.2d()` function, we set the `max.edge=c(0.2, 5)` to have small triangles within the region of length `0.2`. The outer bigger triangles will have length `5`. We set `cutoff=0.01` that avoids building too many smaller triangles in areas where data points are closer to each other. 
+
+<div class="note">
+**NOTE**: We are choosing values for the `max.edge` to be a bit coarser. Off course the value for triangle's length could be even smaller than `0.2` to yield finer mesh; however, this will make the predictions take very long to compute! 
+</div>
+
+```{r, eval=FALSE}
+# create a matrix for the coordinates onlys
+coordinates <- as.matrix(coordinates(combined_data))
+# create a mesh template using inla.mesh.2d() function
+meshTemplate <- inla.mesh.2d(loc = coordinates, max.edge = c(0.2, 5), cutoff = 0.01)
+
+# create plot images to see what the mesh will look like
+plot(meshTemplate)
+plot(combined_data, add = TRUE, col = "blue")
+plot(st_geometry(mdg_national_boundaries), border="red", add=TRUE)
+
+# you can check the number of vertices create from the survey points
+meshTemplate$n # 6521 number of vertices
+```
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/image 1 - Mesh building.png')
+```
+
+**Step 2: Build SPDE model and Projection matrix for observed points and locations for prediction**
+
+After creating the mesh, we can now define the SPDE model using the `inla.spde2.matern()`. The spatial random effect are define using the Matern covariance function (see details [**here**](https://en.wikipedia.org/wiki/Matérn_covariance_function). The alpha option is smoothness parameter which has been set to the value `2`. You can experiment with different values but 2 is always your go-to value.
+
+```{r, eval=FALSE}
+# build the spde model using the matern function
+spde.model <- inla.spde2.matern(mesh = meshTemplate, alpha = 2)
+```
+
+Next, create an index set for the SPDE model so as to link the spatial random effects to the observations accordingly:
+
+```{r, eval=FALSE}
+indexs <- inla.spde.make.index("s", spde.model$n.spde)
+```
+
+Now, using the mesh we created earlier on, we must build a projection field matrix for the observation using the actual points. The object `A_obs` is what we will feed into our likelihood model. Here, we used the function `inla.spde.make.A()` to create this projection field matrix: 
+
+```{r, eval=FALSE}
+A_obs <- inla.spde.make.A(mesh = meshTemplate, loc = coordinates)
+```
+
+Next, and the most crucial step involves repeating the previous step of using the same mesh and function `inla.spde.make.A()`; however, we have to build another projection field matrix for the unsampled point locations we want to make predictions on based on the observed points. Here, we extract the coordinates from `PredictionPoints` object we created earlier:
+
+```{r, eval=FALSE}
+PredictionPoints <- as.data.frame(PredictionPoints)
+names(PredictionPoints)[1] <- "longitude"
+names(PredictionPoints)[2] <- "latitude"
+coordinates(PredictionPoints) <- ~ longitude + latitude
+A_prd <- inla.spde.make.A(mesh = meshTemplate, loc = PredictionPoints)
+```
+
+The objects `A_obs` and `A_prd` are matrix objects which are compressed down elements that are non-zero.
+
+**Step 3: Stack the data, effects and projection matrices**
+
+We need to stack the data using `inla.stack()`, this will organize the the dataset one stack which provides estimation for the posterior based on the observations i.e., `stack.obs`, and the other stack for spatial predictions `stack.prd`. These two objects are stacked to create the `stack.full` object.
+
+```{r, eval=FALSE}
+# here, we pull the information for the observations 'combined_data'
+stack.obs <- inla.stack(
+	tag = "est", # differentiate each stack with the tag (e.g., estimation)
+	data = list(y=combined_data$pf_pos, numtrials=combined_data$examined),
+	A = list(1, A_obs), # specify the projection field matrix
+	effects = list(data.frame(b0 = 1, temp = combined_data$MDG_temp_5km, prec = combined_data$MDG_prec_5km, elev = combined_data$MDG_elev_5km, popl = combined_data$MDG_popl_5km),s=indexs))
+```
+
+```{r, eval=FALSE}
+# here, we pull the information for the locations of the grids 'PredictionPoints'
+stack.prd <- inla.stack(
+	tag = "pred", # differentiate each stack with the tag (e.g., prediction)
+	data = list(y=NA, numtrials=NA), # note here, the outcome is NA, because it only the covariates in this object
+	A = list(1, A_prd), # specify the projection field matrix
+	effects = list(data.frame(b0 = 1, temp = PredictionPoints$MDG_temp_5km, prec = PredictionPoints$MDG_prec_5km, elev = PredictionPoints$MDG_elev_5km, popl = PredictionPoints$MDG_popl_5km),s=indexs)
+)
+```
+
+Finally, bring the two stacks together to form a full stack using the `inla.stack()` function
+
+```{r, eval=FALSE}
+stack.full <- inla.stack(stack.obs, stack.prd)
+```
+
+<div class="note">
+**NOTE**: While preparing the stacks, we have been developing the notations for the response and independent variables which we will have to define in the model's formula. The following are: 
+
+- `y` is the number indivdiuals detected with have malaria in a community. 
+- `numtrials` is the total number of individuals surveyed in a community. 
+- `b0` is the overall risk of malaria (i.e., intercept).
+- `elev` is elevation
+- `temp` is temperature
+- `popl` is population density
+- `prec` is precipitation
+
+The likelihood function therefore implemented within the Bayesian framework using INLA-SPDE will be generalized linear mixed model with link function of binomial. 
+</div>
+
+## Bayesian inference using INLA-SPDE
+
+We now specify the model formula for including the response on the left-hand side and the fixed and random effects on the right-hand side. The fixed effects are the independent variables, while the random effects is "`s`" which we specified earlier in the object `indexs` (see section 6.6 in **Step 2**). We declare the model to be the object `spde.model` which we created earlier in section 6.6 in **Step 2**
+
+```{r, eval=FALSE}
+model.formula <- y ~ 0 + b0 + temp + prec + elev + popl + f(s, model = spde.model)
+```
+
+[**FINALLY**](https://www.youtube.com/watch?v=qouCwQsha3c), we can run the model using the `inla()` function
+
+```{r, eval=FALSE}
+# this starts the timer
+ptm <- proc.time() 
+
+# run inla() function
+res <- inla(model.formula, family = "binomial", Ntrials = numtrials,
+						control.family = list(link = "logit"),
+						data = inla.stack.data(stack.full),
+						control.predictor = list(compute = TRUE, A = inla.stack.A(stack.full)))
+
+# this end the timer
+proc.time() - ptm
+```
+
+<div class="note">
+**NOTE**: Depending on how the meshes were set, as well as the size of the projection matrix - it might take sometime for the `inla()` to complete the posterior estimation. This model was fitted in approximately `9 mins` in a desktop with 3 GHz 6-core Intel Core i5 processor with 32 GB of RAM memory. It will be interesting to see how long it takes on a standard UCL desktop or on your personal laptops. Here is the ideal time for a coffee break while it churns. 
+</div>
+
+## Results from fixed effects {-}
+
+To obtained the results for the fixed effects - you can simply call the `summary()` on the object `res`. You can exponentiate the values to report them as odds ratios.
+
+```{r, eval=FALSE}
+summary(res)
+
+# report the coefficients with their 95% Credibility Intervals as odds ratios
+exp(res$summary.fixed[,c(1,3,5)])
+```
+
+It turns out that elevated levels of temperature increased the risk of malaria by 4% (OR: 1.036, 95% CrI: 0.972 to 1.111), whereas precipitation does not increase nor decrease the risk of malaria. Lastly, higher altitude (i.e., elevation) (95% CrI: 0.998 to 0.999) and increase population density (95% CrI: 0.997 to 0.999) have a decrease the risk by 1% which is **marginally** significant.
+
+This is an example of results turning up to be incredibly disappointing - can you image after all that data wrangling, cleaning and time spent etc., [**just to get this...**](https://www.youtube.com/watch?v=cdEQmpVIE4A).
+
+Lets wrap this up by checking out the maps for predicted prevalence and exceedance probabilities. 
+
+## Geostatistical prediction of the Malaria prevalence for Madagascar {-}
+
+The estimates are on the log odds scale, we will need to extract the them for the object `res` and transform them to probabilities (i.e., prevalence).
+
+```{r, eval=FALSE}
+# extract index values from 'stack.full' object corresponding to the predictions.
+index <- inla.stack.index(stack = stack.full, tag = "pred")$data
+
+# extract the prevalence values from the `res` under the summary.fitted.value column
+# note: this is on the log odds scale that must be transformed
+prev_mean <- exp(res$summary.fitted.values[index,"mean"])/(1+exp(res$summary.fitted.values[index,"mean"]))
+```
+
+Now, the extracted estimates are in points which need to be rasterized. We can rasterize them using the `rasterize()` function. But first, let create an empty raster template based on the dimension for the stacked environmental raster grids:
+
+```{r, eval=FALSE}
+# breakdown on extraction
+dim(covariates)[1] # number of rows
+dim(covariates)[2] # number of columns
+crs(covariates)    # reports the crs
+extent(covariates) # reports the spatial extents of study area
+
+# putting all together to create an empty raster template based on these details
+# create a raster template
+RasterTemplate <- raster(nrow = dim(covariates)[1], ncol = dim(covariates)[2], crs=crs(covariates), extent(covariates))
+
+# Now rasterise predicted prevalence points into the empty raster template
+mdg.malaria.prevalence <- rasterize(x = PredictionPoints, y = RasterTemplate, field= prev_mean, fun=mean)
+```
+
+Visualize prevalence using the `tmap` functions:
+
+```{r, eval=FALSE}
+tm_shape(mdg.malaria.prevalence) + tm_raster(style = "cont", midpoint = NA, palette = "YlOrRd")
+```
+
+Let's visualize the posterior predicted prevalence it accordance with the WHO Classification for malaria endemicity:
+
+```{r, eval = FALSE}
+# generate categories in raster
+reclassifyRaster <- c(0,0.01,0,
+											0.01,0.10,1,
+											0.10,0.50,2,
+											0.50,0.75,3,
+											0.75,1.00,4)
+
+# Then store the values into a matrix 
+reclassifyRaster_Mat <- matrix(reclassifyRaster, ncol=3, byrow=TRUE)
+reclassifyRaster_Mat
+
+mdg.malaria.prevalence_recl <- reclassify(mdg.malaria.prevalence, reclassifyRaster_Mat)
+
+# visual endemicity map for Madagascar
+	tm_shape(mdg.malaria.prevalence_recl) + 
+	tm_raster(style="cat", 
+					title = "Endemicity Status (Posterior Prevalence)",
+					palette = c("#41ab5d", "#fed976", "#fd8d3c", "#e31a1c", "#b10026"), 
+					labels=c("(<1%) Not endemic", "(1-10%) Hypoendemic", "(11-50%) Mesoendemic", "(51-75%) Hyperendemic", "(>75%) Holoendemic")) +
+	tm_shape(mdg_states_boundaries) + 
+	tm_polygons(alpha = 0, border.col = "black") +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.text.size = 0.7, legend.title.size = 0.8)
+```
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Image 5 - Posterior Prevalence.png')
+```
+
+## Exceedance Probabilities for regions with prevalence classified as "Mesoendemic" (p > 10%) {-}
+
+This is computed by using the `marginals.fitted.value column` from the `res` object. Similarly, we can rasterize these values as follows: 
+
+```{r, eval=FALSE}
+# extract the exceedance probability and compute the marginal probability that a pixel exceeds threshold value of 0,1 (i.e., 10%)
+
+excprob <- sapply(res$marginals.fitted.values[index], FUN = function(marg){1-inla.pmarginal(q = 0.1, marginal = marg)})
+
+mdg.malaria.exc <- rasterize(x = PredictionPoints, y = RasterTemplate, field= excprob, fun=mean)
+tm_shape(mdg.malaria.exc) + tm_raster(style = "cont", midpoint = NA, palette = "YlOrRd")
+```
+
+Let's visualize the exceedance probabilities categorically:
+
+```{r, eval=FALSE}
+# generate categories in raster
+reclassifyRaster <- c(0,0.01,0,
+											0.01,0.10,1,
+											0.10,0.20,2,
+											0.20,0.30,3,
+											0.30,0.40,4,
+											0.40,0.50,5,
+											0.50,0.60,6,
+											0.60,0.70,7,
+											0.70,0.80,8,
+											0.80,0.90,9,
+											0.90,1.00,10)
+
+# Then store the values into a matrix 
+reclassifyRaster_Mat <- matrix(reclassifyRaster, ncol=3, byrow=TRUE)
+reclassifyRaster_Mat
+
+mdg.malaria.exc_recl <- reclassify(mdg.malaria.exc, reclassifyRaster_Mat)
+
+# visual exceedance probability for Madagascar
+tm_shape(mdg.malaria.exc_recl) + 
+	tm_raster(style="cat", 
+						title = "Exceedance (p > 0.1)",
+						palette = "Reds", 
+						labels=c("<1%", "1-10%", "11-20%", "21-30%", "31-40%", "41-50%", "51-60%", "61-70%", "71-80%", "81-90%", "90%+")) +
+	tm_shape(mdg_states_boundaries) + 
+	tm_polygons(alpha = 0, border.col = "black") +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.text.size = 0.7, legend.title.size = 0.8)
+```
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('/Volumes/Anwar-HHD/GEOG0125/Practicals/2021_2022/images/general/Exceendance Prob_cat.png')
+```
