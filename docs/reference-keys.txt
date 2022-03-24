@@ -62,3 +62,8 @@ descriptive-analysis-geographical-distribution-of-malaria-prevalence-in-madagasc
 data-preparation-2
 mesh-and-projection-matrix-construction
 bayesian-inference-using-inla-spde
+web-geovisualisation-using-r-shiny
+introduction-6
+installing-and-loading-packages-2
+data-preparation-3
+concept-for-r-shiny-ing

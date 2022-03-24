@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="7 Web &amp; Geovisualisation using R-Shiny | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayesian-models-for-geostatistical-data-using-inla-spde.html"/>
+
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#welcome">Welcome<span></span></a>
+<ul>
+<li><a href="index.html#moodle">Moodle<span></span></a></li>
+<li><a href="index.html#structure">Structure<span></span></a></li>
+<li><a href="index.html#office-hours-for-geog0125">Office hours for GEOG0125<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>1</b> Descriptive Statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#downloadable-dataset-for-this-exercise"><i class="fa fa-check"></i><b>1.1.1</b> Downloadable dataset for this exercise<span></span></a></li>
+<li class="chapter" data-level="1.1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#reading-list"><i class="fa fa-check"></i><b>1.1.2</b> Reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#frequency-distribution"><i class="fa fa-check"></i><b>1.2</b> Frequency distribution<span></span></a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#computing-frequencies-cumulative-frequency-and-proportions"><i class="fa fa-check"></i><b>1.2.1</b> Computing frequencies, cumulative frequency and proportions<span></span></a></li>
+<li class="chapter" data-level="1.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-barplot-and-piechart"><i class="fa fa-check"></i><b>1.2.2</b> Using a <code>barplot()</code> and <code>piechart()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#descriptive-analysis-using-measures-for-central-tendency-dispersion"><i class="fa fa-check"></i><b>1.3</b> Descriptive analysis using measures for central tendency &amp; dispersion<span></span></a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#summary-estimates-using-summary"><i class="fa fa-check"></i><b>1.3.1</b> Summary estimates using <code>summary()</code><span></span></a></li>
+<li class="chapter" data-level="1.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#using-a-boxplot-and-hist"><i class="fa fa-check"></i><b>1.3.2</b> Using a <code>boxplot()</code> and <code>hist()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#generating-tables-shells-in-rstudio"><i class="fa fa-check"></i><b>1.4</b> Generating tables shells in RStudio<span></span></a></li>
+<li class="chapter" data-level="1.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#questions"><i class="fa fa-check"></i><b>1.5</b> Questions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html"><i class="fa fa-check"></i><b>2</b> Parametric and Nonparametric Tests<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#downloadable-dataset-for-this-exercise-1"><i class="fa fa-check"></i><b>2.1.1</b> Downloadable dataset for this exercise<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#reading-list-1"><i class="fa fa-check"></i><b>2.1.2</b> Reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#some-data-managing-ettiquttes"><i class="fa fa-check"></i><b>2.2</b> Some data managing ettiquttes<span></span></a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#logical-operators"><i class="fa fa-check"></i><b>2.2.1</b> Logical Operators<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-2-groups"><i class="fa fa-check"></i><b>2.3</b> Hypothesis testing for 2 groups<span></span></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#assumption-checking"><i class="fa fa-check"></i><b>2.3.1</b> Assumption checking<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests"><i class="fa fa-check"></i><b>2.3.2</b> Selection of tests<span></span></a></li>
+<li class="chapter" data-level="2.3.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-1"><i class="fa fa-check"></i><b>2.3.3</b> Questions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#hypothesis-testing-for-3-or-more-groups"><i class="fa fa-check"></i><b>2.4</b> Hypothesis testing for 3 or more groups<span></span></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#asssumption-checking"><i class="fa fa-check"></i><b>2.4.1</b> Asssumption Checking<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#selection-of-tests-1"><i class="fa fa-check"></i><b>2.4.2</b> Selection of tests<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#questions-2"><i class="fa fa-check"></i><b>2.4.3</b> Questions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="parametric-and-nonparametric-tests.html"><a href="parametric-and-nonparametric-tests.html#conclusions"><i class="fa fa-check"></i><b>2.5</b> Conclusions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>3</b> Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#downloadable-dataset-for-this-exercise-2"><i class="fa fa-check"></i><b>3.1.1</b> Downloadable dataset for this exercise<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#reading-list-2"><i class="fa fa-check"></i><b>3.1.2</b> Reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.2</b> Poisson Regression Modelling<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.2.1</b> Selecting the appropriate Poisson model<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>4</b> Introduction to Bayesian Statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#probability-theory"><i class="fa fa-check"></i><b>4.2</b> Probability theory<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#application-long-term-environmental-exposure-to-soil-arsenic-risk-of-metallic-poisoning."><i class="fa fa-check"></i><b>4.2.1</b> Application: Long-term environmental exposure to soil arsenic &amp; risk of metallic poisoning.<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#bayes-theorem"><i class="fa fa-check"></i><b>4.3</b> Bayes’ Theorem<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#applying-bayes-rule-on-the-metallic-poisoning-data"><i class="fa fa-check"></i><b>4.3.1</b> Applying Bayes’ Rule on the metallic poisoning data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#bayesian-inference-with-probability-functions"><i class="fa fa-check"></i><b>4.4</b> Bayesian Inference with Probability Functions<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#bayesian-inference-with-binomial-beta-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Bayesian inference with Binomial-Beta distribution<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html"><i class="fa fa-check"></i><b>5</b> Spatial &amp; Spatiotemporal Bayesian Models using INLA<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#downloadable-dataset-for-this-exercise-3"><i class="fa fa-check"></i><b>5.1.1</b> Downloadable dataset for this exercise<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#recommended-reading-list"><i class="fa fa-check"></i><b>5.1.2</b> Recommended reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>5.2</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#loading-dataset"><i class="fa fa-check"></i><b>5.3</b> Loading dataset<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#spatial-bayesian-modelling-non-temporal-data"><i class="fa fa-check"></i><b>5.4</b> Spatial Bayesian Modelling (Non-temporal data)<span></span></a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#data-preparation"><i class="fa fa-check"></i><b>5.4.1</b> Data preparation<span></span></a></li>
+<li class="chapter" data-level="5.4.2" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#creating-an-adjacency-matrix"><i class="fa fa-check"></i><b>5.4.2</b> Creating an adjacency matrix<span></span></a></li>
+<li class="chapter" data-level="5.4.3" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#model-formation"><i class="fa fa-check"></i><b>5.4.3</b> Model formation<span></span></a></li>
+<li class="chapter" data-level="5.4.4" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#bayesian-inference-using-inla"><i class="fa fa-check"></i><b>5.4.4</b> Bayesian inference using INLA<span></span></a></li>
+<li><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#interpretation-of-the-overall-risks">Interpretation of the overall risks<span></span></a></li>
+<li><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#mapping-the-relative-risks-rr-of-casualties-in-england">Mapping the Relative Risks (RR) of casualties in England<span></span></a></li>
+<li><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#mapping-the-exceedance-probability-of-excess-risk-of-casualties-in-england">Mapping the Exceedance Probability of excess risk of casualties in England<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#spatiotemporal-bayesian-modelling"><i class="fa fa-check"></i><b>5.5</b> Spatiotemporal Bayesian Modelling<span></span></a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#data-preparation-1"><i class="fa fa-check"></i><b>5.5.1</b> Data preparation<span></span></a></li>
+<li class="chapter" data-level="5.5.2" data-path="spatial-spatiotemporal-bayesian-models-using-inla.html"><a href="spatial-spatiotemporal-bayesian-models-using-inla.html#model-formation-inference-with-inla"><i class="fa fa-check"></i><b>5.5.2</b> Model formation &amp; inference with INLA<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html"><i class="fa fa-check"></i><b>6</b> Bayesian Models for Geostatistical Data using INLA-SPDE<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#introduction-5"><i class="fa fa-check"></i><b>6.1</b> Introduction<span></span></a>
+<ul>
+<li><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#downloadable-dataset-for-this-exercise-4">Downloadable dataset for this exercise<span></span></a></li>
+<li><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#recommended-reading-list-1">Recommended reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#installing-and-loading-packages-1"><i class="fa fa-check"></i><b>6.2</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#loading-dataset-1"><i class="fa fa-check"></i><b>6.3</b> Loading dataset<span></span></a></li>
+<li class="chapter" data-level="6.4" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#descriptive-analysis-geographical-distribution-of-malaria-prevalence-in-madagascar"><i class="fa fa-check"></i><b>6.4</b> Descriptive analysis: Geographical distribution of malaria prevalence in Madagascar<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#data-preparation-2"><i class="fa fa-check"></i><b>6.5</b> Data preparation<span></span></a></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#mesh-and-projection-matrix-construction"><i class="fa fa-check"></i><b>6.6</b> Mesh and Projection matrix construction<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-models-for-geostatistical-data-using-inla-spde.html"><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#bayesian-inference-using-inla-spde"><i class="fa fa-check"></i><b>6.7</b> Bayesian inference using INLA-SPDE<span></span></a>
+<ul>
+<li><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#results-from-fixed-effects">Results from fixed effects<span></span></a></li>
+<li><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#geostatistical-prediction-of-the-malaria-prevalence-for-madagascar">Geostatistical prediction of the Malaria prevalence for Madagascar<span></span></a></li>
+<li><a href="bayesian-models-for-geostatistical-data-using-inla-spde.html#exceedance-probabilities-for-regions-with-prevalence-classified-as-mesoendemic-p-10">Exceedance Probabilities for regions with prevalence classified as “Mesoendemic” (p &gt; 10%)<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="web-geovisualisation-using-r-shiny.html"><a href="web-geovisualisation-using-r-shiny.html"><i class="fa fa-check"></i><b>7</b> Web &amp; Geovisualisation using R-Shiny<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="web-geovisualisation-using-r-shiny.html"><a href="web-geovisualisation-using-r-shiny.html#introduction-6"><i class="fa fa-check"></i><b>7.1</b> Introduction<span></span></a>
+<ul>
+<li><a href="web-geovisualisation-using-r-shiny.html#downloadable-datasets">Downloadable dataset(s)<span></span></a></li>
+<li><a href="web-geovisualisation-using-r-shiny.html#recommended-reading-list-2">Recommended reading list<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="web-geovisualisation-using-r-shiny.html"><a href="web-geovisualisation-using-r-shiny.html#installing-and-loading-packages-2"><i class="fa fa-check"></i><b>7.2</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="7.3" data-path="web-geovisualisation-using-r-shiny.html"><a href="web-geovisualisation-using-r-shiny.html#data-preparation-3"><i class="fa fa-check"></i><b>7.3</b> Data Preparation<span></span></a></li>
+<li class="chapter" data-level="7.4" data-path="web-geovisualisation-using-r-shiny.html"><a href="web-geovisualisation-using-r-shiny.html#concept-for-r-shiny-ing"><i class="fa fa-check"></i><b>7.4</b> Concept for R-Shiny-ing<span></span></a>
+<ul>
+<li><a href="web-geovisualisation-using-r-shiny.html#code-overview">Code overview<span></span></a></li>
+<li><a href="web-geovisualisation-using-r-shiny.html#part-1-the-user-interface">Part 1: The User Interface<span></span></a></li>
+<li><a href="web-geovisualisation-using-r-shiny.html#part-2-server">Part 2: Server<span></span></a></li>
+<li><a href="web-geovisualisation-using-r-shiny.html#part-3-running-the-shiny-app">Part 3: Running the shiny app<span></span></a></li>
+<li><a href="web-geovisualisation-using-r-shiny.html#full-code-for-generating-a-shiny-app">Full code for generating a Shiny app<span></span></a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="web-geovisualisation-using-r-shiny" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Web &amp; Geovisualisation using R-Shiny<a href="web-geovisualisation-using-r-shiny.html#web-geovisualisation-using-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Theme: R Shiny Dashboards</strong>
+<img src="images/general/Rshiny%20symbol.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="introduction-6" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Introduction<a href="web-geovisualisation-using-r-shiny.html#introduction-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Shiny is a web application framework for R that enables to build an interactive and reactive GIS dashboards that can be used as a web applications. This tutorial provides a basic introduction to Shiny. As discussed in the lecture, a Shiny application can be built by creating a directory that contains an R script named as <code>app.R</code>. The code in the <code>app.R</code> has three parts:</p>
+<ul>
+<li><p>a user interface object (<code>ui</code>) which controls the layout and appearance of the app,</p></li>
+<li><p>a <code>server()</code> function with the instructions to build the objects displayed in the <code>ui</code> (and for further data cleaning)</p></li>
+<li><p>a call function the to <code>shinyApp()</code> that creates the app from the ui/server pair.</p></li>
+</ul>
+<p>This is very easy to master if you understand the workflow. Let’s learn by focusing on the outputs generated previously from week 8’s practicals which focused on applying spatial and spatiotemporal models to road accident data from 2015 to 2020. We will create a generic-reactive dashboard for the North West’s Local Authority areas with layouts that swaps through the following items:</p>
+<ul>
+<li><p>Relative risk (RR) [Map 1]</p></li>
+<li><p>95% credible intervals (95% Credibility Intervals) [Map 2]</p></li>
+<li><p>Histogram plots for the casualties [Graphical plot]</p></li>
+<li><p>Data viewer [Dataset]</p></li>
+</ul>
+<div id="downloadable-datasets" class="section level3 unnumbered hasAnchor">
+<h3>Downloadable dataset(s)<a href="web-geovisualisation-using-r-shiny.html#downloadable-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>All datasets can be downloaded from <a href="https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%2010%20Datasets.zip"><strong>HERE</strong></a>.</p>
+</div>
+<div id="recommended-reading-list-2" class="section level3 unnumbered hasAnchor">
+<h3>Recommended reading list<a href="web-geovisualisation-using-r-shiny.html#recommended-reading-list-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Books</strong></p>
+<p>Moraga. P, (2020). Geospatial Health Data: Modeling and Visualization with R-INLA &amp; Shiny, <a href="https://www.paulamoraga.com/book-geospatial/"><strong>Ebook</strong></a></p>
+<ul>
+<li><p>Chapter 13: Introduction to Shiny</p></li>
+<li><p>Chapter 15: Building a Shiny app to upload and visualize spatio-temporal data</p></li>
+</ul>
+<p>Wickham. H, (2021). Mastering Shiny: Building Interactive Apps, Reports &amp; Dashboards Powered by R, <a href="https://mastering-shiny.org"><strong>Ebook</strong></a></p>
+<p><strong>Very helpful tutorial videos</strong></p>
+<ul>
+<li><p>Gibert. C. YouTube Video (01h17m05s): <a href="https://www.youtube.com/watch?v=eIpiL6y1oQQ&amp;t=3375s"><strong>Make Your Own Interactive Map of COVID-19 Spread Using R Shiny</strong></a></p></li>
+<li><p>Gibert. C. YouTube Video (00h58m55s): <a href="https://www.youtube.com/watch?v=ebLIa9b4c_c&amp;t=1868s"><strong>R Shiny Overview &amp; Tutorial</strong></a></p></li>
+</ul>
+</div>
+</div>
+<div id="installing-and-loading-packages-2" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Installing and loading packages<a href="web-geovisualisation-using-r-shiny.html#installing-and-loading-packages-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here is the description of the following packages we will need for this exercise:</p>
+<ul>
+<li><p><code>sf</code>: Simple Features</p></li>
+<li><p><code>tmap</code>: Thematic Mapping</p></li>
+<li><p><code>shiny</code>: Shiny is an R package that makes it easy to build interactive web apps and dashboards straight from R</p></li>
+<li><p><code>shinythemes</code>: Shinythemes package provides some several themes for use with Shiny</p></li>
+<li><p><code>htmlwidgets</code>: A framework for creating HTML widgets that render in various contexts including the R console</p></li>
+<li><p><code>leaflet</code>: An R package makes it easy to integrate and control Leaflet maps in R</p></li>
+<li><p><code>DT</code>: An R package DT provides an R interface to the JavaScript library DataTables</p></li>
+<li><p><code>dplyr</code>: A fast, consistent tool for working with data frame like objects, both in memory and out of memory.</p></li>
+</ul>
+<p>We have already installed the packages <code>sf</code> and <code>tmap</code> from previous sessions (i.e., <strong>GEOG0114 Principles of Spatial Analysis</strong>). Let us install the other packages.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="web-geovisualisation-using-r-shiny.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install</span></span>
+<span id="cb134-2"><a href="web-geovisualisation-using-r-shiny.html#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;shiny&quot;</span>)</span>
+<span id="cb134-3"><a href="web-geovisualisation-using-r-shiny.html#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;shinythemes&quot;</span>)</span>
+<span id="cb134-4"><a href="web-geovisualisation-using-r-shiny.html#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;htmlwidgets&quot;</span>)</span>
+<span id="cb134-5"><a href="web-geovisualisation-using-r-shiny.html#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;leaflet&quot;</span>)</span>
+<span id="cb134-6"><a href="web-geovisualisation-using-r-shiny.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;DT&quot;</span>)</span>
+<span id="cb134-7"><a href="web-geovisualisation-using-r-shiny.html#cb134-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<p>Load the packages into RStudio</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="web-geovisualisation-using-r-shiny.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmlwidgets)</span>
+<span id="cb135-2"><a href="web-geovisualisation-using-r-shiny.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb135-3"><a href="web-geovisualisation-using-r-shiny.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinythemes)</span>
+<span id="cb135-4"><a href="web-geovisualisation-using-r-shiny.html#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb135-5"><a href="web-geovisualisation-using-r-shiny.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb135-6"><a href="web-geovisualisation-using-r-shiny.html#cb135-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb135-7"><a href="web-geovisualisation-using-r-shiny.html#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb135-8"><a href="web-geovisualisation-using-r-shiny.html#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+</div>
+<div id="data-preparation-3" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Data Preparation<a href="web-geovisualisation-using-r-shiny.html#data-preparation-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For the <code>Shiny</code> application to work - <strong>all</strong> dataset(s) must be stored in the same directory location folder. Create a folder in your computer and store the RDS formatted spatial data frame <code>Road Accidents Output Data.RDS</code>, and the shapefile <code>North_West_LAs.shp</code> in that location. Set your directory and load data sets into memory:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="web-geovisualisation-using-r-shiny.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set your main directory</span></span>
+<span id="cb136-2"><a href="web-geovisualisation-using-r-shiny.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Volumes/Anwar-HHD/GEOG0125/Practicals/Shiny&quot;</span>)</span>
+<span id="cb136-3"><a href="web-geovisualisation-using-r-shiny.html#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="co"># open the RDS format for Shiny</span></span>
+<span id="cb136-4"><a href="web-geovisualisation-using-r-shiny.html#cb136-4" aria-hidden="true" tabindex="-1"></a>la.spatial.df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Road Accidents Output Data.RDS&quot;</span>)</span>
+<span id="cb136-5"><a href="web-geovisualisation-using-r-shiny.html#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load shape files </span></span>
+<span id="cb136-6"><a href="web-geovisualisation-using-r-shiny.html#cb136-6" aria-hidden="true" tabindex="-1"></a>laboundaries <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;North_West_LAs.shp&quot;</span>)</span></code></pre></div>
+<div class="note">
+<p><strong>Tips for coursework 1</strong>: After you have performed your Bayesian model be sure to extract the relevant posterior estimates according with whatever spatial information its associated with and store the results as an RDS using the <code>saveRDS()</code> function. This is the best file format to work with when dealing with shiny</p>
+</div>
+</div>
+<div id="concept-for-r-shiny-ing" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Concept for R-Shiny-ing<a href="web-geovisualisation-using-r-shiny.html#concept-for-r-shiny-ing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-overview" class="section level3 unnumbered hasAnchor">
+<h3>Code overview<a href="web-geovisualisation-using-r-shiny.html#code-overview" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are three parts to the code, so let’s break it down…</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="web-geovisualisation-using-r-shiny.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do not run</span></span>
+<span id="cb137-2"><a href="web-geovisualisation-using-r-shiny.html#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-3"><a href="web-geovisualisation-using-r-shiny.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Part 1: Define User Interface for application</span></span>
+<span id="cb137-4"><a href="web-geovisualisation-using-r-shiny.html#cb137-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb137-5"><a href="web-geovisualisation-using-r-shiny.html#cb137-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb137-6"><a href="web-geovisualisation-using-r-shiny.html#cb137-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Part 2: Define server logic</span></span>
+<span id="cb137-7"><a href="web-geovisualisation-using-r-shiny.html#cb137-7" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb137-8"><a href="web-geovisualisation-using-r-shiny.html#cb137-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create a reactive function </span></span>
+<span id="cb137-9"><a href="web-geovisualisation-using-r-shiny.html#cb137-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb137-10"><a href="web-geovisualisation-using-r-shiny.html#cb137-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-11"><a href="web-geovisualisation-using-r-shiny.html#cb137-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Part 3: Run shiny app</span></span>
+<span id="cb137-12"><a href="web-geovisualisation-using-r-shiny.html#cb137-12" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+</div>
+<div id="part-1-the-user-interface" class="section level3 unnumbered hasAnchor">
+<h3>Part 1: The User Interface<a href="web-geovisualisation-using-r-shiny.html#part-1-the-user-interface" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We build a user interface (UI) with a sidebar layout. This layout includes a title panel, a sidebar panel for inputs on the left, and a main panel for outputs on the right. The elements of the user interface are placed within the <code>fluidPage()</code> function and this permits the app to adjust automatically to the dimensions of the browser window. The title of the app is added with <code>titlePanel()</code>. Then we write <code>sidebarLayout()</code> to create a sidebar layout with input and output definitions. <code>sidebarLayout()</code> takes the arguments <code>sidebarPanel()</code> and <code>mainPanel()</code>. <code>sidebarPanel()</code> creates a sidebar panel for inputs on the left. The <code>mainPanel()</code> creates a main panel for displaying outputs on the right.</p>
+<p>We can add content to the app by passing it as an argument to <code>titlePanel()</code>, <code>sidebarPanel()</code>, and <code>mainPanel()</code>. Here we have added texts with the description of the panels. Note that to include multiple elements in the same panel, we need to separate them with commas.</p>
+<p>The skeletal of the code for UI is something like this:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="web-geovisualisation-using-r-shiny.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do not run</span></span>
+<span id="cb138-2"><a href="web-geovisualisation-using-r-shiny.html#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="web-geovisualisation-using-r-shiny.html#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Part 1: Define User Interface for application</span></span>
+<span id="cb138-4"><a href="web-geovisualisation-using-r-shiny.html#cb138-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb138-5"><a href="web-geovisualisation-using-r-shiny.html#cb138-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">&quot;insert title&quot;</span>), </span>
+<span id="cb138-6"><a href="web-geovisualisation-using-r-shiny.html#cb138-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarLayout</span>(</span>
+<span id="cb138-7"><a href="web-geovisualisation-using-r-shiny.html#cb138-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sidebarPanel</span>(<span class="st">&quot;sidebar panel for inputs&quot;</span>),</span>
+<span id="cb138-8"><a href="web-geovisualisation-using-r-shiny.html#cb138-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mainPanel</span>(<span class="st">&quot;main panel for outputs&quot;</span>) </span>
+<span id="cb138-9"><a href="web-geovisualisation-using-r-shiny.html#cb138-9" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb138-10"><a href="web-geovisualisation-using-r-shiny.html#cb138-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="part-2-server" class="section level3 unnumbered hasAnchor">
+<h3>Part 2: Server<a href="web-geovisualisation-using-r-shiny.html#part-2-server" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>UI is all about layout of application. The server-side of the application is the back-end where we write the code for crunching the inputted data to perform further cleaning, manipulation and plotting and analysis - as well as for rendering the output to be shown in the UI’s <code>mainPanel()</code> output. More importantly, we use this section to make the application report the outputs dynamically using reactive functions.</p>
+<p>The skeletal of the code for server is something like this:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="web-geovisualisation-using-r-shiny.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Part 2: Define server logic</span></span>
+<span id="cb139-2"><a href="web-geovisualisation-using-r-shiny.html#cb139-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb139-3"><a href="web-geovisualisation-using-r-shiny.html#cb139-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a reactive function </span></span>
+<span id="cb139-4"><a href="web-geovisualisation-using-r-shiny.html#cb139-4" aria-hidden="true" tabindex="-1"></a>    react <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb139-5"><a href="web-geovisualisation-using-r-shiny.html#cb139-5" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb139-6"><a href="web-geovisualisation-using-r-shiny.html#cb139-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb139-7"><a href="web-geovisualisation-using-r-shiny.html#cb139-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use react() function and apply to data,frames to react dynamically to a variable e.g. changing years, time etc.</span></span>
+<span id="cb139-8"><a href="web-geovisualisation-using-r-shiny.html#cb139-8" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>CompactLayeredMapOutput <span class="ot">&lt;-</span> <span class="fu">renderLeaflet</span>({ <span class="st">&quot;insert code&quot;</span> }) <span class="co"># render a map output in leaflet</span></span>
+<span id="cb139-9"><a href="web-geovisualisation-using-r-shiny.html#cb139-9" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>HistogramOutput <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({ <span class="st">&quot;insert code&quot;</span> }) <span class="co"># render a plot output</span></span>
+<span id="cb139-10"><a href="web-geovisualisation-using-r-shiny.html#cb139-10" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>DataViewerOutput <span class="ot">&lt;-</span> <span class="fu">renderDataTable</span>({ <span class="st">&quot;insert code&quot;</span> }) <span class="co"># render a data viewer table to view data in web app</span></span>
+<span id="cb139-11"><a href="web-geovisualisation-using-r-shiny.html#cb139-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="part-3-running-the-shiny-app" class="section level3 unnumbered hasAnchor">
+<h3>Part 3: Running the shiny app<a href="web-geovisualisation-using-r-shiny.html#part-3-running-the-shiny-app" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Finally, the execution of the app once server and UI code is complete.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="web-geovisualisation-using-r-shiny.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Part 3: Run shiny app</span></span>
+<span id="cb140-2"><a href="web-geovisualisation-using-r-shiny.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+</div>
+<div id="full-code-for-generating-a-shiny-app" class="section level3 unnumbered hasAnchor">
+<h3>Full code for generating a Shiny app<a href="web-geovisualisation-using-r-shiny.html#full-code-for-generating-a-shiny-app" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code below is a full breakdown creating a shiny application.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="web-geovisualisation-using-r-shiny.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new Shiny web application. You can run the application by clicking</span></span>
+<span id="cb141-2"><a href="web-geovisualisation-using-r-shiny.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the &#39;Run App&#39; button above at top right corner of script.</span></span>
+<span id="cb141-3"><a href="web-geovisualisation-using-r-shiny.html#cb141-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-4"><a href="web-geovisualisation-using-r-shiny.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Press the &#39;Stop&#39; on the display to exit from app mode. </span></span>
+<span id="cb141-5"><a href="web-geovisualisation-using-r-shiny.html#cb141-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-6"><a href="web-geovisualisation-using-r-shiny.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="co"># MUST RUN FULL CODE ALL AT ONCE, NOT IN CHUNKS</span></span>
+<span id="cb141-7"><a href="web-geovisualisation-using-r-shiny.html#cb141-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-8"><a href="web-geovisualisation-using-r-shiny.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="co"># PART 1: Define User Interface for application</span></span>
+<span id="cb141-9"><a href="web-geovisualisation-using-r-shiny.html#cb141-9" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb141-10"><a href="web-geovisualisation-using-r-shiny.html#cb141-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set the theme (see https://rstudio.github.io/shinythemes/)</span></span>
+<span id="cb141-11"><a href="web-geovisualisation-using-r-shiny.html#cb141-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">shinytheme</span>(<span class="st">&quot;cerulean&quot;</span>),</span>
+<span id="cb141-12"><a href="web-geovisualisation-using-r-shiny.html#cb141-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Title for web application</span></span>
+<span id="cb141-13"><a href="web-geovisualisation-using-r-shiny.html#cb141-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">&quot;North West Region: Road Accident Risk Maps (2015-2020)&quot;</span>),</span>
+<span id="cb141-14"><a href="web-geovisualisation-using-r-shiny.html#cb141-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Including a sidebar - use sidebarLayout() function</span></span>
+<span id="cb141-15"><a href="web-geovisualisation-using-r-shiny.html#cb141-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb141-16"><a href="web-geovisualisation-using-r-shiny.html#cb141-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="cb141-17"><a href="web-geovisualisation-using-r-shiny.html#cb141-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use selectInput() to capture the year values 2015, 2016, ..., 2020 to make maps reactive on years</span></span>
+<span id="cb141-18"><a href="web-geovisualisation-using-r-shiny.html#cb141-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">&quot;Years&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Select a year:&quot;</span>, <span class="at">choices =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>))</span>
+<span id="cb141-19"><a href="web-geovisualisation-using-r-shiny.html#cb141-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb141-20"><a href="web-geovisualisation-using-r-shiny.html#cb141-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create layouts for plots: first panel is for risk estimates, histograms and data viewer</span></span>
+<span id="cb141-21"><a href="web-geovisualisation-using-r-shiny.html#cb141-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># These are the outputs of interest I want to show on dashboard/web app</span></span>
+<span id="cb141-22"><a href="web-geovisualisation-using-r-shiny.html#cb141-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb141-23"><a href="web-geovisualisation-using-r-shiny.html#cb141-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabsetPanel</span>(</span>
+<span id="cb141-24"><a href="web-geovisualisation-using-r-shiny.html#cb141-24" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabPanel</span>(<span class="st">&quot;Posterior Risk Estimates&quot;</span>, <span class="fu">leafletOutput</span>(<span class="st">&quot;CompactLayeredMapOutput&quot;</span>, <span class="at">height =</span> <span class="st">&quot;90vh&quot;</span>)),</span>
+<span id="cb141-25"><a href="web-geovisualisation-using-r-shiny.html#cb141-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabPanel</span>(<span class="st">&quot;Casualties (Plots)&quot;</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;HistogramOutput&quot;</span>, <span class="at">height =</span> <span class="st">&quot;90vh&quot;</span>)),</span>
+<span id="cb141-26"><a href="web-geovisualisation-using-r-shiny.html#cb141-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabPanel</span>(<span class="st">&quot;Data Viewer&quot;</span>, <span class="fu">dataTableOutput</span>(<span class="st">&quot;DataViewerOutput&quot;</span>, <span class="at">height =</span> <span class="st">&quot;90vh&quot;</span>))</span>
+<span id="cb141-27"><a href="web-geovisualisation-using-r-shiny.html#cb141-27" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb141-28"><a href="web-geovisualisation-using-r-shiny.html#cb141-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb141-29"><a href="web-geovisualisation-using-r-shiny.html#cb141-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb141-30"><a href="web-geovisualisation-using-r-shiny.html#cb141-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb141-31"><a href="web-geovisualisation-using-r-shiny.html#cb141-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-32"><a href="web-geovisualisation-using-r-shiny.html#cb141-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Part 2: Define the server logic</span></span>
+<span id="cb141-33"><a href="web-geovisualisation-using-r-shiny.html#cb141-33" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb141-34"><a href="web-geovisualisation-using-r-shiny.html#cb141-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a reactive function to make all outputs in mainPanel change with the years</span></span>
+<span id="cb141-35"><a href="web-geovisualisation-using-r-shiny.html#cb141-35" aria-hidden="true" tabindex="-1"></a>    year_react <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb141-36"><a href="web-geovisualisation-using-r-shiny.html#cb141-36" aria-hidden="true" tabindex="-1"></a>        yr <span class="ot">&lt;-</span> la.spatial.df[la.spatial.df<span class="sc">$</span>year <span class="sc">==</span> input<span class="sc">$</span>Years,]</span>
+<span id="cb141-37"><a href="web-geovisualisation-using-r-shiny.html#cb141-37" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(yr)</span>
+<span id="cb141-38"><a href="web-geovisualisation-using-r-shiny.html#cb141-38" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb141-39"><a href="web-geovisualisation-using-r-shiny.html#cb141-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># year_react() apply this function in place of la.spatial.df</span></span>
+<span id="cb141-40"><a href="web-geovisualisation-using-r-shiny.html#cb141-40" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>CompactLayeredMapOutput <span class="ot">&lt;-</span> <span class="fu">renderLeaflet</span>({</span>
+<span id="cb141-41"><a href="web-geovisualisation-using-r-shiny.html#cb141-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create risk categories for labels</span></span>
+<span id="cb141-42"><a href="web-geovisualisation-using-r-shiny.html#cb141-42" aria-hidden="true" tabindex="-1"></a>        RiskCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;0.01 to 0.10&quot;</span>, <span class="st">&quot;0.11 to 0.25&quot;</span>, <span class="st">&quot;0.26 to 0.50&quot;</span>, <span class="st">&quot;0.51 to 0.75&quot;</span>, <span class="st">&quot;0.76 to 0.99&quot;</span>, <span class="st">&quot;1.00 (null value)&quot;</span>, <span class="st">&quot;&gt;1.00 to 1.10&quot;</span>, <span class="st">&quot;1.11 to 1.25&quot;</span>, <span class="st">&quot;1.26 to 1.50&quot;</span>, <span class="st">&quot;1.51 to 1.75&quot;</span>, <span class="st">&quot;1.76 to 2.00&quot;</span>, <span class="st">&quot;2.01 to 3.00&quot;</span>, <span class="st">&quot;Above 3.00&quot;</span>)</span>
+<span id="cb141-43"><a href="web-geovisualisation-using-r-shiny.html#cb141-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the colours for the above categories - from extreme blues to extreme reds</span></span>
+<span id="cb141-44"><a href="web-geovisualisation-using-r-shiny.html#cb141-44" aria-hidden="true" tabindex="-1"></a>        RiskPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#33a6fe&quot;</span>,<span class="st">&quot;#65bafe&quot;</span>,<span class="st">&quot;#98cffe&quot;</span>,<span class="st">&quot;#cbe6fe&quot;</span>,<span class="st">&quot;#dfeffe&quot;</span>,<span class="st">&quot;#fef9f9&quot;</span>,<span class="st">&quot;#fed5d5&quot;</span>,<span class="st">&quot;#feb1b1&quot;</span>,<span class="st">&quot;#fe8e8e&quot;</span>,<span class="st">&quot;#fe6a6a&quot;</span>,<span class="st">&quot;#fe4646&quot;</span>,<span class="st">&quot;#fe2424&quot;</span>,<span class="st">&quot;#fe0000&quot;</span>)</span>
+<span id="cb141-45"><a href="web-geovisualisation-using-r-shiny.html#cb141-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb141-46"><a href="web-geovisualisation-using-r-shiny.html#cb141-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Significance label categories and colour scheme</span></span>
+<span id="cb141-47"><a href="web-geovisualisation-using-r-shiny.html#cb141-47" aria-hidden="true" tabindex="-1"></a>        SigCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Significantly low&quot;</span>, <span class="st">&quot;Not Significant&quot;</span>, <span class="st">&quot;Significantly high&quot;</span>)</span>
+<span id="cb141-48"><a href="web-geovisualisation-using-r-shiny.html#cb141-48" aria-hidden="true" tabindex="-1"></a>        SigPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#33a6fe&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#fe0000&quot;</span>)</span>
+<span id="cb141-49"><a href="web-geovisualisation-using-r-shiny.html#cb141-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb141-50"><a href="web-geovisualisation-using-r-shiny.html#cb141-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create one table containing the year, casualties, RelativeRiskCat, Signficance. Here, apply function year_react() here to make dynamic</span></span>
+<span id="cb141-51"><a href="web-geovisualisation-using-r-shiny.html#cb141-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Relative Risk</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">year_react</span>()[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">10</span>)]</span>
+<span id="cb141-52"><a href="web-geovisualisation-using-r-shiny.html#cb141-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Significance</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">year_react</span>()[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">11</span>)]</span>
+<span id="cb141-53"><a href="web-geovisualisation-using-r-shiny.html#cb141-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Local Authority Areas</span><span class="st">`</span> <span class="ot">&lt;-</span> laboundaries</span>
+<span id="cb141-54"><a href="web-geovisualisation-using-r-shiny.html#cb141-54" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb141-55"><a href="web-geovisualisation-using-r-shiny.html#cb141-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create tmap with all maps in one object</span></span>
+<span id="cb141-56"><a href="web-geovisualisation-using-r-shiny.html#cb141-56" aria-hidden="true" tabindex="-1"></a>        InteractiveMap <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(<span class="st">`</span><span class="at">Significance</span><span class="st">`</span>) <span class="sc">+</span></span>
+<span id="cb141-57"><a href="web-geovisualisation-using-r-shiny.html#cb141-57" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tm_fill</span>(<span class="st">&quot;Significance&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Significance Categories&quot;</span>, <span class="at">palette =</span> SigPalette, <span class="at">labels =</span> SigCategorylist) <span class="sc">+</span></span>
+<span id="cb141-58"><a href="web-geovisualisation-using-r-shiny.html#cb141-58" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tm_shape</span>(<span class="st">`</span><span class="at">Relative Risk</span><span class="st">`</span>) <span class="sc">+</span> <span class="co"># map of relative risk</span></span>
+<span id="cb141-59"><a href="web-geovisualisation-using-r-shiny.html#cb141-59" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tm_polygons</span>(<span class="st">&quot;RelativeRiskCat&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Relavtive Risk&quot;</span>, <span class="at">palette =</span> RiskPalette, <span class="at">labels =</span> RiskCategorylist, <span class="at">border.alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb141-60"><a href="web-geovisualisation-using-r-shiny.html#cb141-60" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tm_shape</span>(<span class="st">`</span><span class="at">Local Authority Areas</span><span class="st">`</span>) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">border.alpha =</span> <span class="dv">1</span>, <span class="at">border.col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb141-61"><a href="web-geovisualisation-using-r-shiny.html#cb141-61" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb141-62"><a href="web-geovisualisation-using-r-shiny.html#cb141-62" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Visualise them as a compact map through leaflet</span></span>
+<span id="cb141-63"><a href="web-geovisualisation-using-r-shiny.html#cb141-63" aria-hidden="true" tabindex="-1"></a>        InteractiveMap <span class="ot">&lt;-</span> <span class="fu">tmap_leaflet</span>(InteractiveMap) <span class="sc">%&gt;%</span></span>
+<span id="cb141-64"><a href="web-geovisualisation-using-r-shiny.html#cb141-64" aria-hidden="true" tabindex="-1"></a>            <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>OpenStreetMap, <span class="at">group=</span><span class="st">&quot;Street&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb141-65"><a href="web-geovisualisation-using-r-shiny.html#cb141-65" aria-hidden="true" tabindex="-1"></a>            <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.DarkMatter, <span class="at">group=</span><span class="st">&quot;Dark&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb141-66"><a href="web-geovisualisation-using-r-shiny.html#cb141-66" aria-hidden="true" tabindex="-1"></a>            <span class="fu">addLayersControl</span>(<span class="at">baseGroups =</span> <span class="fu">c</span>(<span class="st">&quot;Street&quot;</span>, <span class="st">&quot;Dark&quot;</span>), <span class="at">overlayGroups=</span><span class="fu">c</span>(<span class="st">&quot;Local Authority Areas&quot;</span>, <span class="st">&quot;Relative Risk&quot;</span>, <span class="st">&quot;Significance&quot;</span>), <span class="at">position=</span><span class="st">&quot;topleft&quot;</span>, <span class="at">options =</span> <span class="fu">layersControlOptions</span>(<span class="at">collapsed =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb141-67"><a href="web-geovisualisation-using-r-shiny.html#cb141-67" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb141-68"><a href="web-geovisualisation-using-r-shiny.html#cb141-68" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Resulting leaflet map</span></span>
+<span id="cb141-69"><a href="web-geovisualisation-using-r-shiny.html#cb141-69" aria-hidden="true" tabindex="-1"></a>        InteractiveMap</span>
+<span id="cb141-70"><a href="web-geovisualisation-using-r-shiny.html#cb141-70" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb141-71"><a href="web-geovisualisation-using-r-shiny.html#cb141-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create histogram for second panel</span></span>
+<span id="cb141-72"><a href="web-geovisualisation-using-r-shiny.html#cb141-72" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>HistogramOutput <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb141-73"><a href="web-geovisualisation-using-r-shiny.html#cb141-73" aria-hidden="true" tabindex="-1"></a>        <span class="fu">hist</span>(<span class="fu">year_react</span>()<span class="sc">$</span>casualties, </span>
+<span id="cb141-74"><a href="web-geovisualisation-using-r-shiny.html#cb141-74" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="fu">paste</span>(<span class="st">&quot;Number of recorded casualties in &quot;</span>, input<span class="sc">$</span>Years, <span class="at">sep=</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb141-75"><a href="web-geovisualisation-using-r-shiny.html#cb141-75" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Distribution of Road Accidents in &quot;</span>, input<span class="sc">$</span>Years, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), <span class="at">breaks =</span> <span class="dv">50</span>)</span>
+<span id="cb141-76"><a href="web-geovisualisation-using-r-shiny.html#cb141-76" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb141-77"><a href="web-geovisualisation-using-r-shiny.html#cb141-77" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create data viewer for third panel</span></span>
+<span id="cb141-78"><a href="web-geovisualisation-using-r-shiny.html#cb141-78" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>DataViewerOutput <span class="ot">&lt;-</span> <span class="fu">renderDataTable</span>({</span>
+<span id="cb141-79"><a href="web-geovisualisation-using-r-shiny.html#cb141-79" aria-hidden="true" tabindex="-1"></a>            DT<span class="sc">::</span><span class="fu">datatable</span>(<span class="fu">year_react</span>()[, <span class="fu">c</span>(<span class="st">&quot;LAD21CD&quot;</span>, <span class="st">&quot;LAD21NM&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;casualties&quot;</span>, <span class="st">&quot;Risks&quot;</span>)], <span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">sScrollY =</span> <span class="st">&#39;75vh&#39;</span>, <span class="at">scrollCollapse =</span> <span class="cn">TRUE</span>), <span class="at">extensions =</span> <span class="fu">list</span>(<span class="st">&quot;Scroller&quot;</span>))</span>
+<span id="cb141-80"><a href="web-geovisualisation-using-r-shiny.html#cb141-80" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb141-81"><a href="web-geovisualisation-using-r-shiny.html#cb141-81" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb141-82"><a href="web-geovisualisation-using-r-shiny.html#cb141-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-83"><a href="web-geovisualisation-using-r-shiny.html#cb141-83" aria-hidden="true" tabindex="-1"></a><span class="co">#Part 3: Run shiny app</span></span>
+<span id="cb141-84"><a href="web-geovisualisation-using-r-shiny.html#cb141-84" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<div class="note">
+<p><strong>Tips for coursework 1</strong>: Run the Bayesian analysis outside of this code. Assemble the resulting data from the analysis into one data frame before pushing it into the above code.y</p>
+</div>
+<p>You should get this really… REALLY basic web application that looks like this:</p>
+<p><img src="images/general/Image_panel1.png" width="100%" style="display: block; margin: auto;" />
+<strong>Panel 1: Risk estimates</strong></p>
+<p><img src="images/general/Image_panel2.png" width="100%" style="display: block; margin: auto;" />
+<strong>Panel 2: Plots</strong></p>
+<p><img src="images/general/Image_panel3.png" width="100%" style="display: block; margin: auto;" />
+<strong>Panel 3: Data viewer</strong></p>
+<p>You can sign-up to <a href="https://www.shinyapps.io" class="uri">https://www.shinyapps.io</a> and deploy the <code>app.R</code> for free but keep in mind that there is a limit of 1GB. If contents of web app exceeds that threshold it would not deploy at all. Upon registering - you will receive a token which you can link your RStudio to the server.</p>
+<p>Deploy by clicking on the <code>Publish</code> blue button icon located at the top-right corner of the script window and only select the <code>app.R</code> script. This tutorial is fairly simple, it should give you an edge on how to make you dashboard for answering the coursework. Good luck!</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesian-models-for-geostatistical-data-using-inla-spde.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/07-WEEK_10.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["GEOG0125.pdf", "GEOG0125.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
