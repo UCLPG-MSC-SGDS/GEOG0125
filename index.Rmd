@@ -26,13 +26,13 @@ You can download the lecture notes and data sets for the practical lesson from t
 
 | **Week** | **Downloads** | **Topics** |
 |:----------------|:------------------------|:--------------------------------------|
-|1 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%201%20Lecture%20-%20Introduction%20to%20Bayesian%20Statistics.pdf) | Introduction to Bayesian Statistics |
-|2 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%202%20Lecture%20-%20Bayesian%20GLMs.pdf) **&** [**Datasets**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%202.zip) | Bayesian Generalised Linear Models (GLMs) |
-|3 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%203%20Lecture%20-%20Bayesian%20GAMs.pdf) **&** [**Datasets**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%203.zip) | Bayesian Generalised Additive Models (GAMs) |
-|7 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf) **&** [**Datasets**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%207.zip) | Bayesian Hierarchical Regression Models |
-|8 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf) **&** [**Datasets**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Bayesian Spatial Risk Models |
-|9 | **Lecture Notes** & **Datasets** | Spatiotemproal Modelling |
-|10 | [**Lecture Notes**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/GEOG0125%20Week%209%20Lecture%20-%20Research%20Methodology%20and%20Study%20Design.pdf) | Study Design, Research & Revision  |
+|1 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%201%20Lecture%20-%20Introduction%20to%20Bayesian%20Statistics.pdf) | Introduction to Bayesian Statistics |
+|2 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%202%20Lecture%20-%20Bayesian%20GLMs.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%202.zip) | Bayesian Generalised Linear Models (GLMs) |
+|3 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%203%20Lecture%20-%20Bayesian%20GAMs.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%203.zip) | Bayesian Generalised Additive Models (GAMs) |
+|7 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%207.zip) | Bayesian Hierarchical Regression Models |
+|8 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Bayesian Spatial Risk Models |
+|9 | **[Lecture Notes]** **[Datasets]** | Spatiotemproal Modelling |
+|10 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Research%20Methodology%20and%20Study%20Design.pdf) | Study Design, Research & Revision  |
 
 **Solutions**: **[Week 1]** | **[Week 2]** | **[Week 3]** | **[Week 7]** | **[Week 8]** | **[Week 9]**
 
