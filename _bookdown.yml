@@ -1,0 +1,17 @@
+book_filename: "GEOG0125"
+rmd_files:
+- index.rmd
+- Readings.Rmd
+- Installation.Rmd
+- Intro_to_RStan.Rmd
+- Intro_to_Bayesian_Regression_in_Stan.Rmd
+- Intro_to_Bayesian_GAMs_in_brms.Rmd
+- Intro_to_Bayesian_Hierarchicals.Rmd
+- Intro_to_Bayesian_ICAR_Regression.Rmd
+- Intro_to_Research_Methods_and_Study_Design.Rmd
+
+language:
+  ui:
+    chapter_name: ""
+delete_merged_file: true
+output_dir: "docs"

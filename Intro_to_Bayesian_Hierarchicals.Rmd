@@ -1,0 +1,223 @@
+# Bayesian Hierarchical Regression Models
+
+## Lecture recording (Length: 48:25 minutes)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_msstream('6d37ef45-05fb-4fce-a847-ffd3e84c5546', height=400) %>% use_align('center')
+```
+
+<div class="note">
+**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/6d37ef45-05fb-4fce-a847-ffd3e84c5546). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
+</div>
+
+## Introduction
+
+This week we will learn how to perform Hierarchical regression modelling within a **Bayesian** framework. These models are useful and much superior to the generic regressions especially if there is an hierarchical structure to the data. This artefact must be taken into account off to ensure statistical robustness. We will focus on implementing 2-level hierarchical regressions with examples on **random-intercept-only** model as these are quite simple to pull off in **Stan**. Let us begin.
+
+### Datasets & setting up the work directory 
+
+Go to your folder **GEOG0125** and create a sub folder called "**Week 7**" within the **GEOG0125** folder. Here, we will store all our R & Stan scripts as well as datasets. Set your work directory to **Week 7's** folder.
+
+For Windows, the code for setting the work directory will be:
+
+```{r, eval = FALSE}
+setwd("C:/Users/AccountName/Desktop/GEOG0125/Week 7")
+```
+
+For MAC, the code for setting the work directory will be:
+
+```{r, eval = FALSE}
+setwd("/Users/AccountName/Desktop/GEOG0125/Week 7")
+```
+
+The dataset for this practical are:
+
+- `Maths attainment and activity study.csv`
+- `Pregnancies and hospital data.csv`
+
+The dataset were going to start of with is the `Maths attainment and activity study.csv`. Let us load this dataset into memory:
+
+```{r, eval=FALSE}
+# load up the data
+Maths_dataset <- read.csv("`Maths attainment and activity study.csv`")
+```
+
+### Loading packages
+
+We need to load the installed packages including `rstan` and `tidybayes`:
+
+```{r, eval = FALSE}
+# load up packages
+library('rstan')
+library('tidybayes')
+```
+
+As usual, configure Stan:
+
+```{r, eval = FALSE}
+# configure Stan
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+```
+
+## Data preparation and set-up for Bayesian analysis in Stan
+
+We are going to fit a 2-level hierarchical model on a continous outcome i.e., `MathScore` and see how the following independent variables i.e., `ActiveTime` and `Supportive` impact it. The `Maths_dataset` contains a total of 200 students evenly clustered into 4 classrooms `ClassroomID` (i.e., 50 students in each classroom). The students have a unique student number i.e., `StudentID` and classroom number the `GroupID` column.
+
+We want fit an `random-intercept-only` to explore the difference in the classroom's performance in maths, as well as how `ActiveTime` and `Supportive` impact it. To perform the 2-level hierarchical model, we need to perform the dataset accordingly by extract right information from the `Maths_dataset` data frame for the Stan script as follows:
+
+- `N` = total number of students (level 1);
+- `CL` = maximum number of group (level 2);
+- `ClassroomID` = the list of all the group numbers that align with the students;
+- `k` = the total k-number of indepedent variables to be included in the model (k=2) because we want to use `ActiveTime` and `Supportive`;
+- `MathScore` = we want to extract the dependent variable;
+- `ActiveTime` = we want to extract the first independent variable;
+- `Supportive` = we want to extract the second independent variable;
+
+We can condense this information into list() object in line of code as our dataset for **Stan** to compile:
+
+```{r, eval=FALSE}
+stan.dataset <- list(N=nrow(Maths_dataset), 
+	CL=max(unique(Maths_dataset$GroupID)),
+	ClassroomID=as.integer(Maths_dataset$GroupID),
+	k=2,
+	MathScore=Maths_dataset$Math,
+	ActiveTime=Maths_dataset$ActiveTime,
+	Supportive=Maths_dataset$Support
+	)
+```
+
+At this point, the dataset is fully prepared and ready to go. Let's create our **Stan script** for running a **2-level Multilevel linear regression** within a Bayesian framework.
+
+### Creating a script to run a 2-level Multilevel linear regression in Stan
+
+We will need `Data`, `Parameters` and `Model` blocks only for this analysis. Recall that the `Data`, `Parameters` and `Model` block **must** be specified for any regression analysis to work. 
+
+**FIRST STEP:** We specify the total number of observations `int N` as well as the number of independent variables `int k` as an integer in the **data** block. We define our `MathScore` outcome as a `vector` of size `N`, and we do the same for the two independent variables `ActiveTime` and `Supportive`. We need to specific the number of classrooms for which the students are clustered in through `CL` and `ClassroomID`. 
+
+```{r, eval=FALSE, highlight=FALSE}
+data {
+	int<lower = 0> N;       // Number of students
+	int<lower = 0> CL;      // Total number of classrooms
+	int<lower = 0, upper = CL> ClassroomID[N];    // Aligning the classroom ID number to the student ID
+	int<lower = 0> k;                   // Specify total number of independent variables to be used in model
+	real<lower = 0> ActiveTime[N];      // First independent variable
+	real<lower = 0> Supportive[N];      // Second independent variable
+	real<lower = 0> MathScore[N];       // Outcome or dependent variable
+}
+```
+
+**SECOND STEP:** For the **parameters** block, here we will need to specify the name of the **fixed effect part** of regression i.e., `gamma00` and the level-1 coefficients `beta` for  our independent variables. We need to also specify the random effect part of the model as well i.e., `u0,1 u0,2, u0,3 and u0,4` as a vector by linking this to the four number of classes. Finally, we need to specify the `sigma_error` and `group_error` as the variance (or residual errors on group- and individual-level) as we must estimate this!
+
+Here is the code:
+
+```{r, eval=FALSE, highlight=FALSE}
+data {
+	int<lower = 0> N;                             // Number of students
+	int<lower = 0> CL;                            // Total number of classrooms
+	int<lower = 0, upper = CL> ClassroomID[N];    // Aligning the classroom ID number to the student ID
+	int<lower = 0> k;                             // Specify total number of independent variables to be used in model
+	real<lower = 0> ActiveTime[N];                // First independent variable
+	real<lower = 0> Supportive[N];                // Second independent variable
+	real<lower = 0> MathScore[N];                 // Outcome or dependent variable
+}
+
+parameters {
+	real gamma00;                                 // Declare the fixed part (intercept)
+	vector[k] beta;                               // Declare the fixed part (coefficients for ActiveTime and Supportive)
+	vector[CL] u;                                 // Declare the random effects u0,1 u0,2, u0,3 and u0,4
+	real<lower = 0> sigma_error;                  // Declare the random part (level-1)
+	real<lower = 0> group_error;                  // Declare the random part (level-2)
+}
+```
+
+**THIRD AND LAST STEP:** We build our likelihood function and specify the priors for each parameter under the **model** block. We are using a typical linear model as we are assuming there's some linear relationship:
+
+```{r, eval=FALSE, highlight=FALSE}
+data {
+	int<lower = 0> N;                             // Number of students
+	int<lower = 0> CL;                            // Total number of classrooms
+	int<lower = 0, upper = CL> ClassroomID[N];    // Aligning the classroom ID number to the student ID
+	int<lower = 0> k;                             // Specify total number of independent variables to be used in model
+	real<lower = 0> ActiveTime[N];                // First independent variable
+	real<lower = 0> Supportive[N];                // Second independent variable
+	real<lower = 0> MathScore[N];                 // Outcome or dependent variable
+}
+
+parameters {
+	real gamma00;                                 // Declare the fixed part (intercept)
+	vector[k] beta;                               // Declare the fixed part (coefficients for ActiveTime and Supportive)
+	vector[CL] u;                                 // Declare the random effects u0,1 u0,2, u0,3 and u0,4
+	real<lower = 0> sigma_error;                  // Declare the random part (level-1)
+	real<lower = 0> group_error;                  // Declare the random part (level-2)
+}
+
+model {
+	real mu;
+	u ~ normal(0, group_error);
+	gamma00 ~ normal(0, 20);
+	beta ~ normal(0, 20);
+	
+	for (i in 1:N) {
+		mu = gamma00 + u[ClassroomID[i]] + beta[1]*ActiveTime[i] + beta[2]*Supportive[i];
+		MathScore[i] ~ normal(mu, sigma_error);
+	}
+}
+```
+
+<div class="note">
+Let's save the script as `Maths_Activity_study.stan`. Now, we can compile and run it through RStudio to get our estimates coefficients and random intercept results. 
+</div>
+
+### Compiling our Stan code for Hierarchical Modelling
+
+Now, let us turn our attention to RStudio. Using the `stan()` to compile the save script to obtain the posterior estimation of the parameters in our hierarchical model:
+
+```{r, eval = FALSE}
+# Start the clock
+ptm <- proc.time()
+# compile linear regression model for now
+bayesian.hierarchical.model = stan("Maths_Activity_study.stan", data=stan.dataset, iter=10000, chains=6, verbose = FALSE)
+# Stop the clock
+proc.time() - ptm
+```
+
+**Output summary table**
+```{r, eval=FALSE, highlight=FALSE}
+bayesian.hierarchical.model
+
+Inference for Stan model: anon_model.
+6 chains, each with iter=10000; warmup=5000; thin=1; 
+post-warmup draws per chain=5000, total post-warmup draws=30000.
+
+               mean se_mean    sd    2.5%     25%     50%     75%   97.5% n_eff Rhat
+gamma00       33.24    0.38 24.31  -18.18   16.03   35.80   54.05   68.28  4194    1
+beta[1]       11.44    0.01  0.78    9.90   10.92   11.45   11.97   12.98 18542    1
+beta[2]        3.18    0.01  0.83    1.57    2.63    3.18    3.75    4.82 18370    1
+u[1]          44.92    0.38 24.33    9.76   24.10   42.30   62.08   96.37  4182    1
+u[2]          37.23    0.38 24.33    2.07   16.42   34.62   54.48   88.78  4192    1
+u[3]          21.59    0.38 24.32  -13.54    0.79   18.96   38.76   73.01  4195    1
+u[4]          28.08    0.38 24.32   -7.09    7.28   25.49   45.30   79.49  4190    1
+sigma_error    3.34    0.00  0.17    3.03    3.22    3.33    3.45    3.69 17383    1
+group_error   56.16    0.73 58.88    8.34   20.69   40.83   71.25  197.13  6566    1
+lp__        -353.89    0.02  2.14 -359.01 -355.06 -353.55 -352.34 -350.73  9263    1
+
+Samples were drawn using NUTS(diag_e) at Fri Mar  3 06:03:06 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).
+```
+
+Here is the **interpretation**:
+
+- `gamma00` is the global mean (or average) in the population under study. This means after for accounting for clustering, on average the students' marks in maths are **33.24 (95% CrI: -18.18 to 68.28)**. Note that the `u[1]` is the random-effect for the intercept for Class 1, its value is 44.92 (i.e., positive value). By added this to 33.24, we get the intercept that is specific to Class 1. Similarly, for `u[2]` by adding 37.23 to 33.24, we obtain the intercept this is specific to Class 2, and the rest is so on, and so forth.
+- `beta[1]` is the level-1 coefficient for `ActiveTime`. This means after for accounting for clustering, its yields a positive increase on average for maths scores the more time is spent on active learning. This increase is significant since the credibility intervals exclude the null value of zero. 
+- `beta[2]`, in the same vein, the same can be said for amount of one-to-one support a student receives from a teacher. 
+- `Variances` for level-1 and level-2 can used to explain the model's performance by taking the `56.16/(56.16 + 3.34) = 0.943`. Here, it's `0.943` or `94.3%`, this quantity is actually known as the **Intraclass Correlation Coefficient (ICC)**. This the proportion of explained variation in the 2-level hierarchical model when accounting for group clustering. Here, the value is quite high and so its a good model. Anything close to 1 (100%) is good and bad vice versa.  
+
+## Task
+
+**Try your hand on this problem in Stan**: Build a random intercept logit model using data on 1060 births to 501 mothers. The outcome of interest is whether the `birth` was delivered in a hospital or elsewhere. The predictors include the log of income `loginc`, the `distance` to the nearest hospital distance, and two indicators of mothers’s education: `dropout` for less than high school and college for college `graduate`, so high school or some college is the reference cell.
+
+Have ago at building this model.
+

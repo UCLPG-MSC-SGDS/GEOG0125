@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="3 Bayesian Generalised Linear Models (GLMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-bayesian-statistics.html"/>
+<link rel="next" href="bayesian-generalised-additive-models-gams.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#timetable-and-key-locations"><i class="fa fa-check"></i>Timetable and key locations</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact-details"><i class="fa fa-check"></i>Contact details</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html"><i class="fa fa-check"></i>Reading List</a>
+<ul>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-1-introduction-to-bayesian-inference"><i class="fa fa-check"></i>Week 1: Introduction to Bayesian Inference</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-2-bayesian-generalised-linear-models-glms"><i class="fa fa-check"></i>Week 2: Bayesian Generalised Linear Models (GLMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-3-bayesian-generalised-additive-models-gams"><i class="fa fa-check"></i>Week 3: Bayesian Generalised Additive Models (GAMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-7-bayesian-hierarchical-regression-models"><i class="fa fa-check"></i>Week 7: Bayesian Hierarchical Regression Models</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-8-spatial-intrinsic-conditional-autoregressive-modelling-icar"><i class="fa fa-check"></i>Week 8: Spatial Intrinsic Conditional Autoregressive Modelling (ICAR)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-9-bayesian-updating-for-spatiotemporal-areal-analysis"><i class="fa fa-check"></i>Week 9: Bayesian Updating for Spatiotemporal Areal Analysis</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#excellent-incredibly-useful-tutorial-videos-for-learning-stan-code"><i class="fa fa-check"></i>Excellent &amp; Incredibly Useful Tutorial Videos for Learning Stan Code</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#what-is-stan"><i class="fa fa-check"></i><b>1.1</b> What is Stan?</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#installation-of-r-rstudio"><i class="fa fa-check"></i><b>1.2</b> Installation of R &amp; RStudio</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-mac-users"><i class="fa fa-check"></i><b>1.2.1</b> Installation process for MAC users</a></li>
+<li class="chapter" data-level="1.2.2" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-windows-users"><i class="fa fa-check"></i><b>1.2.2</b> Installation process for Windows users</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#installation-of-rstan-or-stan"><i class="fa fa-check"></i><b>1.3</b> Installation of <code>rstan</code> (or Stan)</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#installation-of-other-relevant-r-packages"><i class="fa fa-check"></i><b>1.4</b> Installation of other relevant R-packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes"><i class="fa fa-check"></i><b>2.1</b> Lecture recording (Length: 59:50 minutes)</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction"><i class="fa fa-check"></i><b>2.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#learning-outcomes"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 38:23 minutes)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>2.3</b> Basic building blocks I: About Stan Programming</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.1</b> Opening a Stan Script in RStudio</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Basic structure of a Stan script in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations"><i class="fa fa-check"></i><b>2.4</b> Basic building blocks II: Data types and constraint declarations</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model"><i class="fa fa-check"></i><b>2.5</b> Basic building blocks III: Developing our model</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>2.6</b> Basic building blocks IV: Compiling our Stan code in RStudio</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation"><i class="fa fa-check"></i><b>2.7</b> Basic building blocks V: Extract posterior samples and interpretation</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information"><i class="fa fa-check"></i><b>2.8</b> Basic building blocks VI: Updating our prediction with new information</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#tasks"><i class="fa fa-check"></i><b>2.9</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-1---low-level-arsenic-poisoning-in-cornwall-uk"><i class="fa fa-check"></i><b>2.9.1</b> Task 1 - Low-level arsenic poisoning in Cornwall, UK</a></li>
+<li class="chapter" data-level="2.9.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-2---body-mass-index-bmi-problem"><i class="fa fa-check"></i><b>2.9.2</b> Task 2 - Body mass index (BMI) problem</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html"><i class="fa fa-check"></i><b>3</b> Bayesian Generalised Linear Models (GLMs)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes"><i class="fa fa-check"></i><b>3.1</b> Lecture recording (Length: 45:46 minutes)</a></li>
+<li class="chapter" data-level="3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#introduction-1"><i class="fa fa-check"></i><b>3.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1"><i class="fa fa-check"></i><b>3.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes"><i class="fa fa-check"></i><b>3.2.2</b> Demonstration recording (Length: 52:52 minutes)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1"><i class="fa fa-check"></i><b>3.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>3.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.3</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.3.1</b> Selecting the appropriate Poisson model</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan"><i class="fa fa-check"></i><b>3.3.2</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan"><i class="fa fa-check"></i><b>3.3.3</b> Creating a script to run a Negative Binomial Poisson regression in Stan</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>3.3.4</b> Compiling our Stan code in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>3.4.1</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.4.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan"><i class="fa fa-check"></i><b>3.4.2</b> Creating a script to run a logistic regression in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#tasks-1"><i class="fa fa-check"></i><b>3.5</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-1---obesity-and-fastfoods-in-london"><i class="fa fa-check"></i><b>3.5.1</b> Task 1 - Obesity and Fastfoods in London</a></li>
+<li class="chapter" data-level="3.5.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-2---factors-affecting-house-prices-in-london-2015"><i class="fa fa-check"></i><b>3.5.2</b> Task 2 - Factors affecting house prices in London (2015)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html"><i class="fa fa-check"></i><b>4</b> Bayesian Generalised Additive Models (GAMs)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 38:12 minutes)</a></li>
+<li class="chapter" data-level="4.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2"><i class="fa fa-check"></i><b>4.2.2</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model"><i class="fa fa-check"></i><b>4.3</b> Implementing a Bayesian Generalised Additive Model</a></li>
+<li class="chapter" data-level="4.4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode"><i class="fa fa-check"></i><b>4.4</b> Printing Stan code from <code>brms::stancode()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html"><i class="fa fa-check"></i><b>5</b> Bayesian Hierarchical Regression Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-4825-minutes"><i class="fa fa-check"></i><b>5.1</b> Lecture recording (Length: 48:25 minutes)</a></li>
+<li class="chapter" data-level="5.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-3"><i class="fa fa-check"></i><b>5.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>5.2.2</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-2"><i class="fa fa-check"></i><b>5.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan"><i class="fa fa-check"></i><b>5.3.1</b> Creating a script to run a 2-level Multilevel linear regression in Stan</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>5.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task"><i class="fa fa-check"></i><b>5.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>6</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes"><i class="fa fa-check"></i><b>6.1</b> Lecture recording (Length: 40:58 minutes)</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.3</b> Learning outcomes</a></li>
+<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes"><i class="fa fa-check"></i><b>6.4</b> Demonstration recording (Length: 51:46 minutes)</a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start"><i class="fa fa-check"></i><b>6.5</b> Before we start…</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.5.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.5.2</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.6</b> Data preparation in RStudio</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.6.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR smoothed model</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model"><i class="fa fa-check"></i><b>6.7.1</b> Defining the ICAR component of the Spatial model</a></li>
+<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script"><i class="fa fa-check"></i><b>6.7.2</b> Adding the blocks in our ICAR Stan script</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for Spatial ICAR modelling</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="6.8.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.8.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="6.8.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.8.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="6.8.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.8.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.9</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>7</b> Research Methods, Study Design and Revision</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>7.1</b> Lecture (Length: 51:03 minutes)</a></li>
+<li class="chapter" data-level="7.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>7.2</b> Revision (Length: 17:56 minutes)</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian-generalised-linear-models-glms" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Bayesian Generalised Linear Models (GLMs)<a href="bayesian-generalised-linear-models-glms.html#bayesian-generalised-linear-models-glms" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-recording-length-4546-minutes" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Lecture recording (Length: 45:46 minutes)<a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://web.microsoftstream.com/embed/video/47194349-59c3-427e-bf68-0eaf860a735c?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
+</div>
+</div>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/47194349-59c3-427e-bf68-0eaf860a735c"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="introduction-1" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Introduction<a href="bayesian-generalised-linear-models-glms.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This week we will learn how to perform Generalised Linear Modelling (GLMs) within a <strong>Bayesian</strong> framework. We will use quantitative data focused on crime victimization in Nigeria which have resulted in a number of interesting publications and see its application to a real study problem. Recall, the all forms of linear models only take continuous outcome as a dependent variable, this feature of a linear model can be limiting when have data following either a binary, count or categorical structure. A GLM typically consist of three components which allows a user to fit different dependent variable types:</p>
+<ul>
+<li>A <strong>probability distribution</strong> to specify the dependent variable’s <strong>conditional distribution</strong>;</li>
+<li>A <strong>linear predictor</strong>, which is the function of the predictors (or <strong>independent variables</strong>);</li>
+<li>A <strong>link function</strong> that connects point 1 to point 2.</li>
+</ul>
+<p>These models are often applied within a frequentist way of thinking; however, these are also easily estimated in a Bayesian setting. We going to take it a step further and show you how one can use <a href="https://mc-stan.org"><strong>Stan</strong></a> to encode various regression model types from a <strong>Bayesian</strong> perspective. We will specifically focus on models with likelihood functions that follows either a <strong>Binomial</strong> or <strong>Poisson</strong> distribution as they are used for risk assessments.</p>
+<div id="learning-outcomes-1" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Learning outcomes<a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Today’s session aims to formally introduce you to <strong>Stan</strong> programming for <strong>Bayesian regression models</strong>. By the end of this session, you should be able to perform the following:</p>
+<ul>
+<li>How to select the appropriate <strong>likelihood function</strong> specification for the <strong>Bayesian</strong> regression model i.e., <strong>binomial</strong> or <strong>Poisson</strong> to model either <strong>binary</strong>, or <strong>count</strong> outcomes respectively;</li>
+<li>How to fully develop <strong>Stan</strong> code for such regression models with the appropriate <strong>prior (i.e., uninformative, weak or informative) specification</strong> for various parameters;</li>
+<li>How to interpret the various types of coefficients e.g., <strong>Odds Ratios (OR)</strong> and <strong>Risk Ratios (RR)</strong>;</li>
+</ul>
+<p>You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.</p>
+</div>
+<div id="demonstration-recording-length-5252-minutes" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Demonstration recording (Length: 52:52 minutes)<a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://web.microsoftstream.com/embed/video/16375863-45fc-4ed1-9456-97e0d5cfe1f1?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
+</div>
+</div>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/16375863-45fc-4ed1-9456-97e0d5cfe1f1"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="datasets-setting-up-the-work-directory-1" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Datasets &amp; setting up the work directory<a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 2</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 2’s</strong> folder.</p>
+<p>For Windows, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="bayesian-generalised-linear-models-glms.html#cb29-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 2&quot;</span>)</span></code></pre></div>
+<p>For MAC, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="bayesian-generalised-linear-models-glms.html#cb30-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 2&quot;</span>)</span></code></pre></div>
+<p>The dataset for this practical are:</p>
+<ul>
+<li><code>Street Burglary Data in Nigeria.csv</code></li>
+<li><code>Household victimisation data in Nigeria.csv</code></li>
+<li><code>London LSOA 2015 data.csv</code></li>
+</ul>
+<div class="note">
+<p><strong>Context about the dataset:</strong> Conventional analyses of crime, based on European research models, are often poorly suited to assessing the specific dimensions of criminality in Africa. The data used in today’s practical is an anonymised excerpt from the <a href="https://www.urbantransformations.ox.ac.uk/project/development-frontiers-in-crime-livelihoods-and-urban-poverty-in-nigeria-fclp/"><strong>Development Frontiers in Crime, Livelihoods and Urban Poverty in Nigeria (FCLP)</strong></a> project that aimed to provide an alternative framework for understanding the specific drivers of criminality in a West African urban context. This research project used a mixed-methods approach for combining statistical modeling, geovisualisation and ethnography, and attempted to situate insecurity and crime against a broader backdrop of rapid urban growth, seasonal migration, youth unemployment and informality. The study typically provided researchers both in Nigeria and internationally a richer and more nuanced evidence base on the particular dynamics of crime from an African perspective resulting a number of publications: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0143622818311949"><strong>[1]</strong></a>, <a href="https://link.springer.com/article/10.1007/s10940-019-09448-3"><strong>[2]</strong></a> and <a href="https://academic.oup.com/edited-volume/34642/chapter-abstract/295177150?redirectedFrom=fulltext&amp;login=false"><strong>[3]</strong></a> .</p>
+</div>
+</div>
+<div id="loading-and-installing-packages-1" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Loading and installing packages<a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will need to load the following packages from previous practicals:</p>
+<ul>
+<li><code>rstan</code>: a package that enables <code>R</code> to interface with <code>Stan</code>. It provides R the functions to code, parse, compile, test, estimate, and analyze Bayesian models through <code>Stan</code> in R.</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="bayesian-generalised-linear-models-glms.html#cb31-1" tabindex="-1"></a><span class="co"># Load the packages with library()</span></span>
+<span id="cb31-2"><a href="bayesian-generalised-linear-models-glms.html#cb31-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;rstan&#39;</span>)</span></code></pre></div>
+<p>Note that when you load <code>rstan</code> from cran you will see some recommendations on using multiple cores for speeding the process. For the best experience, we highly recommend using this code:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="bayesian-generalised-linear-models-glms.html#cb32-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb32-2"><a href="bayesian-generalised-linear-models-glms.html#cb32-2" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>This tells RStudio to use multiple core for parallel process whenever Stan is being implemented. Every time you want to use Stan - make sure to load <code>parallel::detectCores()</code> and <code>rstan_options</code> code.</p>
+</div>
+</div>
+<div id="poisson-regression-modelling" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Poisson Regression Modelling<a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We are going to fit a Poisson-type model on some an outcome that contain discrete counts of households reporting to have been victims of burglary. Let us load the data into RStudio can call the object <code>burglaryDataset</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="bayesian-generalised-linear-models-glms.html#cb33-1" tabindex="-1"></a><span class="co"># Set your own directory using setwd() function</span></span>
+<span id="cb33-2"><a href="bayesian-generalised-linear-models-glms.html#cb33-2" tabindex="-1"></a><span class="co"># Load data into RStudio using read.csv(). The spreadsheet is stored in the object called &#39;burglaryData&#39;</span></span>
+<span id="cb33-3"><a href="bayesian-generalised-linear-models-glms.html#cb33-3" tabindex="-1"></a>burglaryDataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Street Burglary Data in Nigeria.csv&quot;</span>)</span>
+<span id="cb33-4"><a href="bayesian-generalised-linear-models-glms.html#cb33-4" tabindex="-1"></a><span class="fu">names</span>(burglaryDataset)</span></code></pre></div>
+<div id="selecting-the-appropriate-poisson-model" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Selecting the appropriate Poisson model<a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are three different types of Poisson models:</p>
+<ul>
+<li>Standard Poisson regression</li>
+<li>Negative Binomial Poisson regression</li>
+<li>Zero-Inflated Poisson regression</li>
+</ul>
+<p>The implementation of one of these models are highly dependent on how the frequency distribution of the count response variable are displayed. If it resembles a normal curve - then use the standard version. Otherwise, use the <strong>Negative Binomial Poisson regression</strong> if there is any evidence of over-dispersion. When there is a an inflation of zero counts in the dataset, you will have to use the <strong>Zero-Inflated model</strong> to account for the problem.</p>
+<p><img src="images/general/Plot_test_poisson.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Let’s check the frequency distribution of the outcome variable <code>Burglary</code> which corresponds to the number of reported instances a property on a street was burgled. You can simply use a histogram to examine its distribution:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="bayesian-generalised-linear-models-glms.html#cb34-1" tabindex="-1"></a><span class="fu">hist</span>(burglaryDataset<span class="sc">$</span>Burglary, <span class="at">breaks=</span><span class="dv">20</span>)</span></code></pre></div>
+<p>The plot show evidence of over-dispersion. It indicates that streets in Kaduna have less frequency of burglaries. Here, we consider using a <strong>Negative Binomial Poisson regression model</strong> over the standard and zero-inflated versions (i.e., scenario 1 and 3). Now, that we know the model type, let prepare the dataset of our independent variables.</p>
+</div>
+<div id="data-preparation-and-set-up-for-bayesian-analysis-in-stan" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Data preparation and set-up for Bayesian analysis in Stan<a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Stan</strong> is able to handle continuous variable nicely; but for some strange reasons it’s absolutely terrible with categorical variables! It can only handle them as dummy variables - meaning that the categorical variable must be split into a series of binary variables. You will see what I mean in a second. The following variables: <code>choice</code>, <code>integration</code>, <code>business activities</code> and <code>socioeconomic deprivation</code>, at a street-level are examples of categorical variables which needs to be converted to dummy variables.</p>
+<p>They need to be make as a factor using the <code>as.factor()</code> function before implementing the <code>model.matrix()</code> to apply the conversion. Here is the code:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bayesian-generalised-linear-models-glms.html#cb35-1" tabindex="-1"></a><span class="co"># change the variable from numeric to a factor variable using the as.factor() function</span></span>
+<span id="cb35-2"><a href="bayesian-generalised-linear-models-glms.html#cb35-2" tabindex="-1"></a>burglaryDataset<span class="sc">$</span>choice_q<span class="ot">&lt;-</span> <span class="fu">as.factor</span>(burglaryDataset<span class="sc">$</span>choice_q)</span>
+<span id="cb35-3"><a href="bayesian-generalised-linear-models-glms.html#cb35-3" tabindex="-1"></a>burglaryDataset<span class="sc">$</span>integ_q <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(burglaryDataset<span class="sc">$</span>integ_q)</span>
+<span id="cb35-4"><a href="bayesian-generalised-linear-models-glms.html#cb35-4" tabindex="-1"></a>burglaryDataset<span class="sc">$</span>business_q <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(burglaryDataset<span class="sc">$</span>business_q)</span>
+<span id="cb35-5"><a href="bayesian-generalised-linear-models-glms.html#cb35-5" tabindex="-1"></a>burglaryDataset<span class="sc">$</span>socioeconomic_q <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(burglaryDataset<span class="sc">$</span>socioeconomic_q)</span></code></pre></div>
+<p>Next, we use the <code>model.matrix()</code> function to apply the conversion:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="bayesian-generalised-linear-models-glms.html#cb36-1" tabindex="-1"></a><span class="co"># extract all the important independent variables to be used in model</span></span>
+<span id="cb36-2"><a href="bayesian-generalised-linear-models-glms.html#cb36-2" tabindex="-1"></a>SelectedVariables <span class="ot">&lt;-</span> burglaryDataset[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>)]</span>
+<span id="cb36-3"><a href="bayesian-generalised-linear-models-glms.html#cb36-3" tabindex="-1"></a><span class="co"># convert only variable that are factor variables</span></span>
+<span id="cb36-4"><a href="bayesian-generalised-linear-models-glms.html#cb36-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> connectivity <span class="sc">+</span> choice_q <span class="sc">+</span> integ_q <span class="sc">+</span> business_q <span class="sc">+</span> socioeconomic_q, <span class="at">data =</span> SelectedVariables)</span>
+<span id="cb36-5"><a href="bayesian-generalised-linear-models-glms.html#cb36-5" tabindex="-1"></a><span class="co"># see conversion</span></span>
+<span id="cb36-6"><a href="bayesian-generalised-linear-models-glms.html#cb36-6" tabindex="-1"></a><span class="fu">View</span>(X)</span></code></pre></div>
+<p>Drop any column that is the first category - i.e., for instance choice_q1 is present. This needs to be dropped as its the referent category.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="bayesian-generalised-linear-models-glms.html#cb37-1" tabindex="-1"></a><span class="co"># drop the column that has choice_q1 i.e., column three only</span></span>
+<span id="cb37-2"><a href="bayesian-generalised-linear-models-glms.html#cb37-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> X[,<span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div>
+<p>Our independent variables are stored in the matrix <code>X</code>. Will use this specify this in the models when programming it in <strong>Stan</strong>. Now, we need to define our dependent variable <code>y</code> i.e., number of reported burglaries on a street, as well as the total numbers of houses on a street as an offset - these two quantities will also need to be specified in our <code>Stan</code> code.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="bayesian-generalised-linear-models-glms.html#cb38-1" tabindex="-1"></a><span class="co"># declare the dependent variable </span></span>
+<span id="cb38-2"><a href="bayesian-generalised-linear-models-glms.html#cb38-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> burglaryDataset<span class="sc">$</span>burglary</span>
+<span id="cb38-3"><a href="bayesian-generalised-linear-models-glms.html#cb38-3" tabindex="-1"></a><span class="co"># declare totalhouse column as the denominators to be imputed as an offset in the model</span></span>
+<span id="cb38-4"><a href="bayesian-generalised-linear-models-glms.html#cb38-4" tabindex="-1"></a>denominators <span class="ot">&lt;-</span> burglaryDataset<span class="sc">$</span>totalhouses</span></code></pre></div>
+<p>Now, we need to condense this information into list() object as our data for <strong>Stan</strong> to read:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="bayesian-generalised-linear-models-glms.html#cb39-1" tabindex="-1"></a>stan.negbin.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="fu">length</span>(y), <span class="at">X=</span>X, <span class="at">k=</span><span class="fu">ncol</span>(X), <span class="at">phi_scale=</span><span class="fl">0.9</span>, <span class="at">y=</span>y, <span class="at">denominators=</span>denominators)</span></code></pre></div>
+<div class="note">
+<p><strong>Important Notes:</strong></p>
+<ul>
+<li><code>N = length(y)</code> we are extracting the number of observations instead of fully typing the number. Here, <code>N</code> is <code>743</code></li>
+<li><code>X=X</code>: This is the set of independent variables we created earlier on with the dummy variables etc., It should contain 16 columns.</li>
+<li><code>k=ncol(X)</code>: We are extracting the number of columns from <code>X</code></li>
+<li><code>phi_scale = 0.9</code>: Here, we specify our over-dispersion parameter as <code>1</code></li>
+<li><code>y=y</code>: Here, we defined the outcome variable (i.e., counts of burglaries) as <code>y</code></li>
+<li><code>denominators=denominators</code>: Here, we define the <code>totalhouse</code> to be the denominators in the model</li>
+</ul>
+</div>
+<p>At this point, the dataset is fully prepared are ready to go. Let’s create our <strong>Stan script</strong> for running a <strong>Negative Binomial Poisson regression</strong> within a Bayesian framework.</p>
+</div>
+<div id="creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Creating a script to run a Negative Binomial Poisson regression in Stan<a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A typical <strong>Stan</strong> program for a regression onsist of the following 5 <strong>blocks</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Data</li>
+<li>Transformed data</li>
+<li>Parameters</li>
+<li>Transformed parameters</li>
+<li>Model</li>
+<li>Generated quantities</li>
+</ol>
+<p>The <code>Data</code>, <code>Parameters</code> and <code>Model</code> block <strong>must</strong> be specified for the regression to work. But there will be additional things that we need to transform such as the inputted data, parameters and our estimated coefficients for our relative risk (RR). Let’s start with the <code>data</code> block:</p>
+<p><strong>FIRST STEP:</strong> We specify the total number of observations <code>int N</code> as well as the number of independent variables <code>int k</code> as an integer in the <strong>data</strong> block. We define our <code>y</code> as a <code>vector</code> of size <code>N</code> holding all the values for our dependent variable. We also define our independent variables a matrix <code>X</code> with <code>N</code> rows and <code>k</code> columns (i.e, <code>matrix[N, k] X</code>). Lastly, we define our overdispersion parameter as a real number <code>real</code> and call it <code>phi_scale</code>. We need to define the <code>denominators</code> as a <code>vector</code>:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}</code></pre>
+<p>Next we need to apply a <code>log()</code> transformation on to the <code>denominators</code> to change it as an offset for the model. Here, we are making a direct change to the data; hence, we can use the <code>transformed data</code> block:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}
+
+transformed data {
+    vector[N] offset = log(denominators);
+}</code></pre>
+<p><strong>SECOND STEP:</strong> For the <strong>parameters</strong> block, here we will need to specify the name of the regression intercept <code>alpha</code> and the coefficients for all our independent variables. Here, we call defined it as a vector of size <code>k</code>. The <code>reciporcal_phi</code> is a precision estimate which we will need as a prior in our model.</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}
+
+transformed data {
+    vector[N] offset = log(denominators);
+}
+
+parameters {
+    real alpha;          // intercept i.e., overall risk of burglary in population
+    vector[k] beta;      // regression coefficients
+    real reciporcal_phi; // overdispersion 
+}</code></pre>
+<p><strong>THIRD STEP:</strong> We define our regression model in the <strong>transformed parameters</strong> block. <code>mu</code> represents the predicted number of burglaries, which is a vector of <code>N</code> size (i.e., each street). The <code>alpha + beta*X</code> is the regression model. <code>phi</code> is the over-dispersion parameter accounted for in the model:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}
+
+transformed data {
+    vector[N] offset = log(denominators);
+}
+
+parameters {
+    real alpha;          // intercept i.e., overall risk of burglary in population
+    vector[k] beta;      // regression coefficients
+    real reciporcal_phi; // overdispersion 
+}
+
+transformed parameters {
+    vector[N] mu;                    // create mu our estimator for model
+    real phi;                        // define precision parameter
+    mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
+    phi = 1./reciporcal_phi;         // precision (akin to variation)
+}</code></pre>
+<p><strong>FOURTH STEP:</strong> We build our likelihood function and specify the priors for each parameter under the <strong>model</strong> block:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}
+
+transformed data {
+    vector[N] offset = log(denominators);
+}
+
+parameters {
+    real alpha;          // intercept i.e., overall risk of burglary in population
+    vector[k] beta;      // regression coefficients
+    real reciporcal_phi; // overdispersion 
+}
+
+transformed parameters {
+    vector[N] mu;                    // create mu our estimator for model
+    real phi;                        // define precision parameter
+    mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
+    phi = 1./reciporcal_phi;         // precision (akin to variation)
+}
+
+model {
+    reciporcal_phi ~ cauchy(0, phi_scale);  // prior for reciporcal_phi using half-cauchy
+    alpha ~ normal(0, 10);                  // prior for intercept i.e., normal with mean 0 and ±10 variance
+    beta ~ normal(0, 2.5);                  // prior for beta i.e., normal with mean 0 and ±2.5 variance
+    y ~ neg_binomial_2_log(mu, phi);        // likelihood function for burglaries neg_binomial_2_log()
+}</code></pre>
+<p><strong>LAST STEP:</strong> We instruct Stan on the parameters we want to report. We want them a <strong>relative risk ratio (RR)</strong> or should we say a <strong>crime risk ratio (CRR)</strong>. We use the <strong>generated quantities</strong> block to obtain the estimates we need i.e., exponentiation pf the intercept and coefficients:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 1&gt; N;    // Number of observations
+    int&lt;lower = 1&gt; k;    // Number of columns in X matrix contain independent variables and intercept column
+    int y[N];            // Dependent variable - Number of reported burglaries on a street segment
+    matrix[N,k] X;       // Model matrix for our independent variables
+    real phi_scale;
+    vector&lt;lower = 1&gt;[N] denominators;
+}
+
+transformed data {
+    vector[N] offset = log(denominators);
+}
+
+parameters {
+    real alpha;          // intercept i.e., overall risk of burglary in population
+    vector[k] beta;      // regression coefficients
+    real reciporcal_phi; // overdispersion 
+}
+
+transformed parameters {
+    vector[N] mu;                    // create mu our estimator for model
+    real phi;                        // define precision parameter
+    mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
+    phi = 1./reciporcal_phi;         // precision (akin to variation)
+}
+
+model {
+    reciporcal_phi ~ cauchy(0, phi_scale);  // prior for reciporcal_phi using half-cauchy
+    alpha ~ normal(0, 10);                  // prior for intercept i.e., normal with mean 0 and ±10 variance
+    beta ~ normal(0, 2.5);                  // prior for beta i.e., normal with mean 0 and ±2.5 variance
+    y ~ neg_binomial_2_log(mu, phi);        // likelihood function for burglaries neg_binomial_2_log()
+}
+
+generated quantities {
+    vector[N] eta;            // vector containing our predicted number of burglaries for each street
+    vector[k] crr;            // vector containing our estimated crime risk ratios for each variable
+    real alpha_crr;      
+    alpha_crr = exp(alpha);
+    eta = exp(mu);            // overall risk ratio
+    crr = exp(beta);          // risk ratio for each variable
+}</code></pre>
+<div class="note">
+<p><strong>COMPLIMENTS:</strong> Well done - you are doing well. You have coded your first Bayesian regression. Let’s save the script, and then compile and run it through RStudio to get our crime risk ratio (<strong>CRR</strong>) results.</p>
+</div>
+</div>
+<div id="compiling-our-stan-code-in-rstudio" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Compiling our Stan code in RStudio<a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now, let us turn our attention to RStudio. Using the <code>stan()</code> to compile and obtain the posterior estimation of the overall risk and crime risk ratios (CRR) for the each independent variable:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bayesian-generalised-linear-models-glms.html#cb46-1" tabindex="-1"></a><span class="co"># the directory needs to be set to where you saved the dataset and Stan script</span></span>
+<span id="cb46-2"><a href="bayesian-generalised-linear-models-glms.html#cb46-2" tabindex="-1"></a>crr.negbin.model <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Script for NegBin model.stan&quot;</span>, <span class="at">data=</span>stan.negbin.dataset, <span class="at">iter=</span><span class="dv">5000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-3"><a href="bayesian-generalised-linear-models-glms.html#cb46-3" tabindex="-1"></a><span class="co"># take roughly 1-2 minutes to compile</span></span></code></pre></div>
+<p>We can print the results accordingly:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bayesian-generalised-linear-models-glms.html#cb47-1" tabindex="-1"></a><span class="co"># reports the crime rate ratio (relative risk)</span></span>
+<span id="cb47-2"><a href="bayesian-generalised-linear-models-glms.html#cb47-2" tabindex="-1"></a><span class="fu">print</span>(crr.negbin.model, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;alpha_crr&quot;</span>, <span class="st">&quot;crr&quot;</span>, <span class="st">&quot;lp__&quot;</span>))</span>
+<span id="cb47-3"><a href="bayesian-generalised-linear-models-glms.html#cb47-3" tabindex="-1"></a><span class="co"># take roughly 1-2 minutes to compile</span></span></code></pre></div>
+<p><strong>Output summary table</strong></p>
+<pre class="text"><code>Inference for Stan model: anon_model.
+3 chains, each with iter=5000; warmup=2500; thin=1; 
+post-warmup draws per chain=2500, total post-warmup draws=7500.
+
+              mean se_mean   sd     2.5%    97.5% n_eff Rhat
+alpha_crr     0.12    0.00 0.04     0.07     0.21  3289    1
+crr[1]        1.00    0.00 0.00     1.00     1.00 10232    1
+crr[2]        1.07    0.00 0.03     1.01     1.13  5844    1
+crr[3]        0.96    0.00 0.21     0.60     1.44  5245    1
+crr[4]        1.03    0.00 0.25     0.63     1.60  4469    1
+crr[5]        0.85    0.00 0.28     0.44     1.52  4323    1
+crr[6]        0.99    0.00 0.22     0.64     1.48  5065    1
+crr[7]        0.90    0.00 0.20     0.57     1.36  4608    1
+crr[8]        0.85    0.00 0.21     0.51     1.34  4607    1
+crr[9]        0.93    0.00 0.25     0.53     1.50  4888    1
+crr[10]       0.70    0.00 0.17     0.42     1.10  4924    1
+crr[11]       1.15    0.00 0.27     0.71     1.78  4700    1
+crr[12]       1.21    0.00 0.29     0.73     1.88  4495    1
+crr[13]       1.23    0.00 0.29     0.76     1.88  3971    1
+crr[14]       0.95    0.00 0.22     0.59     1.46  4427    1
+crr[15]       0.95    0.00 0.24     0.56     1.49  4366    1
+crr[16]       1.25    0.01 0.32     0.74     1.98  4097    1
+lp__      -1023.04    0.06 3.03 -1029.81 -1018.04  2670    1
+
+Samples were drawn using NUTS(diag_e) at Thu Jan 19 22:33:08 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+<p>Here is the messing part - <strong>interpretation</strong>. Before anything, note that <code>alpha_crr</code> corresponds to the intercept. Each <code>crr[1]</code>, <code>crr[2]</code>,… and so on corresponds to the ordering of the columns’ in <code>X</code> matrix containing the independent variables. If you run this code of <code>colnames(X)</code> - it will print this list of names:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="bayesian-generalised-linear-models-glms.html#cb49-1" tabindex="-1"></a><span class="fu">colnames</span>(X)</span></code></pre></div>
+<p><strong>Output</strong></p>
+<pre class="text"><code> [1] &quot;distance&quot;         &quot;connectivity&quot;     &quot;choice_q2&quot;        &quot;choice_q3&quot;        &quot;choice_q4&quot;       
+ [6] &quot;integ_q2&quot;         &quot;integ_q3&quot;         &quot;integ_q4&quot;         &quot;business_q2&quot;      &quot;business_q3&quot;     
+[11] &quot;business_q4&quot;      &quot;business_q5&quot;      &quot;socioeconomic_q2&quot; &quot;socioeconomic_q3&quot; &quot;socioeconomic_q4&quot;
+[16] &quot;socioeconomic_q5&quot;</code></pre>
+<ul>
+<li><code>alpha_crr</code> is the risk ratio for the intercept</li>
+<li><code>crr[1]</code> corresponds to the continuous distance variable</li>
+<li><code>crr[2]</code> corresponds to the continuous connectivity variable</li>
+<li><code>crr[3]</code>, <code>crr[4]</code> and <code>crr[5]</code> corresponds to the 2nd, 3rd, 4th categories for <code>choice</code> variable</li>
+<li><code>crr[6]</code>, <code>crr[7]</code> and <code>crr[8]</code> corresponds to the 2nd, 3rd, 4th categories for <code>integration</code> variable</li>
+<li><code>crr[9]</code>, <code>crr[10]</code>, <code>crr[11]</code> and <code>crr[12]</code> corresponds to the 2nd, 3rd, 4th and 5th categories for <code>business activities</code> variable</li>
+<li><code>crr[13]</code>, <code>crr[14]</code>, <code>crr[15]</code> and <code>crr[16]</code> corresponds to the 2nd, 3rd, 4th and 5th categories for <code>socioeconomic deprivation</code> variable</li>
+</ul>
+<div class="note">
+<p><strong>Interpretation of interesting coefficients</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Connectivity (cont.)</strong>: For a unit increase in the number of connections on a street segment significantly increases the risk of burglaries by 7% (CRR 1.07, 95% CrI: 1.01–1.13). or you can say the risk for burglaries in relation to a unit increase in the number of connections on a street are 1.07 times higher.</p></li>
+<li><p><strong>Business activities (cat.)</strong>: Relative to street segments will lower levels of business activities, streets that are in the highest quintiles (i.e., higher levels of commerce) are more likely to report burglaries (4th category: CRR 1.15, 95% CrI: 0.71-1.78; 5th category: CRR 1.21, 95% CrI: 0.73-1.88)</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="logistic-regression-modelling" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Logistic Regression Modelling<a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-preparation-and-set-up-for-bayesian-analysis-in-stan-1" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Data preparation and set-up for Bayesian analysis in Stan<a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Running a logistic regression is very easy. It has household-level information regarding the security status of a property and victimisation (i.e., victim of burglary). Here are the list of variables:</p>
+<ul>
+<li><code>Gate</code>: Is the property gated? (1 = yes, 0 = no)</li>
+<li><code>Garage</code>: Does the property contains a garage? (1 = yes, 0 = no)</li>
+<li><code>Outdoor_sitting</code>: Does property have an outdoor sitting? (1 = yes, 0 = no)</li>
+<li><code>Security_lights</code>: Are security lights attached to property? (1 = yes, 0 = no)</li>
+<li><code>BurglaryStatus</code>: Whether the household has been a victim of burglary (1 = yes, 0 = no) - outcome variable.</li>
+</ul>
+<p>Let’s load this dataset i.e., <code>Household victimisation data in Nigeria.csv</code> and attempt to implement a logistic regression model using the <code>Bernoulli</code> likelihood function on a binary dependent variable that is <code>BurglaryStatus</code> to assess the impacts of properties protected by some form of security.</p>
+<p>Let’s get straight to the preparing the dataset for <strong>Stan</strong>:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="bayesian-generalised-linear-models-glms.html#cb51-1" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb51-2"><a href="bayesian-generalised-linear-models-glms.html#cb51-2" tabindex="-1"></a>houselevel.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Household victimisation data in Nigeria.csv&quot;</span>)</span>
+<span id="cb51-3"><a href="bayesian-generalised-linear-models-glms.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="bayesian-generalised-linear-models-glms.html#cb51-4" tabindex="-1"></a><span class="co"># declare binary variables as factor variables</span></span>
+<span id="cb51-5"><a href="bayesian-generalised-linear-models-glms.html#cb51-5" tabindex="-1"></a>houselevel.data<span class="sc">$</span>Gate<span class="ot">&lt;-</span> <span class="fu">as.factor</span>(houselevel.data<span class="sc">$</span>Gate)</span>
+<span id="cb51-6"><a href="bayesian-generalised-linear-models-glms.html#cb51-6" tabindex="-1"></a>houselevel.data<span class="sc">$</span>Garage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(houselevel.data<span class="sc">$</span>Garage)</span>
+<span id="cb51-7"><a href="bayesian-generalised-linear-models-glms.html#cb51-7" tabindex="-1"></a>houselevel.data<span class="sc">$</span>Outdoor_sitting <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(houselevel.data<span class="sc">$</span>Outdoor_sitting)</span>
+<span id="cb51-8"><a href="bayesian-generalised-linear-models-glms.html#cb51-8" tabindex="-1"></a>houselevel.data<span class="sc">$</span>Security_lights <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(houselevel.data<span class="sc">$</span>Security_lights)</span>
+<span id="cb51-9"><a href="bayesian-generalised-linear-models-glms.html#cb51-9" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="bayesian-generalised-linear-models-glms.html#cb51-10" tabindex="-1"></a><span class="co"># create a matrix for the independent variables</span></span>
+<span id="cb51-11"><a href="bayesian-generalised-linear-models-glms.html#cb51-11" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Gate <span class="sc">+</span> Garage <span class="sc">+</span> Outdoor_sitting <span class="sc">+</span> Security_lights, <span class="at">data =</span> houselevel.data)</span>
+<span id="cb51-12"><a href="bayesian-generalised-linear-models-glms.html#cb51-12" tabindex="-1"></a></span>
+<span id="cb51-13"><a href="bayesian-generalised-linear-models-glms.html#cb51-13" tabindex="-1"></a><span class="co"># declare the dependent variable </span></span>
+<span id="cb51-14"><a href="bayesian-generalised-linear-models-glms.html#cb51-14" tabindex="-1"></a>y <span class="ot">&lt;-</span> houselevel.data<span class="sc">$</span>BurglaryStatus</span>
+<span id="cb51-15"><a href="bayesian-generalised-linear-models-glms.html#cb51-15" tabindex="-1"></a></span>
+<span id="cb51-16"><a href="bayesian-generalised-linear-models-glms.html#cb51-16" tabindex="-1"></a><span class="co"># compile all information into list() object for Stan to compile in logistic regression script</span></span>
+<span id="cb51-17"><a href="bayesian-generalised-linear-models-glms.html#cb51-17" tabindex="-1"></a>stan.logistic.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="fu">length</span>(y), <span class="at">X=</span>X, <span class="at">k=</span><span class="fu">ncol</span>(X), <span class="at">y=</span>y)</span></code></pre></div>
+</div>
+<div id="creating-a-script-to-run-a-logistic-regression-in-stan" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Creating a script to run a logistic regression in Stan<a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s get straight to writing the logistic regression script in <strong>Stan</strong>.</p>
+<pre class="text"><code>// Stan script for running logistic regression model
+
+data {
+    int&lt;lower = 1&gt; N;
+    int&lt;lower = 1&gt; k;
+    int&lt;lower = 0, upper = 1&gt; y [N];      // Burglary status 1 = yes, 0 = no
+    matrix[N, k] X;
+}
+
+parameters {
+    real alpha;
+    vector[k] beta;
+}
+
+model {
+    y ~ bernoulli_logit(alpha + X*beta);   // fit a logistic regression using a bernoulli_logit()
+    alpha ~ normal(0, 10);
+    beta ~ normal(0, 2.5);
+}
+
+generated quantities {
+    vector[k] orr;
+    real alpha_orr;
+    alpha_orr = exp(alpha);
+    orr = exp(beta);
+}</code></pre>
+<p>Now, save the script with an appropriate name, and we can compile the code in RStudio with <code>stan()</code> function:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="bayesian-generalised-linear-models-glms.html#cb53-1" tabindex="-1"></a>orr.logistic.model <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Script for logit model.stan&quot;</span>, <span class="at">data=</span>stan.logistic.dataset, <span class="at">iter=</span><span class="dv">5000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Print the results for risk of burglaries in relation to target hardening security features:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="bayesian-generalised-linear-models-glms.html#cb54-1" tabindex="-1"></a><span class="co"># reports the odds ratios (OR)</span></span>
+<span id="cb54-2"><a href="bayesian-generalised-linear-models-glms.html#cb54-2" tabindex="-1"></a><span class="fu">print</span>(orr.logistic.model, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;alpha_orr&quot;</span>, <span class="st">&quot;orr&quot;</span>, <span class="st">&quot;lp__&quot;</span>))</span></code></pre></div>
+<p><strong>Output summary table</strong></p>
+<pre class="text"><code>Inference for Stan model: anon_model.
+3 chains, each with iter=5000; warmup=2500; thin=1; 
+post-warmup draws per chain=2500, total post-warmup draws=7500.
+
+              mean se_mean   sd     2.5%    97.5% n_eff Rhat
+alpha_orr     0.16    0.00 0.01     0.13     0.19  4591    1
+orr[1]        1.06    0.00 0.12     0.85     1.31  5589    1
+orr[2]        1.04    0.00 0.23     0.64     1.56  6729    1
+orr[3]        1.08    0.00 0.13     0.85     1.35  6637    1
+orr[4]        1.22    0.00 0.13     0.99     1.49  5937    1
+lp__      -1268.99    0.03 1.60 -1272.95 -1266.93  3375    1
+
+Samples were drawn using NUTS(diag_e) at Fri Jan 20 00:35:46 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+<p>Here is the messing part again - <strong>interpretation</strong>. Before anything, note that <code>alpha_orr</code> corresponds to the intercept. Each <code>orr[1]</code>, <code>orr[2]</code>,… and so on corresponds to the ordering of the columns’ in <code>X</code> matrix containing the independent variables. If you run<code>colnames(X)</code> it will print this list:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="bayesian-generalised-linear-models-glms.html#cb56-1" tabindex="-1"></a><span class="fu">colnames</span>(X)</span></code></pre></div>
+<p><strong>Printing list of variable names in X matrix</strong></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="bayesian-generalised-linear-models-glms.html#cb57-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;Gate&quot;</span> <span class="st">&quot;Garage&quot;</span> <span class="st">&quot;Outdoor_sitting&quot;</span> <span class="st">&quot;Security_lights&quot;</span></span></code></pre></div>
+<ul>
+<li><code>alpha_orr</code> is the odds ratio for the intercept</li>
+<li><code>orr[1]</code> corresponds to the category in <code>Gate = 1</code> that means it has a gate</li>
+<li><code>orr[2]</code> corresponds to the category in <code>Garage = 1</code> that means it has a garage</li>
+<li><code>orr[3]</code> corresponds to the category in <code>Outdoor_sitting = 1</code> that means it has a outdoor settings to property</li>
+<li><code>orr[4]</code> corresponds to the category in <code>Security lights = 1</code> that means it has a security lights outside its property</li>
+</ul>
+<div class="note">
+<p><strong>Interpretation of interesting coefficients</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Gated properties (cat.)</strong>: Compared to properties without gates, those with this security feature are targeted and hence 6% more likely to be a victim of burglary (OR: 1.06, 95% CrI 0.85-1.31).</li>
+<li><strong>Properties with Garages (cat.)</strong>: Compared to properties without garages, those with this feature are targeted and hence 4% more likely to be a victim of burglary (OR: 1.04, 95% CrI 0.64-1.56).</li>
+<li><strong>Properties with Outdoor sittings (cat.)</strong>: Compared to properties with no outdoor features, those with this feature are targeted and hence 8% more likely to be a victim of burglary (OR: 1.08, 95% CrI 0.85-1.35).</li>
+<li><strong>Properties with Security lightings (cat.)</strong>: Compared to properties with no secruity lights, those with this feature are targeted and hence 22% more likely to be a victim of burglary (OR: 1.22, 95% CrI 0.99-1.49).</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="tasks-1" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Tasks<a href="bayesian-generalised-linear-models-glms.html#tasks-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="task-1---obesity-and-fastfoods-in-london" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Task 1 - Obesity and Fastfoods in London<a href="bayesian-generalised-linear-models-glms.html#task-1---obesity-and-fastfoods-in-london" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Accessibility to junk food restaurants in young adolescents especially after school hours is a growing cause for concern. Especially, now that many young adults have a sedentary lifestyle; hence obesity rates among this population is increasing in the UK.</p>
+<p><strong>Try this problem in Stan</strong>: Use the dataset <code>Obesity and Fastfoods in MSOAs data.csv</code> to determine the links between prevalence of obesity in high school students and density of fast food (cheap) restaurant and deprivation in MSOAs in London. Implement a Bayesian GLM using <strong>Stan</strong> code.</p>
+<p><strong>Variable names:</strong></p>
+<ul>
+<li><code>SEQID</code>: ID number for row</li>
+<li><code>MSOA11CD</code>: Unique identifier for MSOA area</li>
+<li><code>MSOA11NM</code>: Name of the MSOA area</li>
+<li><code>OBESE</code>: Number of child identified as obese in MSOA in London</li>
+<li><code>TOTAL</code>: Total number of children surveyed for BMI measurements</li>
+<li><code>IMDMSOA</code>: Area-level socioeconomic deprivation score (higher scores means higher deprivation and vice versa)</li>
+<li><code>RESTCAT</code>: Categorical variable for classifying an MSOA in terms of density of junk/cheap fast food outlets restaurants: <code>1 = 1 to 10</code>, <code>2= 11 to 25</code>, <code>3= 26 to 50</code> and <code>4= 51 to 300</code>.</li>
+</ul>
+<p><strong>HINT</strong>: You might want to consider using the following functions: <code>binomial_logit()</code> or <code>binomial()</code> in the <strong>model</strong> block and reporting the <strong>odd ratios</strong> using the <strong>generated quantities</strong> block. Also, use the <code>as.factor()</code> for independent variables that are categorical. You can put all independent variables into a matrix using the code using the <code>model.matrix()</code> function. You might want to consider computing the exceedance probabilities for the <strong>odd ratios</strong> using the threshold of 1.</p>
+</div>
+<div id="task-2---factors-affecting-house-prices-in-london-2015" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Task 2 - Factors affecting house prices in London (2015)<a href="bayesian-generalised-linear-models-glms.html#task-2---factors-affecting-house-prices-in-london-2015" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Try this problem in Stan</strong>: Use <code>London LSOA 2015 data.csv</code> data pertained house prices in 2015, and assess it’s relationship with public transport accessibility (PTA), average income and socioeconomic deprivation (IMD) as the independent variables. Implement a Bayesian GLM using Stan code.</p>
+<p><strong>Variables names:</strong></p>
+<ul>
+<li><code>LSOACODE</code>: Unique identification code for the geographic area</li>
+<li><code>AVEPRICE</code>: (Dependent variable) Average house price estimated for the LSOA in 2015</li>
+<li><code>AVEINCOME</code>: Estimated average annual income for households within an LSOA in 2015</li>
+<li><code>IMDSCORE</code>: Deprivation score for an LSOA in 2015</li>
+<li><code>PTAINDEX</code>: Measures levels of access/connectivity to public transport</li>
+</ul>
+<p><strong>HINT</strong>: You might want to consider using the following functions: <code>normal()</code> in the <strong>model</strong> block. You might want to consider computing the exceedance probabilities for the <strong>coefficients</strong> using the threshold of 0.</p>
+<div class="note">
+<p><strong>Note:</strong> Solutions will be made available later today.</p>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-bayesian-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesian-generalised-additive-models-gams.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/Intro_to_Bayesian_Regression_in_Stan.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="1 Getting started | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="reading-list.html"/>
+<link rel="next" href="introduction-to-bayesian-statistics.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#timetable-and-key-locations"><i class="fa fa-check"></i>Timetable and key locations</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact-details"><i class="fa fa-check"></i>Contact details</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html"><i class="fa fa-check"></i>Reading List</a>
+<ul>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-1-introduction-to-bayesian-inference"><i class="fa fa-check"></i>Week 1: Introduction to Bayesian Inference</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-2-bayesian-generalised-linear-models-glms"><i class="fa fa-check"></i>Week 2: Bayesian Generalised Linear Models (GLMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-3-bayesian-generalised-additive-models-gams"><i class="fa fa-check"></i>Week 3: Bayesian Generalised Additive Models (GAMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-7-bayesian-hierarchical-regression-models"><i class="fa fa-check"></i>Week 7: Bayesian Hierarchical Regression Models</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-8-spatial-intrinsic-conditional-autoregressive-modelling-icar"><i class="fa fa-check"></i>Week 8: Spatial Intrinsic Conditional Autoregressive Modelling (ICAR)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-9-bayesian-updating-for-spatiotemporal-areal-analysis"><i class="fa fa-check"></i>Week 9: Bayesian Updating for Spatiotemporal Areal Analysis</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#excellent-incredibly-useful-tutorial-videos-for-learning-stan-code"><i class="fa fa-check"></i>Excellent &amp; Incredibly Useful Tutorial Videos for Learning Stan Code</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#what-is-stan"><i class="fa fa-check"></i><b>1.1</b> What is Stan?</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#installation-of-r-rstudio"><i class="fa fa-check"></i><b>1.2</b> Installation of R &amp; RStudio</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-mac-users"><i class="fa fa-check"></i><b>1.2.1</b> Installation process for MAC users</a></li>
+<li class="chapter" data-level="1.2.2" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-windows-users"><i class="fa fa-check"></i><b>1.2.2</b> Installation process for Windows users</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#installation-of-rstan-or-stan"><i class="fa fa-check"></i><b>1.3</b> Installation of <code>rstan</code> (or Stan)</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#installation-of-other-relevant-r-packages"><i class="fa fa-check"></i><b>1.4</b> Installation of other relevant R-packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes"><i class="fa fa-check"></i><b>2.1</b> Lecture recording (Length: 59:50 minutes)</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction"><i class="fa fa-check"></i><b>2.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#learning-outcomes"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 38:23 minutes)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>2.3</b> Basic building blocks I: About Stan Programming</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.1</b> Opening a Stan Script in RStudio</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Basic structure of a Stan script in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations"><i class="fa fa-check"></i><b>2.4</b> Basic building blocks II: Data types and constraint declarations</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model"><i class="fa fa-check"></i><b>2.5</b> Basic building blocks III: Developing our model</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>2.6</b> Basic building blocks IV: Compiling our Stan code in RStudio</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation"><i class="fa fa-check"></i><b>2.7</b> Basic building blocks V: Extract posterior samples and interpretation</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information"><i class="fa fa-check"></i><b>2.8</b> Basic building blocks VI: Updating our prediction with new information</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#tasks"><i class="fa fa-check"></i><b>2.9</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-1---low-level-arsenic-poisoning-in-cornwall-uk"><i class="fa fa-check"></i><b>2.9.1</b> Task 1 - Low-level arsenic poisoning in Cornwall, UK</a></li>
+<li class="chapter" data-level="2.9.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-2---body-mass-index-bmi-problem"><i class="fa fa-check"></i><b>2.9.2</b> Task 2 - Body mass index (BMI) problem</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html"><i class="fa fa-check"></i><b>3</b> Bayesian Generalised Linear Models (GLMs)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes"><i class="fa fa-check"></i><b>3.1</b> Lecture recording (Length: 45:46 minutes)</a></li>
+<li class="chapter" data-level="3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#introduction-1"><i class="fa fa-check"></i><b>3.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1"><i class="fa fa-check"></i><b>3.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes"><i class="fa fa-check"></i><b>3.2.2</b> Demonstration recording (Length: 52:52 minutes)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1"><i class="fa fa-check"></i><b>3.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>3.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.3</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.3.1</b> Selecting the appropriate Poisson model</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan"><i class="fa fa-check"></i><b>3.3.2</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan"><i class="fa fa-check"></i><b>3.3.3</b> Creating a script to run a Negative Binomial Poisson regression in Stan</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>3.3.4</b> Compiling our Stan code in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>3.4.1</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.4.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan"><i class="fa fa-check"></i><b>3.4.2</b> Creating a script to run a logistic regression in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#tasks-1"><i class="fa fa-check"></i><b>3.5</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-1---obesity-and-fastfoods-in-london"><i class="fa fa-check"></i><b>3.5.1</b> Task 1 - Obesity and Fastfoods in London</a></li>
+<li class="chapter" data-level="3.5.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-2---factors-affecting-house-prices-in-london-2015"><i class="fa fa-check"></i><b>3.5.2</b> Task 2 - Factors affecting house prices in London (2015)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html"><i class="fa fa-check"></i><b>4</b> Bayesian Generalised Additive Models (GAMs)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 38:12 minutes)</a></li>
+<li class="chapter" data-level="4.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2"><i class="fa fa-check"></i><b>4.2.2</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model"><i class="fa fa-check"></i><b>4.3</b> Implementing a Bayesian Generalised Additive Model</a></li>
+<li class="chapter" data-level="4.4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode"><i class="fa fa-check"></i><b>4.4</b> Printing Stan code from <code>brms::stancode()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html"><i class="fa fa-check"></i><b>5</b> Bayesian Hierarchical Regression Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-4825-minutes"><i class="fa fa-check"></i><b>5.1</b> Lecture recording (Length: 48:25 minutes)</a></li>
+<li class="chapter" data-level="5.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-3"><i class="fa fa-check"></i><b>5.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>5.2.2</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-2"><i class="fa fa-check"></i><b>5.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan"><i class="fa fa-check"></i><b>5.3.1</b> Creating a script to run a 2-level Multilevel linear regression in Stan</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>5.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task"><i class="fa fa-check"></i><b>5.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>6</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes"><i class="fa fa-check"></i><b>6.1</b> Lecture recording (Length: 40:58 minutes)</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.3</b> Learning outcomes</a></li>
+<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes"><i class="fa fa-check"></i><b>6.4</b> Demonstration recording (Length: 51:46 minutes)</a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start"><i class="fa fa-check"></i><b>6.5</b> Before we start…</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.5.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.5.2</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.6</b> Data preparation in RStudio</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.6.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR smoothed model</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model"><i class="fa fa-check"></i><b>6.7.1</b> Defining the ICAR component of the Spatial model</a></li>
+<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script"><i class="fa fa-check"></i><b>6.7.2</b> Adding the blocks in our ICAR Stan script</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for Spatial ICAR modelling</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="6.8.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.8.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="6.8.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.8.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="6.8.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.8.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.9</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>7</b> Research Methods, Study Design and Revision</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>7.1</b> Lecture (Length: 51:03 minutes)</a></li>
+<li class="chapter" data-level="7.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>7.2</b> Revision (Length: 17:56 minutes)</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="getting-started" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Getting started<a href="getting-started.html#getting-started" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-stan" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is Stan?<a href="getting-started.html#what-is-stan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="images/general/Stan_logo.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><a href="https://mc-stan.org"><strong>Stan</strong></a> is an interface for several statistical software packages (e.g., RStudio, Python, Julia, Stata, and MATLAB) which allows the user to perform state-of-the-art statistical modelling within a Bayesian framework. For R users, the package is called <code>rstan</code> which interfaces Stan and RStudio.</p>
+<p>The focus of this workshop will be solely on Stan and RStudio. We will show you how one can develop and compile Stan scripts for Bayesian inference through RStudio to perform basic parameter estimation, as well as a wide range of regression-based techniques starting with the simplest univariable linear models and its different families to the more advanced multivariable spatial risk models.</p>
+<p>Before all that, let us install the appropriate software. The next section will guide you through the installation process.</p>
+<div class="warning">
+<p><strong>Important note</strong>: The installation process is a bit involved for all the wrong reasons. For some strange reason, <strong>Stan</strong> (i.e., <code>rstan</code> package) works perfectly with any previous release of <strong>R</strong> that’s <strong>version 4.2.x</strong>. However, <code>rstan</code> don’t seem to work properly with the latest builds for <strong>R</strong> that’s <strong>version 4.3.x</strong>. So to avoid grief, do not install any version of <strong>R</strong> that’s <strong>version 4.3.x</strong>.</p>
+<p>If you have <strong>R 4.3.x</strong> installed. Please remove it, as well as we recommend the removal of any historical folders that are R-program-based hidden in your machine as safety measure to avoid any conflicts with the things we are about to install.</p>
+</div>
+</div>
+<div id="installation-of-r-rstudio" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Installation of R &amp; RStudio<a href="getting-started.html#installation-of-r-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="images/general/RBase_RStudio_logo.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>This section takes you through the installation process for <a href="https://www.r-project.org"><strong>R (Base)</strong></a> and <a href="https://www.rstudio.com"><strong>RStudio</strong></a> on MAC and Windows.</p>
+<div id="installation-process-for-mac-users" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Installation process for MAC users<a href="getting-started.html#installation-process-for-mac-users" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You will need to have the following software installed for the <code>rstan</code> package to work on MAC.</p>
+<ol style="list-style-type: decimal">
+<li>R (version 4.2.3)</li>
+<li>RStudio (version 2023.06.0-421)</li>
+<li>XQuartz (version 2.8.5)</li>
+<li>XCode (version 14.3.1 (14E300c))</li>
+</ol>
+<p>If you already have R and RStudio installed, then the first thing to do is to remove them entirely from our MAC machine. Please follow the guidance outlined here.</p>
+<p><strong>Removal steps:</strong></p>
+<p>Before deleting R and RStudio. We need to find this folder called <strong>“R.framework”</strong> on our MAC PC and delete it from our machine entirely, so that when we install R (version 4.2.3) and <code>rstan</code> there would not be any crashes or conflicts between the versions, packages etc.,</p>
+<p>To find the <strong>“R.framework”</strong> folder on a MAC PC:</p>
+<ol style="list-style-type: decimal">
+<li>Go your <strong>“Finder”</strong> application and click it.</li>
+<li>Click <strong>“Go”</strong> in the menu bar.</li>
+<li>Click <strong>“Go to Folder”</strong> on the pull down menu and a panel will appear.</li>
+</ol>
+<p><img src="images/general/MAC_removal_steps_1-3.png" width="100%" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Type <code>/Library/Frameworks/</code> in the panel and press the return (or enter) button in the search panel to go the <strong>“Frameworks”</strong> folder.</li>
+</ol>
+<p><img src="images/general/MAC_removal_steps_4.png" width="100%" style="display: block; margin: auto;" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>From the list of folders under <strong>“Frameworks”</strong>. Highlight <strong>“R.framework”</strong> folder and right-click then delete it.</li>
+<li>Go back to your <strong>Applications</strong> folder and delete <strong>R</strong> and <strong>RStudio</strong> apps and empty out your <strong>Bin</strong></li>
+</ol>
+<p><strong>Installation of R (4.2.3) and RStudio (2023.06.0-421) on MAC:</strong></p>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="34%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>OS User type</strong></th>
+<th><strong>R (Base)</strong></th>
+<th><strong>RStudio Desktop</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MAC</td>
+<td><a href="https://cran.ma.imperial.ac.uk/bin/macosx/base/R-4.2.3.pkg"><strong>R-4.2.3.pkg</strong></a></td>
+<td><a href="https://download1.rstudio.org/electron/macos/RStudio-2023.06.0-421.dmg"><strong>RStudio-2023.06.0-421.dmg</strong></a></td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li>Download the file for <strong>R-4.2.3.pkg</strong> attached in the table above.</li>
+<li>Double-click the downloaded file (i.e., <strong>R-4.2.3.pkg</strong>) and follow the steps to complete the installation.</li>
+<li>Now, we can download the file (i.e., <code>.dmg</code>) for <strong>RStudio</strong> from the link provided in the above table.</li>
+<li>Double-click the downloaded file (i.e., <strong>RStudio-2023.06.0-421.dmg</strong>) and then drag and drop the RStudio icon into the <strong>Applications</strong> folder to complete the installation.</li>
+</ol>
+<p><strong>Installation of XQuartz (2.8.5):</strong></p>
+<p>Some functions in R and Stan require some of the libraries from <strong>XQuartz</strong> to function properly on your MAC.</p>
+<ol style="list-style-type: decimal">
+<li>Download the latest version of <strong>XQuartz</strong> (<strong>XQuartz-2.8.5.pkg</strong>) by clicking on this <a href="https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg"><strong>LINK</strong></a> and simply complete the installation process by following the steps.</li>
+</ol>
+<p><strong>Installation of XCode (14.3.1 [14E300c]):</strong></p>
+<p>Some functions in R and Stan require some of the external developer tools from <strong>XCode</strong> application to function properly on your MAC.</p>
+<ol style="list-style-type: decimal">
+<li>Go to the App Store application and get the <strong>XCode</strong> app downloaded by clicking on this <a href="https://apps.apple.com/us/app/xcode/id497799835?mt=12"><strong>LINK</strong></a>.</li>
+<li>Once it is downloaded, you can click on the “OPEN” button to verify it’s been downloaded. A window will prompt you to complete installation.</li>
+<li>Lastly, and for safe measures - we going to run this through our <strong>Terminal</strong>. You can open the Terminal program by going to the <strong>Applications</strong> <strong>&gt;</strong> <strong>Utilities</strong> folder and select the <strong>Terminal</strong> application</li>
+</ol>
+<p><img src="images/general/Utilities_folder.png" width="100%" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>In the terminal, type the following code <code>xcode-select --install</code>. If you get the following error message shown in the code chunk below, then it means that the <strong>XCode</strong> program has been installed properly - no need to do anything at this point. Otherwise, the terminal will proceed to install the <strong>XCode</strong> tool remotely.</li>
+</ol>
+<pre class="text"><code>xcode-select: error: command line tools are already installed, use &quot;Software Update&quot; in System Settings to install updates</code></pre>
+<p>This completes the installation process for R and RStudio on MAC.</p>
+</div>
+<div id="installation-process-for-windows-users" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Installation process for Windows users<a href="getting-started.html#installation-process-for-windows-users" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You will need to have the following software installed for the <code>rstan</code> package to work on Windows.</p>
+<ol style="list-style-type: decimal">
+<li>R (version 4.2.3)</li>
+<li>Rtools42 (version 4.2)</li>
+<li>RStudio (version 2023.06.0-421)</li>
+</ol>
+<p>If you already have R and RStudio installed, then the first thing to do is to remove them entirely from our Windows machine. Please follow the guidance outlined here:</p>
+<p><strong>Removal steps</strong></p>
+<ol style="list-style-type: decimal">
+<li>Type <strong>“Add or remove programs”</strong> in the bottom search bar.</li>
+<li>The <strong>“Add or remove programs”</strong> settings should appear. Click it to show the <strong>“Apps &amp; Features”</strong> window.</li>
+<li>Under this section – completely uninstall <strong>R (4.3.x)</strong>.</li>
+<li>Repeat the third steps for removing <strong>RStudio</strong> and <strong>Rtools 4.3.</strong></li>
+</ol>
+<p><img src="images/general/uninstalling_windows.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Now, we going to delete any folders with R-related programs which are hidden in our computer. We will check three locations in our PC (i.e., Local, Program Files or Programs Files (x86) folder).</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Type the path <code>C:\Users\Your_username\AppData\Local</code> in the search bar on the File Explorer window and press “Enter”. It should take you to the <strong>“Local”</strong> folder. Here, delete the following folders if you see them: <strong>“R”</strong>, <strong>“RStudio”</strong> and/or <strong>“RStudio-Desktop”</strong>.</li>
+</ol>
+<p><img src="images/general/Windows_paths.png" width="100%" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Repeat the steps in 5 by typing the path <code>C:\Program Files</code> in this search bar on the File Explorer window. Pressing “Enter” will direct you to the <strong>“Program Files”</strong> folder. Again, check and delete any folders that’s <strong>“R”</strong>, <strong>“RStudio”</strong> and/or <strong>“RStudio-Desktop”</strong>.</p></li>
+<li><p>Lastly, repeat the steps in 5 or 6 by checking the folder <strong>“Program Files (x86)”</strong> using this path <code>C:\Program Files (x86)</code> and delete accordingly.</p></li>
+</ol>
+<p><strong>Installation of R (4.3.2) and RStudio (2023.06.0-421) on Windows:</strong></p>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="34%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>OS User type</strong></th>
+<th><strong>R (Base)</strong></th>
+<th><strong>RStudio Desktop</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Windows</td>
+<td><a href="https://cran.ma.imperial.ac.uk/bin/windows/base/old/4.2.3/R-4.2.3-win.exe"><strong>R-4.2.3-win.exe</strong></a></td>
+<td><a href="https://download1.rstudio.org/electron/windows/RStudio-2023.06.0-421.exe"><strong>RStudio-2023.06.0-421.exe</strong></a></td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li>Download the file for <strong>R-4.2.3-win.exe</strong> attached in the table above.</li>
+<li>Double-click the downloaded file (i.e., <strong>R-4.2.3-win.exe</strong>) and follow the steps to complete the installation.</li>
+<li>Now, we can download the file (i.e., <code>.exe</code>) for <strong>RStudio</strong> from the link provided in the above table.</li>
+<li>Double-click the downloaded file (i.e., <strong>RStudio-2023.06.0-421.exe</strong>) and follow the steps from the installer to complete the installation.</li>
+</ol>
+<p><strong>Installation of Rtools 4.2</strong></p>
+<p>For Windows users, after you have completed the installation for R and RStudio, you are required to install the <a href="https://cran.ma.imperial.ac.uk/bin/windows/Rtools/rtools42/rtools.html"><strong>Rtools42 package</strong></a> as it contains some libraries and developer tools for the smooth functioning of Stan.</p>
+<ol style="list-style-type: decimal">
+<li>Download the latest version of <strong>Rtools42</strong> by clicking on this <a href="https://cran.ma.imperial.ac.uk/bin/windows/Rtools/rtools42/files/rtools42-5355-5357.exe"><strong>LINK</strong></a> to initiate the download of the <strong>Rtools42 installer</strong>.</li>
+<li>Double-click the downloaded <strong>rtools42-5355-5357.exe</strong> file and follow the steps to complete the installation.</li>
+</ol>
+<p>This completes the installation process for R and RStudio on Windows.</p>
+</div>
+</div>
+<div id="installation-of-rstan-or-stan" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Installation of <code>rstan</code> (or Stan)<a href="getting-started.html#installation-of-rstan-or-stan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When opening the RStudio application on your Windows or MAC PC. You will be greeted with its interface. The window is usual split into three panels: 1.) <strong>R Console</strong>, 2.) <strong>Environments</strong> and 3.) <strong>Files, Help, Outputs etc.,</strong></p>
+<p><img src="images/general/RStudio_Panels.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The above section is the <strong>Menu Bar</strong>. You can access other functions for saving, editing, and opening a new R and Stan script files for writing and compiling codes. Let us opening a new <strong>R script</strong> by clicking on the <strong>File</strong> <strong>&gt;</strong> <strong>New File</strong> <strong>&gt;</strong> <strong>R Script</strong>. This should open a new script file titled “<strong>Untitled 1</strong>”.</p>
+<p>Now we are going to latest development version of <code>rstan</code> 2.26.22. Using the <code>install.packages()</code> function, we can finally install this package. You can use the code chunk below:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="getting-started.html#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span></code></pre></div>
+<p>After installation, use the following to code chunk to test if its work:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="getting-started.html#cb3-1" tabindex="-1"></a><span class="fu">example</span>(stan_model, <span class="at">package =</span> <span class="st">&quot;rstan&quot;</span>, <span class="at">run.dontrun =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>You will first see some gibberish running through your console - don’t be alarmed - it means that its working. You will know <code>rstan</code> has been successfully installed and it works when you see some iterations for four chains displayed in console. You will also see the objects <code>fit</code>, <code>fit2</code>, <code>mod</code> and <code>stancode</code> stored in the <strong>Environments</strong> panel when its done.</p>
+<p>This completes the installation process for <code>rstan</code>.</p>
+</div>
+<div id="installation-of-other-relevant-r-packages" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Installation of other relevant R-packages<a href="getting-started.html#installation-of-other-relevant-r-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will need to install the following packages ahead of next week’s sessions:</p>
+<ol style="list-style-type: decimal">
+<li><code>sf</code>: “Simply Features” package that allows the user to load shapefiles into RStudio’s memory.</li>
+<li><code>tmap</code>: this package gives access to various functions for users to generate maps.</li>
+<li><code>devtools</code>: Needed to select a particular version of the <code>stars</code> package.</li>
+<li><code>stars</code>: Needed as support for <code>sf</code> and <code>tmap</code> packages to work.</li>
+<li><code>SpatialEpi</code>: grants access to function <code>expected()</code> to calculated expected numbers.</li>
+<li><code>geostan</code>: grants access to further functions that we need to compute the adjacency matrix that can be handled in Stan. We will use the two functions <code>shape2mat()</code> and <code>prep_icar_data()</code> to create the adjacency matrix as nodes and edges.</li>
+<li><code>tidybayes</code>: grants access to further functions for managing posterior estimates. We will need it calculating the exceedance probabilities. Load this alongside <code>tidyverse</code> package.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="getting-started.html#cb4-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb4-2"><a href="getting-started.html#cb4-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_version</span>(<span class="st">&quot;stars&quot;</span>, <span class="at">version =</span> <span class="st">&quot;0.5.3&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span>
+<span id="cb4-3"><a href="getting-started.html#cb4-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb4-4"><a href="getting-started.html#cb4-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tmap&quot;</span>)</span>
+<span id="cb4-5"><a href="getting-started.html#cb4-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;SpatialEpi&quot;</span>)</span>
+<span id="cb4-6"><a href="getting-started.html#cb4-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;geostan&quot;</span>)</span>
+<span id="cb4-7"><a href="getting-started.html#cb4-7" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidybayes&quot;</span>)</span>
+<span id="cb4-8"><a href="getting-started.html#cb4-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>This concludes the installation section and sets you computer up for the course. If you encounter any problems please contact me ahead of next week.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reading-list.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-bayesian-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/Installation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

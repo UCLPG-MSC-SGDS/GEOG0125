@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="4 Bayesian Generalised Additive Models (GAMs) | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayesian-generalised-linear-models-glms.html"/>
+<link rel="next" href="bayesian-hierarchical-regression-models.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#timetable-and-key-locations"><i class="fa fa-check"></i>Timetable and key locations</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact-details"><i class="fa fa-check"></i>Contact details</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html"><i class="fa fa-check"></i>Reading List</a>
+<ul>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-1-introduction-to-bayesian-inference"><i class="fa fa-check"></i>Week 1: Introduction to Bayesian Inference</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-2-bayesian-generalised-linear-models-glms"><i class="fa fa-check"></i>Week 2: Bayesian Generalised Linear Models (GLMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-3-bayesian-generalised-additive-models-gams"><i class="fa fa-check"></i>Week 3: Bayesian Generalised Additive Models (GAMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-7-bayesian-hierarchical-regression-models"><i class="fa fa-check"></i>Week 7: Bayesian Hierarchical Regression Models</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-8-spatial-intrinsic-conditional-autoregressive-modelling-icar"><i class="fa fa-check"></i>Week 8: Spatial Intrinsic Conditional Autoregressive Modelling (ICAR)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-9-bayesian-updating-for-spatiotemporal-areal-analysis"><i class="fa fa-check"></i>Week 9: Bayesian Updating for Spatiotemporal Areal Analysis</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#excellent-incredibly-useful-tutorial-videos-for-learning-stan-code"><i class="fa fa-check"></i>Excellent &amp; Incredibly Useful Tutorial Videos for Learning Stan Code</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#what-is-stan"><i class="fa fa-check"></i><b>1.1</b> What is Stan?</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#installation-of-r-rstudio"><i class="fa fa-check"></i><b>1.2</b> Installation of R &amp; RStudio</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-mac-users"><i class="fa fa-check"></i><b>1.2.1</b> Installation process for MAC users</a></li>
+<li class="chapter" data-level="1.2.2" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-windows-users"><i class="fa fa-check"></i><b>1.2.2</b> Installation process for Windows users</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#installation-of-rstan-or-stan"><i class="fa fa-check"></i><b>1.3</b> Installation of <code>rstan</code> (or Stan)</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#installation-of-other-relevant-r-packages"><i class="fa fa-check"></i><b>1.4</b> Installation of other relevant R-packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes"><i class="fa fa-check"></i><b>2.1</b> Lecture recording (Length: 59:50 minutes)</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction"><i class="fa fa-check"></i><b>2.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#learning-outcomes"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 38:23 minutes)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>2.3</b> Basic building blocks I: About Stan Programming</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.1</b> Opening a Stan Script in RStudio</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Basic structure of a Stan script in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations"><i class="fa fa-check"></i><b>2.4</b> Basic building blocks II: Data types and constraint declarations</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model"><i class="fa fa-check"></i><b>2.5</b> Basic building blocks III: Developing our model</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>2.6</b> Basic building blocks IV: Compiling our Stan code in RStudio</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation"><i class="fa fa-check"></i><b>2.7</b> Basic building blocks V: Extract posterior samples and interpretation</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information"><i class="fa fa-check"></i><b>2.8</b> Basic building blocks VI: Updating our prediction with new information</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#tasks"><i class="fa fa-check"></i><b>2.9</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-1---low-level-arsenic-poisoning-in-cornwall-uk"><i class="fa fa-check"></i><b>2.9.1</b> Task 1 - Low-level arsenic poisoning in Cornwall, UK</a></li>
+<li class="chapter" data-level="2.9.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-2---body-mass-index-bmi-problem"><i class="fa fa-check"></i><b>2.9.2</b> Task 2 - Body mass index (BMI) problem</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html"><i class="fa fa-check"></i><b>3</b> Bayesian Generalised Linear Models (GLMs)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes"><i class="fa fa-check"></i><b>3.1</b> Lecture recording (Length: 45:46 minutes)</a></li>
+<li class="chapter" data-level="3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#introduction-1"><i class="fa fa-check"></i><b>3.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1"><i class="fa fa-check"></i><b>3.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes"><i class="fa fa-check"></i><b>3.2.2</b> Demonstration recording (Length: 52:52 minutes)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1"><i class="fa fa-check"></i><b>3.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>3.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.3</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.3.1</b> Selecting the appropriate Poisson model</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan"><i class="fa fa-check"></i><b>3.3.2</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan"><i class="fa fa-check"></i><b>3.3.3</b> Creating a script to run a Negative Binomial Poisson regression in Stan</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>3.3.4</b> Compiling our Stan code in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>3.4.1</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.4.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan"><i class="fa fa-check"></i><b>3.4.2</b> Creating a script to run a logistic regression in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#tasks-1"><i class="fa fa-check"></i><b>3.5</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-1---obesity-and-fastfoods-in-london"><i class="fa fa-check"></i><b>3.5.1</b> Task 1 - Obesity and Fastfoods in London</a></li>
+<li class="chapter" data-level="3.5.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-2---factors-affecting-house-prices-in-london-2015"><i class="fa fa-check"></i><b>3.5.2</b> Task 2 - Factors affecting house prices in London (2015)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html"><i class="fa fa-check"></i><b>4</b> Bayesian Generalised Additive Models (GAMs)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 38:12 minutes)</a></li>
+<li class="chapter" data-level="4.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2"><i class="fa fa-check"></i><b>4.2.2</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model"><i class="fa fa-check"></i><b>4.3</b> Implementing a Bayesian Generalised Additive Model</a></li>
+<li class="chapter" data-level="4.4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode"><i class="fa fa-check"></i><b>4.4</b> Printing Stan code from <code>brms::stancode()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html"><i class="fa fa-check"></i><b>5</b> Bayesian Hierarchical Regression Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-4825-minutes"><i class="fa fa-check"></i><b>5.1</b> Lecture recording (Length: 48:25 minutes)</a></li>
+<li class="chapter" data-level="5.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-3"><i class="fa fa-check"></i><b>5.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>5.2.2</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-2"><i class="fa fa-check"></i><b>5.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan"><i class="fa fa-check"></i><b>5.3.1</b> Creating a script to run a 2-level Multilevel linear regression in Stan</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>5.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task"><i class="fa fa-check"></i><b>5.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>6</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes"><i class="fa fa-check"></i><b>6.1</b> Lecture recording (Length: 40:58 minutes)</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.3</b> Learning outcomes</a></li>
+<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes"><i class="fa fa-check"></i><b>6.4</b> Demonstration recording (Length: 51:46 minutes)</a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start"><i class="fa fa-check"></i><b>6.5</b> Before we start…</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.5.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.5.2</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.6</b> Data preparation in RStudio</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.6.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR smoothed model</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model"><i class="fa fa-check"></i><b>6.7.1</b> Defining the ICAR component of the Spatial model</a></li>
+<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script"><i class="fa fa-check"></i><b>6.7.2</b> Adding the blocks in our ICAR Stan script</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for Spatial ICAR modelling</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="6.8.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.8.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="6.8.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.8.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="6.8.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.8.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.9</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>7</b> Research Methods, Study Design and Revision</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>7.1</b> Lecture (Length: 51:03 minutes)</a></li>
+<li class="chapter" data-level="7.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>7.2</b> Revision (Length: 17:56 minutes)</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian-generalised-additive-models-gams" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Bayesian Generalised Additive Models (GAMs)<a href="bayesian-generalised-additive-models-gams.html#bayesian-generalised-additive-models-gams" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-recording-length-3812-minutes" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Lecture recording (Length: 38:12 minutes)<a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://web.microsoftstream.com/embed/video/e993c402-65a9-4b02-a67a-5facda574b3b?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
+</div>
+</div>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/e993c402-65a9-4b02-a67a-5facda574b3b"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="introduction-2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Introduction<a href="bayesian-generalised-additive-models-gams.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To date, we have been using various models that considers the relationship between variables to be assumed as something that’s <strong>linear</strong>. When implementing a regression of any kind, we are attempting to fit a straight line (i.e., line of best fit) to the data in order to examine and explain variations between two or more variables with some outcome with the strong assumption of linearity. The issue of linearity may not be case (which often is not the case) and hence there must be some model that can model <strong>non-linear</strong> relationships. This is where <strong>Generalised Additive Models (GAMs)</strong> come to play - this week we will learn how to use GAMs, within a <strong>Bayesian</strong> framework.</p>
+<p>This approach is incredibly easy to perform in RStudio as there are useful packages that generates the Stan code for GAMs. Let us begin!</p>
+<div id="datasets-setting-up-the-work-directory-2" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Datasets &amp; setting up the work directory<a href="bayesian-generalised-additive-models-gams.html#datasets-setting-up-the-work-directory-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 3</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 3’s</strong> folder.</p>
+<p>For Windows, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="bayesian-generalised-additive-models-gams.html#cb58-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 3&quot;</span>)</span></code></pre></div>
+<p>For MAC, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="bayesian-generalised-additive-models-gams.html#cb59-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 3&quot;</span>)</span></code></pre></div>
+<p>The dataset for this practical are:</p>
+<ul>
+<li><code>Respiratory Illness in Turin Province.csv</code></li>
+</ul>
+<p>Now, load the dataset:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="bayesian-generalised-additive-models-gams.html#cb60-1" tabindex="-1"></a><span class="co"># load up the data</span></span>
+<span id="cb60-2"><a href="bayesian-generalised-additive-models-gams.html#cb60-2" tabindex="-1"></a>respiratory_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Respiratory Illness in Turin Province.csv&quot;</span>)</span></code></pre></div>
+<p>It contains the information taught in today’s lecture. We will reproduce the analysis.</p>
+</div>
+<div id="loading-and-installing-packages-2" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Loading and installing packages<a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Install the following packages for today’s practicals.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="bayesian-generalised-additive-models-gams.html#cb61-1" tabindex="-1"></a><span class="co"># install the following packages</span></span>
+<span id="cb61-2"><a href="bayesian-generalised-additive-models-gams.html#cb61-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;brms&quot;</span>)</span>
+<span id="cb61-3"><a href="bayesian-generalised-additive-models-gams.html#cb61-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;mgcv&quot;</span>)</span>
+<span id="cb61-4"><a href="bayesian-generalised-additive-models-gams.html#cb61-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb61-5"><a href="bayesian-generalised-additive-models-gams.html#cb61-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb61-6"><a href="bayesian-generalised-additive-models-gams.html#cb61-6" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&#39;gavinsimpson/schoenberg&#39;</span>)</span></code></pre></div>
+<p>Now load the installed packages including <code>rstan</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="bayesian-generalised-additive-models-gams.html#cb62-1" tabindex="-1"></a><span class="co"># load up packages</span></span>
+<span id="cb62-2"><a href="bayesian-generalised-additive-models-gams.html#cb62-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;brms&quot;</span>)</span>
+<span id="cb62-3"><a href="bayesian-generalised-additive-models-gams.html#cb62-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;mgcv&quot;</span>)</span>
+<span id="cb62-4"><a href="bayesian-generalised-additive-models-gams.html#cb62-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb62-5"><a href="bayesian-generalised-additive-models-gams.html#cb62-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;schoenberg&quot;</span>)</span>
+<span id="cb62-6"><a href="bayesian-generalised-additive-models-gams.html#cb62-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstan&quot;</span>)</span></code></pre></div>
+<p>Make sure to select the appropriate number of cores on your computer - as this will preset the number of chains for the analysis.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="bayesian-generalised-additive-models-gams.html#cb63-1" tabindex="-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code></pre></div>
+<p>On my computer, it is six. Make sure to take note on what you number of cores are. Now the usual, configure Stan:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="bayesian-generalised-additive-models-gams.html#cb64-1" tabindex="-1"></a><span class="co"># configure Stan</span></span>
+<span id="cb64-2"><a href="bayesian-generalised-additive-models-gams.html#cb64-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb64-3"><a href="bayesian-generalised-additive-models-gams.html#cb64-3" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="implementing-a-bayesian-generalised-additive-model" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Implementing a Bayesian Generalised Additive Model<a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Coding a GAM model is extremely hard but lucky - we have the <code>brms</code> package which stands for <strong>Bayesian Regression Modelling in Stan</strong>. It has a very streamlined function <code>brm()</code> for executing a Bayesian model by calling Stan without the need to actually it in Stan, making it very easy.</p>
+<p>In fact, it even helps us to determine prior distributions for the parameters we want to estimate from our GAM model. All we need is to write the formula in the <code>get_prior()</code>:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="bayesian-generalised-additive-models-gams.html#cb65-1" tabindex="-1"></a><span class="co"># get prior</span></span>
+<span id="cb65-2"><a href="bayesian-generalised-additive-models-gams.html#cb65-2" tabindex="-1"></a>prior.list <span class="ot">&lt;-</span> <span class="fu">get_prior</span>(Overall <span class="sc">~</span> <span class="fu">s</span>(PM10) <span class="sc">+</span> <span class="fu">s</span>(CO) <span class="sc">+</span> <span class="fu">s</span>(NO2), <span class="at">data =</span> respiratory_data, <span class="at">family =</span> <span class="fu">poisson</span>())</span></code></pre></div>
+<p>This equation: <code>Overall ~ s(PM10) + s(CO) + s(NO2)</code> is our statistical model which follows a <code>poisson()</code> function. Notice the <code>s()</code> is wrapped round our independent variables. That is how we specify a smoother on an variable. In this example, we are applying smoothers to all independent variables.</p>
+<p>We can run a GAM using the <code>brms()</code>. It like running the <code>ls()</code>.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="bayesian-generalised-additive-models-gams.html#cb66-1" tabindex="-1"></a><span class="co"># start timer gauge how long it takes to run a GAM</span></span>
+<span id="cb66-2"><a href="bayesian-generalised-additive-models-gams.html#cb66-2" tabindex="-1"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb66-3"><a href="bayesian-generalised-additive-models-gams.html#cb66-3" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="bayesian-generalised-additive-models-gams.html#cb66-4" tabindex="-1"></a><span class="co"># run a GAM model</span></span>
+<span id="cb66-5"><a href="bayesian-generalised-additive-models-gams.html#cb66-5" tabindex="-1"></a>model.bayes.gam <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(Overall <span class="sc">~</span> <span class="fu">s</span>(PM10) <span class="sc">+</span> <span class="fu">s</span>(CO) <span class="sc">+</span> <span class="fu">s</span>(NO2)),</span>
+<span id="cb66-6"><a href="bayesian-generalised-additive-models-gams.html#cb66-6" tabindex="-1"></a>    <span class="at">data =</span> respiratory_data, </span>
+<span id="cb66-7"><a href="bayesian-generalised-additive-models-gams.html#cb66-7" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">poisson</span>(),</span>
+<span id="cb66-8"><a href="bayesian-generalised-additive-models-gams.html#cb66-8" tabindex="-1"></a>    <span class="at">prior =</span> prior.list,</span>
+<span id="cb66-9"><a href="bayesian-generalised-additive-models-gams.html#cb66-9" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">6</span>, <span class="co"># replace this with number of cores on your own machine</span></span>
+<span id="cb66-10"><a href="bayesian-generalised-additive-models-gams.html#cb66-10" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">8000</span>, </span>
+<span id="cb66-11"><a href="bayesian-generalised-additive-models-gams.html#cb66-11" tabindex="-1"></a>    <span class="at">warmup =</span> <span class="dv">1000</span>, </span>
+<span id="cb66-12"><a href="bayesian-generalised-additive-models-gams.html#cb66-12" tabindex="-1"></a>    <span class="at">thin =</span> <span class="dv">10</span>, </span>
+<span id="cb66-13"><a href="bayesian-generalised-additive-models-gams.html#cb66-13" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb66-14"><a href="bayesian-generalised-additive-models-gams.html#cb66-14" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.99</span>))</span>
+<span id="cb66-15"><a href="bayesian-generalised-additive-models-gams.html#cb66-15" tabindex="-1"></a></span>
+<span id="cb66-16"><a href="bayesian-generalised-additive-models-gams.html#cb66-16" tabindex="-1"></a><span class="co"># Stop the clock</span></span>
+<span id="cb66-17"><a href="bayesian-generalised-additive-models-gams.html#cb66-17" tabindex="-1"></a><span class="fu">proc.time</span>() <span class="sc">-</span> ptm</span></code></pre></div>
+<p>It takes approximately <code>9 mins</code> to complete the computation of the sample posterior. We can visualise the results using the <code>summary()</code> function:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="bayesian-generalised-additive-models-gams.html#cb67-1" tabindex="-1"></a><span class="co"># Report results</span></span>
+<span id="cb67-2"><a href="bayesian-generalised-additive-models-gams.html#cb67-2" tabindex="-1"></a><span class="fu">summary</span>(model.bayes.gam)</span></code></pre></div>
+<p><strong>Summary Output [See slides 24]</strong></p>
+<pre class="text"><code>Family: poisson 
+  Links: mu = log 
+Formula: Overall ~ s(PM10) + s(CO) + s(NO2) 
+   Data: respiratory_data (Number of observations: 315) 
+  Draws: 4 chains, each with iter = 8000; warmup = 1000; thin = 10;
+         total post-warmup draws = 2800
+
+Smooth Terms: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sds(sPM10_1)     6.57      1.91     3.92    11.63 1.01      400      827
+sds(sCO_1)       5.83      1.60     3.72     9.77 1.01      295      551
+sds(sNO2_1)      6.30      1.60     4.00    10.03 1.01      430     1016
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     3.56      0.01     3.54     3.59 1.00     1565     2241
+sPM10_1     -19.46      3.40   -26.25   -12.94 1.01      445      906
+sCO_1        33.75      3.17    27.43    39.90 1.01      396      804
+sNO2_1        4.35      4.96    -5.43    14.39 1.01      259      455
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<ul>
+<li><p>The result under the <strong>Smooth Terms</strong> are variance parameters, which describes the extent of “wiggliness” of the smooth — the larger the value the more wigglier the smooth, and vice versa. We can see that the credible interval doesn’t include 0 so there is evidence that a smooth is required over and above a linear. If it did exclude the null value of zero - then it would mean there’s no need to apply a smoother on that variable. Here, it was correct for us to apply a GAM model on these three variables. Also, the model is valid since the Rhat estimates that are below 1.05</p></li>
+<li><p>The result under the <strong>Population-level effects</strong> are simply global estimates which are considered as fixed effects. We will interpret these as we usually interpret a regression the usual way.</p></li>
+</ul>
+<p>The above table essentially produces overall results. But we want the coefficient-specific estimate for each value measured in our independent variable. We can extract this result from <code>model.bayes.gam</code> object using the <code>conditional_smooths()</code> function.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="bayesian-generalised-additive-models-gams.html#cb69-1" tabindex="-1"></a>smooth_plot <span class="ot">&lt;-</span> <span class="fu">conditional_smooths</span>(model.bayes.gam)</span></code></pre></div>
+<p>Run the following code in console:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="bayesian-generalised-additive-models-gams.html#cb70-1" tabindex="-1"></a>smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(PM10)</span><span class="st">`</span></span></code></pre></div>
+<p>This should show the posterior specific estimates for <code>PM10</code>:</p>
+<pre class="text"><code>         PM10 effect1__ cond__  estimate__       se__       lower__     upper__
+1    17.63150  17.63150      1  2.62097348 0.58419108  1.4172802112  3.78413878
+2    19.24250  19.24250      1  2.57521132 0.56128002  1.4271478599  3.67997666
+3    20.85350  20.85350      1  2.53090840 0.54322413  1.4125906851  3.59283584
+4    22.46449  22.46449      1  2.48331531 0.52194251  1.4022329526  3.51408796
+5    24.07549  24.07549      1  2.44123786 0.50497874  1.3973972175  3.43957333
+6    25.68649  25.68649      1  2.40463959 0.48327388  1.3978011917  3.36643850
+7    27.29749  27.29749      1  2.37041186 0.47086036  1.3958640356  3.28785824
+8    28.90848  28.90848      1  2.34151285 0.45395873  1.4096217561  3.21844181
+9    30.51948  30.51948      1  2.32250696 0.43903983  1.4396053597  3.17590372
+10   32.13048  32.13048      1  2.31045468 0.42353149  1.4655908589  3.13094097
+11   33.74148  33.74148      1  2.30418617 0.40966546  1.4872374125  3.09568692
+12   35.35247  35.35247      1  2.30994093 0.39628829  1.5180691767  3.07073513
+13   36.96347  36.96347      1  2.31814000 0.38190394  1.5579488275  3.04882364
+14   38.57447  38.57447      1  2.33250802 0.37203591  1.6000727952  3.03712395
+15   40.18547  40.18547      1  2.35002277 0.35667034  1.6531294642  3.02495744
+16   41.79646  41.79646      1  2.36561240 0.33989502  1.7079949755  3.01680741
+17   43.40746  43.40746      1  2.38308174 0.32717131  1.7585588559  3.00095344
+18   45.01846  45.01846      1  2.40230261 0.31269355  1.7996081811  2.98990205
+19   46.62946  46.62946      1  2.41608040 0.29657785  1.8450409374  2.97535575
+20   48.24045  48.24045      1  2.42229899 0.27875546  1.8825763877  2.95464690
+21   49.85145  49.85145      1  2.42185750 0.26111552  1.9082253754  2.92646095
+22   51.46245  51.46245      1  2.41606038 0.24644429  1.9248348118  2.89337966
+23   53.07345  53.07345      1  2.39506092 0.23390482  1.9218254499  2.85807943
+24   54.68444  54.68444      1  2.36402488 0.22431384  1.9093917777  2.81362396
+25   56.29544  56.29544      1  2.32589212 0.21393800  1.8852152209  2.75454643
+26   57.90644  57.90644      1  2.28190391 0.20780909  1.8571817966  2.69251749
+27   59.51744  59.51744      1  2.23039023 0.19945464  1.8244201954  2.62279135
+28   61.12843  61.12843      1  2.17075723 0.18810909  1.7807092880  2.55284812
+29   62.73943  62.73943      1  2.10757795 0.18250459  1.7312261291  2.47443043
+30   64.35043  64.35043      1  2.04432131 0.17743278  1.6808230354  2.40017233
+31   65.96143  65.96143      1  1.97719004 0.17271403  1.6317107455  2.32570753
+32   67.57242  67.57242      1  1.91449416 0.16605060  1.5832596809  2.24791409
+33   69.18342  69.18342      1  1.85511399 0.16055720  1.5309816170  2.18115654
+34   70.79442  70.79442      1  1.80101939 0.15951536  1.4875723704  2.11322875
+35   72.40542  72.40542      1  1.75231598 0.15434167  1.4482471767  2.05785024
+36   74.01641  74.01641      1  1.71355011 0.14961617  1.4179592295  2.00578986
+37   75.62741  75.62741      1  1.68147066 0.14388785  1.3995074794  1.96245797
+38   77.23841  77.23841      1  1.65967140 0.13853479  1.3882695320  1.93246780
+39   78.84941  78.84941      1  1.64791200 0.13459759  1.3858286175  1.90978707
+40   80.46040  80.46040      1  1.64336048 0.12875041  1.3908758754  1.89325457
+41   82.07140  82.07140      1  1.64492013 0.12268128  1.4031639860  1.88175612
+42   83.68240  83.68240      1  1.65417851 0.11713959  1.4235300062  1.87808877
+43   85.29340  85.29340      1  1.66470527 0.11034031  1.4449902794  1.87569038
+44   86.90439  86.90439      1  1.67664542 0.10498627  1.4690518449  1.87324834
+45   88.51539  88.51539      1  1.68465372 0.10091327  1.4884726332  1.87169557
+46   90.12639  90.12639      1  1.68897643 0.09330719  1.5035928627  1.87098835
+47   91.73739  91.73739      1  1.68347289 0.08683769  1.5096123619  1.85667260
+48   93.34838  93.34838      1  1.67060921 0.08271990  1.5076451208  1.83537867
+49   94.95938  94.95938      1  1.64464120 0.07771426  1.4903394988  1.80144760
+50   96.57038  96.57038      1  1.60848980 0.07453532  1.4585948072  1.76077187
+51   98.18138  98.18138      1  1.56015919 0.07375575  1.4156532522  1.70600263
+52   99.79237  99.79237      1  1.49690657 0.07238988  1.3603992597  1.64393361
+53  101.40337 101.40337      1  1.42440125 0.07373672  1.2907121958  1.57108031
+54  103.01437 103.01437      1  1.34150729 0.07264463  1.2096780201  1.49012333
+55  104.62537 104.62537      1  1.24797093 0.07222848  1.1135088788  1.39686834
+56  106.23636 106.23636      1  1.14710058 0.07207578  1.0121126540  1.29687463
+57  107.84736 107.84736      1  1.04280793 0.07222129  0.9058132254  1.19160851
+58  109.45836 109.45836      1  0.93526416 0.07258752  0.7972667841  1.08526921
+59  111.06936 111.06936      1  0.82787351 0.07342898  0.6888869747  0.97590446
+60  112.68035 112.68035      1  0.72334638 0.07249049  0.5850385387  0.87003656
+61  114.29135 114.29135      1  0.62353761 0.07184606  0.4844786298  0.76856511
+62  115.90235 115.90235      1  0.52968239 0.07181101  0.3905574540  0.67239135
+63  117.51335 117.51335      1  0.44344659 0.07074263  0.3038719320  0.58689049
+64  119.12434 119.12434      1  0.36603452 0.07036476  0.2283629332  0.50649586
+65  120.73534 120.73534      1  0.29648469 0.06876687  0.1594488329  0.43632890
+66  122.34634 122.34634      1  0.23554247 0.06794464  0.1006475466  0.37354216
+67  123.95734 123.95734      1  0.18000095 0.06758691  0.0497623523  0.31633100
+68  125.56833 125.56833      1  0.13053101 0.06618215  0.0007378314  0.26424762
+69  127.17933 127.17933      1  0.08206403 0.06474997 -0.0467437618  0.21423914
+70  128.79033 128.79033      1  0.03134801 0.06480924 -0.0974891106  0.16225348
+71  130.40133 130.40133      1 -0.02507498 0.06446464 -0.1533213958  0.10484075
+72  132.01232 132.01232      1 -0.08949573 0.06458059 -0.2185494998  0.04043094
+73  133.62332 133.62332      1 -0.16544886 0.06520103 -0.2941522813 -0.03573511
+74  135.23432 135.23432      1 -0.25395271 0.06544914 -0.3823353866 -0.12530644
+75  136.84532 136.84532      1 -0.35452839 0.06517862 -0.4834635198 -0.22497655
+76  138.45631 138.45631      1 -0.46556823 0.06511143 -0.5947961412 -0.33433084
+77  140.06731 140.06731      1 -0.58572483 0.06552576 -0.7145562107 -0.45392189
+78  141.67831 141.67831      1 -0.71021821 0.06659227 -0.8374210177 -0.57922044
+79  143.28931 143.28931      1 -0.83427326 0.06712725 -0.9628190317 -0.70353029
+80  144.90030 144.90030      1 -0.95489071 0.06664170 -1.0866594998 -0.82278030
+81  146.51130 146.51130      1 -1.06836138 0.06723713 -1.2009492109 -0.93596858
+82  148.12230 148.12230      1 -1.17158620 0.06741626 -1.3056400369 -1.03885479
+83  149.73330 149.73330      1 -1.26424326 0.06818362 -1.3967667804 -1.13022022
+84  151.34429 151.34429      1 -1.34683285 0.06863472 -1.4788035367 -1.21287485
+85  152.95529 152.95529      1 -1.42127536 0.06919206 -1.5539866490 -1.28840211
+86  154.56629 154.56629      1 -1.49103166 0.06843476 -1.6244977766 -1.35811880
+87  156.17729 156.17729      1 -1.55861848 0.06932546 -1.6943199126 -1.42259813
+88  157.78828 157.78828      1 -1.62686300 0.06936522 -1.7642742006 -1.49149207
+89  159.39928 159.39928      1 -1.69919472 0.06909321 -1.8378600178 -1.56336851
+90  161.01028 161.01028      1 -1.77983166 0.06959826 -1.9187291284 -1.64353354
+91  162.62128 162.62128      1 -1.86963932 0.06948871 -2.0093699789 -1.73373903
+92  164.23228 164.23228      1 -1.96957576 0.07001212 -2.1119305781 -1.83262600
+93  165.84327 165.84327      1 -2.08094069 0.07075931 -2.2247677724 -1.94291702
+94  167.45427 167.45427      1 -2.20301138 0.07164868 -2.3493314976 -2.06646808
+95  169.06527 169.06527      1 -2.33352869 0.07203991 -2.4810339237 -2.19639859
+96  170.67627 170.67627      1 -2.47199154 0.07320017 -2.6211551967 -2.33402310
+97  172.28726 172.28726      1 -2.61514938 0.07559344 -2.7664659941 -2.47323472
+98  173.89826 173.89826      1 -2.76218030 0.07684584 -2.9162540724 -2.61667948
+99  175.50926 175.50926      1 -2.91141448 0.08046156 -3.0699949230 -2.76090593
+100 177.12026 177.12026      1 -3.06126468 0.08357851 -3.2261306757 -2.90331811</code></pre>
+<p>We will extract the column 1, 4, 6 and 7 in order to graph the coefficients against the PM10. This essentially tells us the impact of PM10 on admissions for all values of PM10. Column is the observed sampled PM10, column 4 is our coefficients estimated from our basis function (see lecture), and column 6 and 7 is our lower and upper credibility intervals.</p>
+<p>Here is the code for extracting the columns for the <code>model.bayes.gam</code> object:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="bayesian-generalised-additive-models-gams.html#cb72-1" tabindex="-1"></a><span class="co"># create a data frame</span></span>
+<span id="cb72-2"><a href="bayesian-generalised-additive-models-gams.html#cb72-2" tabindex="-1"></a>beta_coef_PM10 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">pm10 =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(PM10)</span><span class="st">`</span>[<span class="dv">1</span>], <span class="at">beta =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(PM10)</span><span class="st">`</span>[<span class="dv">4</span>], </span>
+<span id="cb72-3"><a href="bayesian-generalised-additive-models-gams.html#cb72-3" tabindex="-1"></a>    <span class="at">lower =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(PM10)</span><span class="st">`</span>[<span class="dv">6</span>], <span class="at">lower =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(PM10)</span><span class="st">`</span>[<span class="dv">7</span>])</span></code></pre></div>
+<p>Now, we will plot our final output for PM10 and its impact on respiratory admission:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="bayesian-generalised-additive-models-gams.html#cb73-1" tabindex="-1"></a><span class="co"># generate a plot with coefficients and PM10</span></span>
+<span id="cb73-2"><a href="bayesian-generalised-additive-models-gams.html#cb73-2" tabindex="-1"></a><span class="fu">plot</span>(beta_coef_PM10<span class="sc">$</span>PM10, beta_coef_PM10<span class="sc">$</span>estimate__, <span class="at">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb73-3"><a href="bayesian-generalised-additive-models-gams.html#cb73-3" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Coefficient for PM10&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Observed PM10&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb73-4"><a href="bayesian-generalised-additive-models-gams.html#cb73-4" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;GAM: Impact Respiratory burden in Turin&quot;</span>)</span>
+<span id="cb73-5"><a href="bayesian-generalised-additive-models-gams.html#cb73-5" tabindex="-1"></a><span class="co"># Add lines for 95% credibility limits to above graph</span></span>
+<span id="cb73-6"><a href="bayesian-generalised-additive-models-gams.html#cb73-6" tabindex="-1"></a><span class="fu">lines</span>(beta_coef_PM10<span class="sc">$</span>PM10, beta_coef_PM10<span class="sc">$</span>upper__,<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb73-7"><a href="bayesian-generalised-additive-models-gams.html#cb73-7" tabindex="-1"></a><span class="fu">lines</span>(beta_coef_PM10<span class="sc">$</span>PM10, beta_coef_PM10<span class="sc">$</span>lower__,<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb73-8"><a href="bayesian-generalised-additive-models-gams.html#cb73-8" tabindex="-1"></a><span class="co"># Add null value line at origin</span></span>
+<span id="cb73-9"><a href="bayesian-generalised-additive-models-gams.html#cb73-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">col =</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><strong>Figure output</strong>
+<img src="images/general/PM10.png" width="100%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Interpretation</strong>: The overall impact of PM10 on respiratory-related admissions show a significant decreasing trend across it’s values (-19.46, 95% CrI: -26.25 to -12.94). However, it should be noted that PM10 levels up to 125 yields a significant increase in the admission rates; whilst values after 133 yields a significant decrease in admission rates.</li>
+</ul>
+<p>We can plot our final output for N02 and its impact on respiratory admission as well:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="bayesian-generalised-additive-models-gams.html#cb74-1" tabindex="-1"></a><span class="co"># extract posterior estimates and values for NO2 &amp; create a data frame</span></span>
+<span id="cb74-2"><a href="bayesian-generalised-additive-models-gams.html#cb74-2" tabindex="-1"></a>beta_coef_NO2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">no2 =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(NO2)</span><span class="st">`</span>[<span class="dv">1</span>], <span class="at">beta =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(NO2)</span><span class="st">`</span>[<span class="dv">4</span>], </span>
+<span id="cb74-3"><a href="bayesian-generalised-additive-models-gams.html#cb74-3" tabindex="-1"></a>    <span class="at">lower =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(NO2)</span><span class="st">`</span>[<span class="dv">6</span>], <span class="at">lower =</span> smooth_plot<span class="sc">$</span><span class="st">`</span><span class="at">mu: s(NO2)</span><span class="st">`</span>[<span class="dv">7</span>])</span>
+<span id="cb74-4"><a href="bayesian-generalised-additive-models-gams.html#cb74-4" tabindex="-1"></a><span class="co"># generate a plot with coefficients and NO2</span></span>
+<span id="cb74-5"><a href="bayesian-generalised-additive-models-gams.html#cb74-5" tabindex="-1"></a><span class="fu">plot</span>(beta_coef_NO2<span class="sc">$</span>NO2, beta_coef_NO2<span class="sc">$</span>estimate__, <span class="at">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb74-6"><a href="bayesian-generalised-additive-models-gams.html#cb74-6" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Coefficient for NO2&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Observed NO2&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb74-7"><a href="bayesian-generalised-additive-models-gams.html#cb74-7" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;GAM: Impact Respiratory burden in Turin&quot;</span>)</span>
+<span id="cb74-8"><a href="bayesian-generalised-additive-models-gams.html#cb74-8" tabindex="-1"></a><span class="co"># add 95% credibility limits</span></span>
+<span id="cb74-9"><a href="bayesian-generalised-additive-models-gams.html#cb74-9" tabindex="-1"></a><span class="fu">lines</span>(beta_coef_NO2<span class="sc">$</span>NO2, beta_coef_NO2<span class="sc">$</span>upper__,<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb74-10"><a href="bayesian-generalised-additive-models-gams.html#cb74-10" tabindex="-1"></a><span class="fu">lines</span>(beta_coef_NO2<span class="sc">$</span>NO2, beta_coef_NO2<span class="sc">$</span>lower__,<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb74-11"><a href="bayesian-generalised-additive-models-gams.html#cb74-11" tabindex="-1"></a><span class="co"># Add null value</span></span>
+<span id="cb74-12"><a href="bayesian-generalised-additive-models-gams.html#cb74-12" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">col =</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><strong>Figure output</strong>
+<img src="images/general/Nitrogen_oxide.png" width="100%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Interpretation</strong>: The overall impact of N02 on respiratory-related admissions show an increasing trend across it’s values that is not signficant (4.35, 95% CrI: -5.43 to 14.39). The overall patterns can be described as U-shaped. It should be noted that the NO2 levels between 19.72 and 41.32, and past 127 yields a significant increase in the admission rates; whilst values between 55.06 to 117 yields a significant decrease in admission rates.</li>
+</ul>
+</div>
+<div id="printing-stan-code-from-brmsstancode" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Printing Stan code from <code>brms::stancode()</code><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Stan code for the GAM model can be printed using the <code>stancode</code> function:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="bayesian-generalised-additive-models-gams.html#cb75-1" tabindex="-1"></a><span class="co"># This prints the stancode</span></span>
+<span id="cb75-2"><a href="bayesian-generalised-additive-models-gams.html#cb75-2" tabindex="-1"></a><span class="fu">stancode</span>(model.bayes.gam)</span></code></pre></div>
+<p><strong>Printed Stan Code</strong></p>
+<pre class="text"><code>// generated with brms 2.18.0
+functions {
+}
+data {
+  int&lt;lower=1&gt; N;  // total number of observations
+  int Y[N];  // response variable
+  // data for splines
+  int Ks;  // number of linear effects
+  matrix[N, Ks] Xs;  // design matrix for the linear effects
+  // data for spline s(PM10)
+  int nb_1;  // number of bases
+  int knots_1[nb_1];  // number of knots
+  // basis function matrices
+  matrix[N, knots_1[1]] Zs_1_1;
+  // data for spline s(CO)
+  int nb_2;  // number of bases
+  int knots_2[nb_2];  // number of knots
+  // basis function matrices
+  matrix[N, knots_2[1]] Zs_2_1;
+  // data for spline s(NO2)
+  int nb_3;  // number of bases
+  int knots_3[nb_3];  // number of knots
+  // basis function matrices
+  matrix[N, knots_3[1]] Zs_3_1;
+  int prior_only;  // should the likelihood be ignored?
+}
+transformed data {
+}
+parameters {
+  real Intercept;  // temporary intercept for centered predictors
+  vector[Ks] bs;  // spline coefficients
+  // parameters for spline s(PM10)
+  // standarized spline coefficients
+  vector[knots_1[1]] zs_1_1;
+  real&lt;lower=0&gt; sds_1_1;  // standard deviations of spline coefficients
+  // parameters for spline s(CO)
+  // standarized spline coefficients
+  vector[knots_2[1]] zs_2_1;
+  real&lt;lower=0&gt; sds_2_1;  // standard deviations of spline coefficients
+  // parameters for spline s(NO2)
+  // standarized spline coefficients
+  vector[knots_3[1]] zs_3_1;
+  real&lt;lower=0&gt; sds_3_1;  // standard deviations of spline coefficients
+}
+transformed parameters {
+  // actual spline coefficients
+  vector[knots_1[1]] s_1_1;
+  // actual spline coefficients
+  vector[knots_2[1]] s_2_1;
+  // actual spline coefficients
+  vector[knots_3[1]] s_3_1;
+  real lprior = 0;  // prior contributions to the log posterior
+  // compute actual spline coefficients
+  s_1_1 = sds_1_1 * zs_1_1;
+  // compute actual spline coefficients
+  s_2_1 = sds_2_1 * zs_2_1;
+  // compute actual spline coefficients
+  s_3_1 = sds_3_1 * zs_3_1;
+  lprior += student_t_lpdf(Intercept | 3, 3, 2.5);
+  lprior += student_t_lpdf(sds_1_1 | 3, 0, 2.5)
+    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
+  lprior += student_t_lpdf(sds_2_1 | 3, 0, 2.5)
+    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
+  lprior += student_t_lpdf(sds_3_1 | 3, 0, 2.5)
+    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
+}
+model {
+  // likelihood including constants
+  if (!prior_only) {
+    // initialize linear predictor term
+    vector[N] mu = rep_vector(0.0, N);
+    mu += Intercept + Xs * bs + Zs_1_1 * s_1_1 + Zs_2_1 * s_2_1 + Zs_3_1 * s_3_1;
+    target += poisson_log_lpmf(Y | mu);
+  }
+  // priors including constants
+  target += lprior;
+  target += std_normal_lpdf(zs_1_1);
+  target += std_normal_lpdf(zs_2_1);
+  target += std_normal_lpdf(zs_3_1);
+}
+generated quantities {
+  // actual population-level intercept
+  real b_Intercept = Intercept;
+}</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesian-generalised-linear-models-glms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesian-hierarchical-regression-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/Intro_to_Bayesian_GAMs_in_brms.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

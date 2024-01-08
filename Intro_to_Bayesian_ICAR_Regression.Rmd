@@ -1,0 +1,712 @@
+# Bayesian Spatial Modelling for Areal Data in Stan
+
+## Lecture recording (Length: 40:58 minutes)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_msstream('aac25518-124a-4a00-bfbe-6af58639cb03', height=400) %>% use_align('center')
+```
+
+<div class="note">
+**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/aac25518-124a-4a00-bfbe-6af58639cb03). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
+</div>
+
+## Introduction
+
+This week's practical you will be introduced to applying spatial Bayesian models for risk assessments for areal-level discrete outcomes. This a powerful tool used often in many applications e.g., spatial epidemiology, disaster risk reduction and environmental criminology and many more. 
+
+This exercise will focus on casualty data resulting from road accidents by car users (and/or occupants) in the UK. Road traffic accidents & injuries are a serious problem worldwide. In fact, it is one of the leading causes of death attributed to significant life-years lost and as a consequence is associated with considerable economic losses to impacted individuals and families. There are many individual, environmental and geographical risk factors for road-related casualties. Here, we will use a series of spatial models from a Bayesian framework to estimate the **area-specific relative risks (RR)** of casualties due to road accidents in local authority areas across the England; and we will quantify the levels of uncertainty using a device called **exceedance probabilities**.
+
+## Learning outcomes
+
+You will learn how to:
+
+ - Implement the **Spatial intrinsic conditional autoregressive model (ICAR)** to areal data in **RStan**;
+ - How to use the ICAR model to predict the **area-specific relative risks (RR)** for areal units and how to determine whether the levels of such risk are **statistically significant or not** through 95% credible intervals (95% CrI);
+ - How to determine the **Exceedance Probability** i.e., the probability that an area has an excess risk of an outcome that exceeds a given risk threshold (e.g., RR > 1 (null value));
+ 
+You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.
+
+## Demonstration recording (Length: 51:46 minutes)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_msstream('292021c1-01d2-4e29-8347-06da68804fd6', height=400) %>% use_align('center')
+```
+
+<div class="note">
+**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/292021c1-01d2-4e29-8347-06da68804fd6). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
+</div>
+
+## Before we start...
+
+### Loading and installing packages
+
+We will need to install the following new packages:
+
+- `SpatialEpi`: grants access to function `expected()` to calculated expected numbers
+- `tidybayes`: grants access to further functions for managing posterior estimates. We will need it calculating the exceedance probabilities. Load this alongside `tidyverse` package
+- `geostan`: grants access to further functions that we need to compute the adjacency matrix that can be handled in Stan. We will use the two functions `shape2mat()` and `prep_icar_data()` to create the adjacency matrix as nodes and edges.
+
+```{r, eval = FALSE}
+install.packages("geostan")
+install.packages("SpatialEpi")
+install.packages("tidybayes")
+```
+
+Now, lets load all packages need specifically for this computer practical:
+
+```{r, eval = FALSE}
+# Load the packages with library()
+library("sf")
+library("tmap")
+library("spdep")
+library("rstan")
+library("geostan")
+library("SpatialEpi")
+library("tidybayes")
+library("tidyverse")
+```
+
+Upon loading the `rstan` package, we highly recommend using this code to configure it with RStudio:
+
+```{r, eval=FALSE}
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+```
+
+This tells RStudio to use the multiple cores in your computer for parallel processing whenever Stan is being implemented. Every time you want to use Stan - make sure to load `parallel::detectCores()` and `rstan_options` code.
+
+<div class="note">
+**Important Notes:** Make sure to be using the latest version of `RStan` (2.26.13). Check in your list of packages. If you are using the old version (i.e., 2.21.1) you may encounter problems with creating the functions in Stan script. It is recommended that you remove version 2.21.1 and install the latest development version 2.26.13. See why [**[LINK]**](https://discourse.mc-stan.org/t/a-parser-expected-warning-on-a-code-that-works/30650)
+
+Instruction to do this are as follows:
+```{r, eval=FALSE}
+# remove rstan and StanHeaders
+remove.packages(c("StanHeaders", "rstan"))
+# install the latest development version 2.26.13 from direct source
+install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+```
+</div>
+
+### Datasets & setting up the work directory 
+
+Go to your folder **GEOG0125** and create a sub folder called "**Week 8**" within the **GEOG0125** folder. Here, we will store all our R & Stan scripts as well as datasets. Set your work directory to **Week 8's** folder.
+
+For Windows, the code for setting the work directory will be:
+
+```{r, eval = FALSE}
+setwd("C:/Users/AccountName/Desktop/GEOG0125/Week 8")
+```
+
+For MAC, the code for setting the work directory will be:
+
+```{r, eval = FALSE}
+setwd("/Users/AccountName/Desktop/GEOG0125/Week 8")
+```
+
+The dataset for this practical are:
+
+- `Road Casualties Data 2015-2020.csv`
+- `England Local Authority Shapefile.shp`
+- `England Regions Shapefile.shp`
+
+The dataset were going to start of with is the `Road Casualties Data 2015-2020.csv`. This data file contains the following information: 
+
+- It contains the 307 local authority areas that operate in England. The names and codes are defined under the columns `LAD21NM` and `LAD21CD` respectively;
+- It contains the following variables: `Population`, `Casualties` and `IMDScore`. The `Casualties` is the dependent variable, and `IMDScore` is the independent variable. We will need `Population` column to derive the **expected number of road casualties** to be used as an offset in the Bayesian model.
+
+The shapefile `England Local Authority Shapefile.shp` contains the boundaries for all 307 local authorities in England. The `England Regions Shapefile.shp` contains the boundaries for all 10 regions that make up England. 
+
+Let us load these dataset to memory:
+
+```{r, eval=FALSE}
+# load the shape files
+england_LA_shp <- read_sf("England Local Authority Shapefile.shp")
+england_Region_shp <- read_sf("England Regions Shapefile.shp")
+
+# load in the cross-sectional road accident dataset
+road_accidents <- read.csv("Road Casualties Data 2015-2020.csv")
+```
+
+## Data preparation in RStudio
+
+### Calculation for expected numbers
+
+In order to estimate the risk of casualties due to road accidents at an  LA-level in England, we will need to first obtain a column that contains estimates from expected number of road casualties. This is derived from the `Population` column which as **denominators** or **reference population size** which is multiplied to the overall incidence rates of road accidents to get the number of expected casualties for each LA area.
+
+You can use the `expected()` function to compute this column into the `road_accident` data frame
+
+```{r, eval=FALSE}
+# calculate the expected number of cases
+road_accidents$ExpectedNum <- round(expected(population = road_accidents$Population, cases = road_accidents$Casualties, n.strata = 1), 0)
+```
+
+This particular column `ExpectedNum` is important, it must be computed and used as an offset in our spatial model. 
+
+### Converting the spatial adjacency matrix to nodes & edges
+
+We will need to transform the image below into a list of nodes and edges accordingly as Stan can only identify adjacency with a set of paired nodes with edges that connect them. For instance, `node1` is the index region and `node2` is the list of neighbouring regions connected to the index region in `node1`
+
+```{r echo=FALSE, out.width = "60%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('images/general/Nodes_Edges.png') 
+```
+
+We can perform this by first merging in the road accident data to the LA-level shapefile. Once this action is completed, we will then need to coerce the spatial object to be from a simple features (i.e., `sf`) object to the spatial object (i.e., `sp`).
+
+Here is the code:
+
+```{r, eval=FALSE}
+# merge the attribute table to the shapefile
+spatial.data <- merge(england_LA_shp, road_accidents, by.x = c("LAD21CD", "LAD21NM"), by.y = c("LAD21CD", "LAD21NM"), all.x = TRUE)
+# reordering the columns
+spatial.data <- spatial.data[, c(3,1,2,4,5,7,6)]
+# need to be coerced into a spatial object
+sp.object <- as(spatial.data, "Spatial")
+```
+
+Now, we are going to need the **nodes** and **edges** from the `sp.object` using the `shape2mat()` function - this changes it into a matrix object. From the matrix object, we will be able to prepare the data from spatial ICAR model using the `prep_icar_data()` function. Here, is the code:
+
+```{r, eval=FALSE}
+# needs to be coerced into a matrix object
+adjacencyMatrix <- shape2mat(sp.object)
+# we extract the components for the ICAR model
+extractComponents <- prep_icar_data(adjacencyMatrix)
+```
+
+From the `extractComponents` object, we will need to extract the following contents:
+
+- `$group_size` this is the number of areal units under observation listed in the shapefile (should be the same in the road accidents dataset)
+- `$node1` are index regions of interest
+- `$node2` are the other neighbouring regions that are connected to the index region of interest listed in `node1`
+- `$n_edges` creates the network as show area is connected to what neighbourhood. It's still an adjacency matrix using the queen contiguity matrix but as a network.
+
+Here is the code for performing the extraction:
+
+```{r, eval=FALSE}
+n <- as.numeric(extractComponents$group_size)
+nod1 <- extractComponents$node1
+nod2 <- extractComponents$node2
+n_edges <- as.numeric(extractComponents$n_edges)
+```
+
+Note that the information needed are stored in `n`, `nod1`, `nod2` and `n_edges`. 
+
+### Create the dataset to be compiled in Stan
+
+For the list step in the data preparation, we need to define the variables needed to be compiled in Stan. The outcome `Casualties`, independent variable `IMDScore` and offset variable `ExpectedNum` needs to be extracted into separate vectors. The data needs to be aligned with the areas in shapefile as the result will be churned to that order. So make sure the data is already linked in to the geometries!
+
+Here is the code:
+
+```{r, eval=FALSE}
+y <- spatial.data$Casualties
+x <- spatial.data$IMDScore
+e <- spatial.data$ExpectedNum
+```
+
+Now, we create our dataset for Stan:
+
+```{r, eval=FALSE}
+# put all components into a list object
+stan.spatial.dataset <- list(N=n, N_edges=n_edges, node1=nod1, node2=nod2, Y=y, X=x, E=e)
+```
+
+The above information is going to be passed to Stan in the `data block`. Now, we are in the position to develop our **spatial intrinsic conditional autoregressive (ICAR) model**. Now open your Stan script and we begin.
+
+## Creating the script for the Spatial ICAR smoothed model
+
+### Defining the ICAR component of the Spatial model
+
+Here, we need to create a function for the ICAR component in our model to define the **prior** of spatial random effect $\phi$. This is essentially a probability density computed from the **sum of the squared pairwise differences** between the spatial effect in area $\phi_i$ against another $\phi_j$. This bit is also a reconstruction for the adjacency matrix.
+
+It is a function based on `nodes1`, `nodes2` (i.e., list of adjacent region/area pairs) and the exact number of areas `N` in a study area.
+
+We create the function as `icar_normal_lpdf()`, where the inputs will be `N`, `nodes1` and `nodes2`to get `phi`. In the model block (as you will soon see) - we will specify the prior for $\phi$ as `phi ~ icar_normal(N, node1, node2)`. It should be noted that in this function `phi` is a vector, `N` is a simple integer, and the `node1` and `node2` is an array. The following program fragment shows the Stan parameter and model block to compute the spatial effects vector through the statement `phi ~ icar_normal(N, node1, node2)` (which you will see later):
+
+```{r, eval=FALSE, highlight=FALSE}
+
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+```
+
+<div class="note">
+**Important Notes:** Use the above function as this will help you to generate the spatial random effects for each region
+</div>
+
+### Adding the blocks in our ICAR Stan script
+
+#### Data block
+ 
+In the `data block`, we specify the following:
+
+- The total number of areal unit observations `N` as an integer (i.e., `307`);
+- The total number edges `N_edges` as an integer (i.e., `823`);
+- The `nodes1` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes2`;
+- The `nodes2` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes1`;
+- We define our `Y` outcome (i.e., road accidents) as an `array` of size `N` (i.e., `307`) which is an `integer`; 
+- We define our independent variables `X` as a `vector` of size `N` (i.e., `307`); 
+- We must define our offset for the expected numbers `E` as a vector of size `N` (i.e., `307`);
+
+Here is what our model block will look like:
+
+```{r, eval=FALSE, highlight=FALSE}
+
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+data {
+	int<lower=0> N;
+	int<lower=0> N_edges;
+	array[N_edges] int<lower=1, upper=N> node1;
+	array[N_edges] int<lower=1, upper=N> node2;
+	array[N] int<lower=0> Y;                                         // dependent variable i.e., number of road accidents
+	vector<lower=0>[N] X;                                            // independent variable i.e., deprivation score
+	vector<lower=0>[N] E;                                            // estimated number of expected cases of road accidents
+}
+```
+
+#### Transformed data block
+
+We are going a `transformed data block` to our script. Here, we are simply changing the expected numbers by taking its `log()` and creating another vector `log_offset`. This will be added to the `poisson_log()` sampling statement in our likelihood function of the spatial model. Here, we specify it as follows:
+
+```{r, eval=FALSE, highlight=FALSE}
+
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+data {
+	int<lower=0> N;
+	int<lower=0> N_edges;
+	array[N_edges] int<lower=1, upper=N> node1;
+	array[N_edges] int<lower=1, upper=N> node2;
+	array[N] int<lower=0> Y;                                         // dependent variable i.e., number of road accidents
+	vector<lower=0>[N] X;                                            // independent variable i.e., deprivation score
+	vector<lower=0>[N] E;                                            // estimated number of expected cases of road accidents
+}
+transformed data {
+	vector[N] log_offset = log(E);                                   // use the expected cases as an offset and add to the regression model
+}
+```
+
+#### Parameters block
+
+For the `parameters block`, we will need to specify the following:
+
+- The global intercept i.e., `alpha` for the entire study area (i.e., average risk of road accidents on a population-level);
+- The coefficient `beta` for our independent variable `X` which is the `IMDScore`;
+- We also specify `sigma` as a `real` value which is some error or standard deviation that is multiplied to the spatial effects `phi`;
+- We define  the spatial effects `phi` to be `vector` of size `N`;  
+
+We add the block as follows:
+
+```{r, eval=FALSE, highlight=FALSE}
+
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+data {
+	int<lower=0> N;
+	int<lower=0> N_edges;
+	array[N_edges] int<lower=1, upper=N> node1;
+	array[N_edges] int<lower=1, upper=N> node2;
+	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
+	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
+	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+}
+transformed data {
+	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+}
+parameters {
+	real alpha;                                                     // define the intercept (overall risk in population)
+	real beta;                                                      // define the coefficient for the deprivation score variable
+	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
+	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+}
+```
+
+#### Model block
+
+We build our likelihood function and specify the priors for each parameter under the `model block`. We are using a typical Poisson model with a log link function as we are assuming there's some linear relationship between the counts and IMD score, but here we are also taking into account the spatial structure in the vector parameter for `phi`:
+
+```{r, eval=FALSE, highlight=FALSE}
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+data {
+	int<lower=0> N;
+	int<lower=0> N_edges;
+	array[N_edges] int<lower=1, upper=N> node1;
+	array[N_edges] int<lower=1, upper=N> node2;
+	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
+	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
+	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+}
+transformed data {
+	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+}
+parameters {
+	real alpha;                                                     // define the intercept (overall risk in population)
+	real beta;                                                      // define the coefficient for the deprivation score variable
+	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
+	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+}
+model {
+	phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
+	Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
+	alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
+	beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
+	sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
+	sum(phi) ~ normal(0, 0.001*N);
+}
+```
+
+#### Generated quantities block
+
+Lastly, we instruct Stan on the parameters we want to report. We want them as **relative risk ratio (RR)**. We use the `generated quantities block` to obtain these estimates by exponentiation of our regression model:
+
+```{r, eval=FALSE, highlight=FALSE}
+functions {
+	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
+		return -0.5 * dot_self(phi[node1] - phi[node2]);
+	}
+}
+data {
+	int<lower=0> N;
+	int<lower=0> N_edges;
+	array[N_edges] int<lower=1, upper=N> node1;
+	array[N_edges] int<lower=1, upper=N> node2;
+	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
+	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
+	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+}
+transformed data {
+	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+}
+parameters {
+	real alpha;                                                     // define the intercept (overall risk in population)
+	real beta;                                                      // define the coefficient for the deprivation score variable
+	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
+	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+}
+model {
+	phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
+	Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
+	alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
+	beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
+	sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
+	sum(phi) ~ normal(0, 0.001*N);
+}
+generated quantities {
+	vector[N] eta = alpha + beta*X + phi*sigma;                     // do eta equals alpha + beta*X + phi*sigma to get the relative risk for areas 
+	vector[N] mu = exp(eta);                                        // the exponentiate eta to mu areas-specific relative risk ratios (RRs)
+}
+```
+
+<div class="note">
+Well done! You have coded your first spatial risk model. Alright, let us save the script as `icar_poisson_model.stan`. We can now compile and run it through RStudio to get our posterior estimates as **risk ratios (RR)** for each areas. We can also get the **exceedance probabilities**. The next steps are easy from this point onwards.
+</div>
+
+## Compiling Stan code for Spatial ICAR modelling
+
+### Printing of the global results
+
+Now, let us turn our attention to RStudio. Using the `stan()` to compile the saved script to obtain the posterior estimation of the parameters from our model:
+
+```{r, eval=FALSE}
+icar_poisson_fit = stan("icar_poisson_model.stan", data=stan.spatial.dataset, iter=20000, chains=6, verbose = FALSE)
+```
+
+We can see our estimated results for `alpha`, `beta` and `sigma`:
+
+```{r, eval=FALSE}
+# remove that annoying scientific notation
+options(scipen = 999)
+summary(icar_poisson_fit, pars=c("alpha", "beta", "sigma"), probs=c(0.025, 0.975))$summary
+```
+
+**Output from summary()$summary function:**
+
+```{r, eval=FALSE, highlight=FALSE}
+              mean      se_mean          sd        2.5%        97.5%    n_eff     Rhat
+alpha  0.132105883 0.0046872419 0.085604021 -0.04109926 0.3001698223 333.5444 1.020028
+beta  -0.008203683 0.0002366832 0.004319974 -0.01669401 0.0005396596 333.1404 1.020069
+sigma  1.032680985 0.0017143449 0.047901705  0.94219323 1.1295132135 780.7384 1.004863
+```
+
+Here is the **interpretation**:
+
+- `alpha` is the global mean (or average) in the population under study. It means on average the road accident occurrence in England for the period 2015 to 2020 is  **0.1321 (95% CrI: -0.0411 to 0.3002)**. If we take the exponent of this value i.e., `exp(0.132105883)` - we get the relative risks of road accidents which is 1.14 times higher in England **(95% CrI: 0.959 to 1.35)**. The result is not significant as the null value exists between these limits.
+- `beta` is the coefficient for `IMDScore`. This means that its yields a decrease on average for road accidents throughout England for more deprived areas **-0.0082 (95% CI: -0.016 to 0.00053)**. This is negligible and not significant; and if you exponentiate this value its really close to the null value (1). 
+- `sigma` is the overall standard deviation or global error.
+
+Note, we can view the **spatial effects** i.e., `phi` for each area using this code:
+
+```{r, eval=FALSE}
+# show first 6 rows only instead of the full 307
+head(summary(icar_poisson_fit, pars=c("phi"), probs=c(0.025, 0.975))$summary)
+```
+
+Alternatively, you can use the `print()` function to get a detailed output:
+
+```{r, eval=FALSE}
+print(icar_poisson_fit, pars=c("alpha", "beta", "sigma", "phi"), probs=c(0.025, 0.975))
+```
+
+**Output from print() function:**
+
+```{r, eval=FALSE, highlight=FALSE}
+Inference for Stan model: anon_model.
+6 chains, each with iter=20000; warmup=10000; thin=1; 
+post-warmup draws per chain=10000, total post-warmup draws=60000.
+
+       mean se_mean   sd  2.5% 97.5% n_eff Rhat
+alpha  0.13       0 0.09 -0.04  0.30   334 1.02
+beta  -0.01       0 0.00 -0.02  0.00   333 1.02
+sigma  1.03       0 0.05  0.94  1.13   781 1.00
+
+Samples were drawn using NUTS(diag_e) at Wed Mar  8 21:06:27 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).
+```
+
+### Rapid diagnostics of the rHATs
+
+Before mapping the relative risks, we must check if the any of the estimates i.e., `alpha`, `beta`, `sigma` and all `phi` exceed the **rHAT** value of 1.1. This is an indication that iterations did not perform well if an `rHAT` for a parameter is above `1.1`. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of `1`'s (Valid) and `0`'s (Not valid). We can tabulate it to see the numbers:
+
+```{r, eval=FALSE, highlight=FALSE}
+# diagnostic check on the rHats - put everything into a data frame
+diagnostic.checks <- as.data.frame(summary(icar_poisson_fit, pars=c("alpha", "beta", "sigma", "phi", "lp__"), probs=c(0.025, 0.5, 0.975))$summary)
+# create binary variable
+diagnostic.checks$valid <- ifelse(diagnostic.checks$Rhat < 1.1, 1, 0)
+# tabulate it
+table(diagnostic.checks$valid)
+```
+
+Everything is okay - all outputted parameters have an `rHAT < 1.1`. We are free to generate maps.
+
+<div class="note">
+**NOTES**: To avoid such complications, it is always to best to run about `10000`, `15000` or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.1.
+</div>
+
+### Extraction of the area-specific relative risks
+
+If you run the following code:
+
+```{r, eval=FALSE}
+# show first 6 rows only instead of the full 307
+head(summary(icar_poisson_fit, pars=c("mu"), probs=c(0.025, 0.975))$summary)
+```
+
+We see the relative risk (RR) estimates for the first areas under the column `mu` with their corresponding credibility limits under the `2.5%` and `97.5%` column. We are going to extract this information into a data frame and applying the cleaning and renaming of columns accordingly:
+
+```{r, eval=FALSE}
+
+# extraction key posterior results for the generated quantities 
+relativeRisk.results <- as.data.frame(summary(icar_poisson_fit, pars=c("mu"), probs=c(0.025, 0.975))$summary)
+# now cleaning up this table up
+# first, insert clean row numbers to new data frame
+row.names(relativeRisk.results) <- 1:nrow(relativeRisk.results)
+# second, rearrange the columns into order
+relativeRisk.results <- relativeRisk.results[, c(1,4,5,7)]
+# third, rename the columns appropriately
+colnames(relativeRisk.results)[1] <- "rr"
+colnames(relativeRisk.results)[2] <- "rrlower"
+colnames(relativeRisk.results)[3] <- "rrupper"
+colnames(relativeRisk.results)[4] <- "rHAT"
+
+# view clean table 
+head(relativeRisk.results)
+```
+
+See clean table:
+
+```{r, eval=FALSE, highlight=FALSE}
+         rr   rrlower   rrupper      rHAT valid
+1 0.6295692 0.5759348 0.6859993 0.9999354     1
+2 0.8043656 0.7550300 0.8555160 0.9999809     1
+3 0.6518326 0.6068501 0.6991145 0.9999186     1
+4 0.6292392 0.5920648 0.6674334 0.9999475     1
+5 0.8885551 0.8284516 0.9505547 1.0000141     1
+6 0.7971718 0.7451160 0.8513495 0.9999757     1
+```
+
+Insert these columns into the `spatial.data` object as follow:
+
+```{r, eval=FALSE}
+# now, we proceed to generate our risk maps
+# align the results to the areas in shapefile
+spatial.data$rr <- relativeRisk.results[, "rr"]
+spatial.data$rrlower <- relativeRisk.results[, "rrlower"]
+spatial.data$rrupper <- relativeRisk.results[, "rrupper"]
+```
+
+These relative will allow us to see the mapped risks of road accidents across local authorities in England. We also want a supporting map indicate whether the risks are significant or not. Here, we create an extra column in the `spatial.data` called `Significance`. 
+
+```{r, eval=FALSE}
+# create categories to define if an area has significant increase or decrease in risk, or nothing all 
+spatial.data$Significance <- NA
+spatial.data$Significance[spatial.data$rrlower<1 & spatial.data$rrupper>1] <- 0    # NOT SIGNIFICANT
+spatial.data$Significance[spatial.data$rrlower==1 | spatial.data$rrupper==1] <- 0  # NOT SIGNIFICANT
+spatial.data$Significance[spatial.data$rrlower>1 & spatial.data$rrupper>1] <- 1    # SIGNIFICANT INCREASE
+spatial.data$Significance[spatial.data$rrlower<1 & spatial.data$rrupper<1] <- -1   # SIGNIFICANT DECREASE
+```
+
+### Mapping of RR and significance
+
+The next set of codes are all cosmetics for the creating our risk map for road accidents. Here is the code:
+
+```{r, eval=FALSE}
+
+# For map design for the relative risk -- you want to understand or get a handle on what the distribution for risks look like
+# this would inform you of how to create the labelling for the legends when make a map in tmap
+summary(spatial.data$rr)
+hist(spatial.data$rr)
+
+# creating the labels
+RiskCategorylist <- c(">0.0 to 0.25", "0.26 to 0.50", "0.51 to 0.75", "0.76 to 0.99", "1.00 & <1.01",
+	"1.01 to 1.10", "1.11 to 1.25", "1.26 to 1.50", "1.51 to 1.75", "1.76 to 2.00", "2.01 to 3.00")
+
+# next, we are creating the discrete colour changes for my legends and want to use a divergent colour scheme
+# scheme ranges from extreme dark blues to light blues to white to light reds to extreme dark reds
+# you can pick your own colour choices by checking out this link [https://colorbrewer2.org]
+
+RRPalette <- c("#65bafe","#98cffe","#cbe6fe","#dfeffe","white","#fed5d5","#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15")
+
+# categorising the risk values to match the labelling in RiskCategorylist object
+spatial.data$RelativeRiskCat <- NA
+spatial.data$RelativeRiskCat[spatial.data$rr>= 0 & spatial.data$rr <= 0.25] <- -4
+spatial.data$RelativeRiskCat[spatial.data$rr> 0.25 & spatial.data$rr <= 0.50] <- -3
+spatial.data$RelativeRiskCat[spatial.data$rr> 0.50 & spatial.data$rr <= 0.75] <- -2
+spatial.data$RelativeRiskCat[spatial.data$rr> 0.75 & spatial.data$rr < 1] <- -1
+spatial.data$RelativeRiskCat[spatial.data$rr>= 1.00 & spatial.data$rr < 1.01] <- 0
+spatial.data$RelativeRiskCat[spatial.data$rr>= 1.01 & spatial.data$rr <= 1.10] <- 1
+spatial.data$RelativeRiskCat[spatial.data$rr> 1.10 & spatial.data$rr <= 1.25] <- 2
+spatial.data$RelativeRiskCat[spatial.data$rr> 1.25 & spatial.data$rr <= 1.50] <- 3
+spatial.data$RelativeRiskCat[spatial.data$rr> 1.50 & spatial.data$rr <= 1.75] <- 4
+spatial.data$RelativeRiskCat[spatial.data$rr> 1.75 & spatial.data$rr <= 2.00] <- 5
+spatial.data$RelativeRiskCat[spatial.data$rr> 2.00 & spatial.data$rr <= 10] <- 6
+
+# check to see if legend scheme is balanced - if a number is missing that categorisation is wrong!
+table(spatial.data$RelativeRiskCat)
+```
+
+Generating the maps as a paneled output:
+
+```{r, eval=FALSE}
+
+# map of relative risk
+rr_map <- tm_shape(spatial.data) + 
+	tm_fill("RelativeRiskCat", style = "cat", title = "Relavtive Risk", palette = RRPalette, labels = RiskCategorylist) +
+	tm_shape(england_Region_shp) + tm_polygons(alpha = 0.05) + tm_text("name", size = "AREA") +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 0.8, legend.text.size = 0.7) +
+	tm_compass(position = c("right", "top")) + tm_scale_bar(position = c("right", "bottom"))
+
+# map of significance regions
+sg_map <- tm_shape(spatial.data) + 
+	tm_fill("Significance", style = "cat", title = "Significance Categories", 
+		palette = c("#33a6fe", "white", "#fe0000"), labels = c("Significantly low", "Not Significant", "Significantly high")) +
+	tm_shape(england_Region_shp) + tm_polygons(alpha = 0.10) + tm_text("name", size = "AREA") +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 0.8, legend.text.size = 0.7) +
+	tm_compass(position = c("right", "top")) + tm_scale_bar(position = c("right", "bottom"))
+
+# create side-by-side plot
+tmap_arrange(rr_map, sg_map, ncol = 2, nrow = 1)
+```
+
+**Output:**
+
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('images/general/RR_SG.png') 
+```
+
+### Extracting and mapping of the exceedance probabilities
+
+**Exceedance probabilities** allows the user to quantify the levels of uncertainty surrounding the risks we quantified. We can use a threshold for instance an `RR > 1` and ask what is the probability that an area has an excess risk of road accidents and visualise this as well.
+
+Just like the RRs, we are going to extract this information into a vector and include it into our `spatial.data` object. For this extraction, we will need to use functions from the tidybayes and tidyverse packages i.e., `spread_draws()`, `group_by()`, `summarise()` and `pull()`:
+
+```{r, eval=FALSE}
+
+# extract the exceedence probabilities from the icar_possion_fit object
+# compute the probability that an area has a relative risk ratio > 1.0
+threshold <- function(x){mean(x > 1.00)}
+excProbrr <- icar_poisson_fit %>% spread_draws(mu[i]) %>% 
+	group_by(i) %>% summarise(mu=threshold(mu)) %>%
+	pull(mu)
+
+# insert the exceedance values into the spatial data frame
+spatial.data$excProb <- excProbrr
+```
+
+The next set of codes are all cosmetics for the creating our probability exceedance map for road accidents. Here is the code:
+
+```{r, eval=FALSE}
+
+# create the labels for the probabilities
+ProbCategorylist <- c("<0.01", "0.01-0.09", "0.10-0.19", "0.20-0.29", "0.30-0.39", "0.40-0.49","0.50-0.59", "0.60-0.69", "0.70-0.79", "0.80-0.89", "0.90-0.99", "1.00")
+
+# categorising the probabilities in bands of 10s
+spatial.data$ProbCat <- NA
+spatial.data$ProbCat[spatial.data$excProb>=0 & spatial.data$excProb< 0.01] <- 1
+spatial.data$ProbCat[spatial.data$excProb>=0.01 & spatial.data$excProb< 0.10] <- 2
+spatial.data$ProbCat[spatial.data$excProb>=0.10 & spatial.data$excProb< 0.20] <- 3
+spatial.data$ProbCat[spatial.data$excProb>=0.20 & spatial.data$excProb< 0.30] <- 4
+spatial.data$ProbCat[spatial.data$excProb>=0.30 & spatial.data$excProb< 0.40] <- 5
+spatial.data$ProbCat[spatial.data$excProb>=0.40 & spatial.data$excProb< 0.50] <- 6
+spatial.data$ProbCat[spatial.data$excProb>=0.50 & spatial.data$excProb< 0.60] <- 7
+spatial.data$ProbCat[spatial.data$excProb>=0.60 & spatial.data$excProb< 0.70] <- 8
+spatial.data$ProbCat[spatial.data$excProb>=0.70 & spatial.data$excProb< 0.80] <- 9
+spatial.data$ProbCat[spatial.data$excProb>=0.80 & spatial.data$excProb< 0.90] <- 10
+spatial.data$ProbCat[spatial.data$excProb>=0.90 & spatial.data$excProb< 1.00] <- 11
+spatial.data$ProbCat[spatial.data$excProb == 1.00] <- 12
+
+# check to see if legend scheme is balanced
+table(spatial.data$ProbCat)
+```
+
+Generating the probability map output:
+
+```{r, eval=FALSE}
+
+# map of exceedance probabilities
+tm_shape(spatial.data) + 
+	tm_fill("ProbCat", style = "cat", title = "Probability", palette = "GnBu", labels = ProbCategorylist) +
+	tm_shape(england_Region_shp) + tm_polygons(alpha = 0.05, border.col = "black") + tm_text("name", size = "AREA") +
+	tm_layout(frame = FALSE, legend.outside = TRUE, legend.title.size = 0.8, legend.text.size = 0.7) +
+	tm_compass(position = c("right", "top")) + tm_scale_bar(position = c("right", "bottom"))
+```
+
+**Output:**
+
+```{r echo=FALSE, out.width = "70%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('images/general/probability_map.png')
+```
+
+<div class="note">
+**Example Interpretation:** We can see that the risk patterns for road accidents across England is quite heterogeneous. While it is quite pronounced in all 10 regions in England, the burden is quite significant in South West region with large numbers of local authorities having an increased risk which are statistically significant. While, there's significant limitation the models used here - perhaps, the Department for Transport should do an investigation on these patterns starting with the South West area.
+</div>
+
+## Task
+
+**Try your hand on this problem in Stan**: Build a spatial ICAR model using data on counts of low birth weights in Georgia US to create the following maps:
+
+1. Map showing the relative risk of low birth weight across the 163 counties in Georgia
+2. Map showing the statistical significance of the relative risk
+3. Map showing the Exceedance Probabilities using the threshold of RR > 1
+
+Use the following dataset:
+
+- `Low_birth_weights_data.csv`: Contains `NAME`, `Lowbirths` (Counts) and `ExpectedNumber`  
+- `Georgia_Shapefile.shp`: Contains `NAME`
+
+Try to complete this without consulting the solutions.

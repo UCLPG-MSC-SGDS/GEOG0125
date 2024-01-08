@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="5 Spatial Bayesian Modelling for Areal Data using Stan | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayesian-hierarchical-regression-models.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#timetable-and-key-locations"><i class="fa fa-check"></i>Timetable and key locations</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact-details"><i class="fa fa-check"></i>Contact details</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes"><i class="fa fa-check"></i><b>1.1</b> Lecture recording (Length: 59:50 minutes)</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction"><i class="fa fa-check"></i><b>1.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#learning-outcomes"><i class="fa fa-check"></i><b>1.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes"><i class="fa fa-check"></i><b>1.2.2</b> Demonstration recording (Length: 38:23 minutes)</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>1.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>1.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>1.3</b> Basic building blocks I: About Stan Programming</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>1.3.1</b> Opening a Stan Script in RStudio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>1.3.2</b> Basic structure of a Stan script in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations"><i class="fa fa-check"></i><b>1.4</b> Basic building blocks II: Data types and constraint declarations</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model"><i class="fa fa-check"></i><b>1.5</b> Basic building blocks III: Developing our model</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>1.6</b> Basic building blocks IV: Compiling our Stan code in RStudio</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation"><i class="fa fa-check"></i><b>1.7</b> Basic building blocks V: Extract posterior samples and interpretation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information"><i class="fa fa-check"></i><b>1.8</b> Basic building blocks VI: Updating our prediction with new information</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task"><i class="fa fa-check"></i><b>1.9</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html"><i class="fa fa-check"></i><b>2</b> Bayesian Generalised Linear Models (GLMs)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes"><i class="fa fa-check"></i><b>2.1</b> Lecture recording (Length: 45:46 minutes)</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#introduction-1"><i class="fa fa-check"></i><b>2.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="2.2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 52:52 minutes)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="2.2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>2.3</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>2.3.1</b> Selecting the appropriate Poisson model</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan"><i class="fa fa-check"></i><b>2.3.2</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan"><i class="fa fa-check"></i><b>2.3.3</b> Creating a script to run a Negative Binomial Poisson regression in Stan</a></li>
+<li class="chapter" data-level="2.3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>2.3.4</b> Compiling our Stan code in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling"><i class="fa fa-check"></i><b>2.4</b> Logistic Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>2.4.1</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="2.4.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan"><i class="fa fa-check"></i><b>2.4.2</b> Creating a script to run a logistic regression in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-1"><i class="fa fa-check"></i><b>2.5</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html"><i class="fa fa-check"></i><b>3</b> Bayesian Generalised Additive Models (GAMs)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes"><i class="fa fa-check"></i><b>3.1</b> Lecture recording (Length: 38:12 minutes)</a></li>
+<li class="chapter" data-level="3.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#introduction-2"><i class="fa fa-check"></i><b>3.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2"><i class="fa fa-check"></i><b>3.2.1</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model"><i class="fa fa-check"></i><b>3.3</b> Implementing a Bayesian Generalised Additive Model</a></li>
+<li class="chapter" data-level="3.4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode"><i class="fa fa-check"></i><b>3.4</b> Printing Stan code from <code>brms::stancode()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html"><i class="fa fa-check"></i><b>4</b> Bayesian Hierarchical Regression Models</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-4825-minutes"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 48:25 minutes)</a></li>
+<li class="chapter" data-level="4.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-3"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>4.2.2</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-2"><i class="fa fa-check"></i><b>4.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan"><i class="fa fa-check"></i><b>4.3.1</b> Creating a script to run a 2-level Multilevel linear regression in Stan</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>4.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task-2"><i class="fa fa-check"></i><b>4.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html"><i class="fa fa-check"></i><b>5</b> Spatial Bayesian Modelling for Areal Data using Stan</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#lecture-recording-length-minutes"><i class="fa fa-check"></i><b>5.1</b> Lecture recording (Length: minutes)</a></li>
+<li class="chapter" data-level="5.2" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>5.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#demonstration-recording-length-minutes"><i class="fa fa-check"></i><b>5.2.2</b> Demonstration recording (Length: minutes)</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-bayesian-modelling-for-areal-data-using-stan.html"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.3</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-bayesian-modelling-for-areal-data-using-stan" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Spatial Bayesian Modelling for Areal Data using Stan<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#spatial-bayesian-modelling-for-areal-data-using-stan" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-recording-length-minutes" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Lecture recording (Length: minutes)<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#lecture-recording-length-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>[PLACEHOLDER FOR LECTURE VIDEO]</strong></p>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href=""><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="introduction-4" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Introduction<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This week’s practical you will be introduced to applying spatial Bayesian models for risk assessments for areal-level discrete outcomes. This a powerful tool used often in many applications e.g., spatial epidemiology, disaster risk reduction and environmental criminology and many more.</p>
+<p>This exercise will focus on casualty data resulting from road accidents by car users (and/or occupants) in the UK. Road traffic accidents &amp; injuries are a serious problem worldwide. In fact, it is one of the leading causes of death attributed to significant life-years lost and as a consequence is associated with considerable economic losses to impacted individuals and families. There are many individual, environmental and geographical risk factors for road-related casualties. Here, we will use a series of spatial models from a Bayesian framework to estimate the <strong>area-specific relative risks (RR)</strong> of casualties due to road accidents in local authority areas across the England; and we will quantify the levels of uncertainty using a device called <strong>exceedance probabilities</strong>.</p>
+<div id="learning-outcomes-2" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Learning outcomes<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#learning-outcomes-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You will learn how to:</p>
+<ul>
+<li>Implement the <strong>Spatial intrinsic conditional autoregressive model (ICAR)</strong> to areal data in <strong>RStan</strong>;</li>
+<li>How to use the ICAR model to predict the <strong>area-specific relative risks (RR)</strong> for areal units and how to determine whether the levels of such risk are <strong>statistically significant or not</strong> through 95% credible intervals (95% CrI);</li>
+<li>How to determine the <strong>Exceedance Probability</strong> i.e., the probability that an area has an excess risk of an outcome that exceeds a given risk threshold (e.g., RR &gt; 1 (null value));</li>
+</ul>
+<p>You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.</p>
+</div>
+<div id="demonstration-recording-length-minutes" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Demonstration recording (Length: minutes)<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#demonstration-recording-length-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>[PLACEHOLDER FOR DEMO-WALKTHROUGH VIDEO]</strong></p>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href=""><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="datasets-setting-up-the-work-directory-3" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Datasets &amp; setting up the work directory<a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#datasets-setting-up-the-work-directory-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 8</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 8’s</strong> folder.</p>
+<p>For Windows, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
+<p>For MAC, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
+<p>The dataset for this practical are:</p>
+<ul>
+<li><code>Road Casualties Data 2015-2020.csv</code></li>
+<li><code>England Local Authority Shapefile.shp</code></li>
+<li><code>England Regions Shapefile.shp</code></li>
+</ul>
+<p>The dataset were going to start of with is the <code>Road Casualties Data 2015-2020.csv</code>. This data file contains the following information:</p>
+<ul>
+<li>It contains the 307 local authority areas that operate in England. The names and codes are defined under the columns <code>LAD21NM</code> and <code>LAD21CD</code> respectively;</li>
+<li>It contains the following variables: <code>Population</code>, <code>Casualties</code> and <code>IMDScore</code>. The <code>Casualties</code> is the dependent variable, and <code>IMDScore</code> is the independent variable. We will need <code>Population</code> column to derive the <strong>expected number of road casualties</strong> to be used as an offset in the Bayesian model.</li>
+</ul>
+<p>The shapefile <code>England Local Authority Shapefile.shp</code> contains the boundaries for all 307 local authorities in England. The <code>England Regions Shapefile.shp</code> contains the boundaries for all 10 regions that make up England.</p>
+<p>Let us load these dataset to memory:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the shape files</span></span>
+<span id="cb86-2"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-2" aria-hidden="true" tabindex="-1"></a>england_LA_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Local Authority Shapefile.shp&quot;</span>)</span>
+<span id="cb86-3"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-3" aria-hidden="true" tabindex="-1"></a>england_Region_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Regions Shapefile.shp&quot;</span>)</span>
+<span id="cb86-4"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load in the cross-sectional road accident dataset</span></span>
+<span id="cb86-6"><a href="spatial-bayesian-modelling-for-areal-data-using-stan.html#cb86-6" aria-hidden="true" tabindex="-1"></a>road_accidents <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Road Casualties Data 2015-2020.csv&quot;</span>)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesian-hierarchical-regression-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/Intro_to_Bayesian_ICAR_Regression.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

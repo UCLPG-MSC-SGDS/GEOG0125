@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science</title>
+  <meta name="description" content="2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  <meta name="github-repo" content="UCLPG-MSC-SGDS/GEOG0125" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science" />
+  
+  <meta name="twitter:description" content="2 Introduction to Bayesian Statistics | GEOG0125: Advanced Topics in Social Geographic Data Science Handbook" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="getting-started.html"/>
+<link rel="next" href="bayesian-generalised-linear-models-glms.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo">
+<a href="https://www.ucl.ac.uk/module-catalogue/modules/advanced-topics-in-social-and-geographic-data-science-GEOG0125"><img src="images/general/ucl_logo.png">
+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#timetable-and-key-locations"><i class="fa fa-check"></i>Timetable and key locations</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact-details"><i class="fa fa-check"></i>Contact details</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html"><i class="fa fa-check"></i>Reading List</a>
+<ul>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-1-introduction-to-bayesian-inference"><i class="fa fa-check"></i>Week 1: Introduction to Bayesian Inference</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-2-bayesian-generalised-linear-models-glms"><i class="fa fa-check"></i>Week 2: Bayesian Generalised Linear Models (GLMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-3-bayesian-generalised-additive-models-gams"><i class="fa fa-check"></i>Week 3: Bayesian Generalised Additive Models (GAMs)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-7-bayesian-hierarchical-regression-models"><i class="fa fa-check"></i>Week 7: Bayesian Hierarchical Regression Models</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-8-spatial-intrinsic-conditional-autoregressive-modelling-icar"><i class="fa fa-check"></i>Week 8: Spatial Intrinsic Conditional Autoregressive Modelling (ICAR)</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#week-9-bayesian-updating-for-spatiotemporal-areal-analysis"><i class="fa fa-check"></i>Week 9: Bayesian Updating for Spatiotemporal Areal Analysis</a></li>
+<li class="chapter" data-level="" data-path="reading-list.html"><a href="reading-list.html#excellent-incredibly-useful-tutorial-videos-for-learning-stan-code"><i class="fa fa-check"></i>Excellent &amp; Incredibly Useful Tutorial Videos for Learning Stan Code</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#what-is-stan"><i class="fa fa-check"></i><b>1.1</b> What is Stan?</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#installation-of-r-rstudio"><i class="fa fa-check"></i><b>1.2</b> Installation of R &amp; RStudio</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-mac-users"><i class="fa fa-check"></i><b>1.2.1</b> Installation process for MAC users</a></li>
+<li class="chapter" data-level="1.2.2" data-path="getting-started.html"><a href="getting-started.html#installation-process-for-windows-users"><i class="fa fa-check"></i><b>1.2.2</b> Installation process for Windows users</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#installation-of-rstan-or-stan"><i class="fa fa-check"></i><b>1.3</b> Installation of <code>rstan</code> (or Stan)</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#installation-of-other-relevant-r-packages"><i class="fa fa-check"></i><b>1.4</b> Installation of other relevant R-packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes"><i class="fa fa-check"></i><b>2.1</b> Lecture recording (Length: 59:50 minutes)</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#introduction"><i class="fa fa-check"></i><b>2.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#learning-outcomes"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 38:23 minutes)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>2.3</b> Basic building blocks I: About Stan Programming</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.1</b> Opening a Stan Script in RStudio</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Basic structure of a Stan script in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations"><i class="fa fa-check"></i><b>2.4</b> Basic building blocks II: Data types and constraint declarations</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model"><i class="fa fa-check"></i><b>2.5</b> Basic building blocks III: Developing our model</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>2.6</b> Basic building blocks IV: Compiling our Stan code in RStudio</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation"><i class="fa fa-check"></i><b>2.7</b> Basic building blocks V: Extract posterior samples and interpretation</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information"><i class="fa fa-check"></i><b>2.8</b> Basic building blocks VI: Updating our prediction with new information</a></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#tasks"><i class="fa fa-check"></i><b>2.9</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-1---low-level-arsenic-poisoning-in-cornwall-uk"><i class="fa fa-check"></i><b>2.9.1</b> Task 1 - Low-level arsenic poisoning in Cornwall, UK</a></li>
+<li class="chapter" data-level="2.9.2" data-path="introduction-to-bayesian-statistics.html"><a href="introduction-to-bayesian-statistics.html#task-2---body-mass-index-bmi-problem"><i class="fa fa-check"></i><b>2.9.2</b> Task 2 - Body mass index (BMI) problem</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html"><i class="fa fa-check"></i><b>3</b> Bayesian Generalised Linear Models (GLMs)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#lecture-recording-length-4546-minutes"><i class="fa fa-check"></i><b>3.1</b> Lecture recording (Length: 45:46 minutes)</a></li>
+<li class="chapter" data-level="3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#introduction-1"><i class="fa fa-check"></i><b>3.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#learning-outcomes-1"><i class="fa fa-check"></i><b>3.2.1</b> Learning outcomes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#demonstration-recording-length-5252-minutes"><i class="fa fa-check"></i><b>3.2.2</b> Demonstration recording (Length: 52:52 minutes)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#datasets-setting-up-the-work-directory-1"><i class="fa fa-check"></i><b>3.2.3</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>3.2.4</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#poisson-regression-modelling"><i class="fa fa-check"></i><b>3.3</b> Poisson Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#selecting-the-appropriate-poisson-model"><i class="fa fa-check"></i><b>3.3.1</b> Selecting the appropriate Poisson model</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan"><i class="fa fa-check"></i><b>3.3.2</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-negative-binomial-poisson-regression-in-stan"><i class="fa fa-check"></i><b>3.3.3</b> Creating a script to run a Negative Binomial Poisson regression in Stan</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#compiling-our-stan-code-in-rstudio"><i class="fa fa-check"></i><b>3.3.4</b> Compiling our Stan code in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#logistic-regression-modelling"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression Modelling</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>3.4.1</b> Data preparation and set-up for Bayesian analysis in Stan</a></li>
+<li class="chapter" data-level="3.4.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#creating-a-script-to-run-a-logistic-regression-in-stan"><i class="fa fa-check"></i><b>3.4.2</b> Creating a script to run a logistic regression in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#tasks-1"><i class="fa fa-check"></i><b>3.5</b> Tasks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-1---obesity-and-fastfoods-in-london"><i class="fa fa-check"></i><b>3.5.1</b> Task 1 - Obesity and Fastfoods in London</a></li>
+<li class="chapter" data-level="3.5.2" data-path="bayesian-generalised-linear-models-glms.html"><a href="bayesian-generalised-linear-models-glms.html#task-2---factors-affecting-house-prices-in-london-2015"><i class="fa fa-check"></i><b>3.5.2</b> Task 2 - Factors affecting house prices in London (2015)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html"><i class="fa fa-check"></i><b>4</b> Bayesian Generalised Additive Models (GAMs)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#lecture-recording-length-3812-minutes"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 38:12 minutes)</a></li>
+<li class="chapter" data-level="4.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#loading-and-installing-packages-2"><i class="fa fa-check"></i><b>4.2.2</b> Loading and installing packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#implementing-a-bayesian-generalised-additive-model"><i class="fa fa-check"></i><b>4.3</b> Implementing a Bayesian Generalised Additive Model</a></li>
+<li class="chapter" data-level="4.4" data-path="bayesian-generalised-additive-models-gams.html"><a href="bayesian-generalised-additive-models-gams.html#printing-stan-code-from-brmsstancode"><i class="fa fa-check"></i><b>4.4</b> Printing Stan code from <code>brms::stancode()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html"><i class="fa fa-check"></i><b>5</b> Bayesian Hierarchical Regression Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-4825-minutes"><i class="fa fa-check"></i><b>5.1</b> Lecture recording (Length: 48:25 minutes)</a></li>
+<li class="chapter" data-level="5.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-3"><i class="fa fa-check"></i><b>5.2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.1</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>5.2.2</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-2"><i class="fa fa-check"></i><b>5.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan"><i class="fa fa-check"></i><b>5.3.1</b> Creating a script to run a 2-level Multilevel linear regression in Stan</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>5.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task"><i class="fa fa-check"></i><b>5.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>6</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes"><i class="fa fa-check"></i><b>6.1</b> Lecture recording (Length: 40:58 minutes)</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.3</b> Learning outcomes</a></li>
+<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes"><i class="fa fa-check"></i><b>6.4</b> Demonstration recording (Length: 51:46 minutes)</a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start"><i class="fa fa-check"></i><b>6.5</b> Before we start…</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.5.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.5.2</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.6</b> Data preparation in RStudio</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.6.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR smoothed model</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model"><i class="fa fa-check"></i><b>6.7.1</b> Defining the ICAR component of the Spatial model</a></li>
+<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script"><i class="fa fa-check"></i><b>6.7.2</b> Adding the blocks in our ICAR Stan script</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for Spatial ICAR modelling</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="6.8.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.8.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="6.8.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.8.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="6.8.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.8.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.9</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>7</b> Research Methods, Study Design and Revision</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>7.1</b> Lecture (Length: 51:03 minutes)</a></li>
+<li class="chapter" data-level="7.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>7.2</b> Revision (Length: 17:56 minutes)</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG0125: Advanced Topics in Social Geographic Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-bayesian-statistics" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Introduction to Bayesian Statistics<a href="introduction-to-bayesian-statistics.html#introduction-to-bayesian-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-recording-length-5950-minutes" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Lecture recording (Length: 59:50 minutes)<a href="introduction-to-bayesian-statistics.html#lecture-recording-length-5950-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://web.microsoftstream.com/embed/video/b5586b26-ea2f-489c-84f4-ff4182372cb1?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
+</div>
+</div>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/b5586b26-ea2f-489c-84f4-ff4182372cb1"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="introduction" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Introduction<a href="introduction-to-bayesian-statistics.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this week you will be introduced to Bayesian Statistics. It is a branch of statistics which applies probabilities to statistical problems. The core of Bayesian Statistics is the application of <strong>Bayes’ Theorem (or Bayes’ Rule)</strong> which uses conditional probabilities to quantify uncertainty outcome. We are going to show you how one can use <a href="https://mc-stan.org"><strong>Stan</strong></a> to encode probabilities to a statistical model (aka likelihood functions) to perform full <strong>Bayesian inference</strong>.</p>
+<div id="learning-outcomes" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Learning outcomes<a href="introduction-to-bayesian-statistics.html#learning-outcomes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Today’s session aims to introduce you to the basic Stan programming etiquette for Bayesian analysis in RStudio using Stan as an Interface, and producing output and interpreting it’s results. By the end of this session, you should be able to perform the following:</p>
+<ol style="list-style-type: decimal">
+<li>Develop basic Stan code</li>
+<li>Know how to write and compile a Stan Program to compute the <strong>posterior distribution</strong> for simple parameters (i.e., mean, standard deviation, a proportion etc.,)</li>
+<li>Know how to interpret the results churned from a Stan HMC simulation run</li>
+</ol>
+<p>You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.</p>
+</div>
+<div id="demonstration-recording-length-3823-minutes" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Demonstration recording (Length: 38:23 minutes)<a href="introduction-to-bayesian-statistics.html#demonstration-recording-length-3823-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://web.microsoftstream.com/embed/video/e70853ca-4452-4363-9474-539547a238f9?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
+</div>
+</div>
+<div class="note">
+<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/e70853ca-4452-4363-9474-539547a238f9"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
+</div>
+</div>
+<div id="datasets-setting-up-the-work-directory" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Datasets &amp; setting up the work directory<a href="introduction-to-bayesian-statistics.html#datasets-setting-up-the-work-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since, this is our first practical lesson for GEOG0125, let us create a new folder <strong>GEOG0125</strong> at the desktop location of our computer. Now, create a sub folder called “<strong>Week 1</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R and Stan scripts. Set your work directory to <strong>Week 1’s</strong> folder.</p>
+<p>For Windows, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-bayesian-statistics.html#cb5-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 1&quot;</span>)</span></code></pre></div>
+<p>For MAC, the code for setting the work directory will be:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-bayesian-statistics.html#cb6-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 1&quot;</span>)</span></code></pre></div>
+</div>
+<div id="loading-and-installing-packages" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Loading and installing packages<a href="introduction-to-bayesian-statistics.html#loading-and-installing-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To start writing scripts for Bayesian analysis, we will need to install a package called <code>rstan</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-bayesian-statistics.html#cb7-1" tabindex="-1"></a><span class="co"># setting timer over 100s to extend timeout::: just in case</span></span>
+<span id="cb7-2"><a href="introduction-to-bayesian-statistics.html#cb7-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout=</span><span class="dv">100</span>)</span>
+<span id="cb7-3"><a href="introduction-to-bayesian-statistics.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="introduction-to-bayesian-statistics.html#cb7-4" tabindex="-1"></a><span class="co"># install package rstan with its dependency</span></span>
+<span id="cb7-5"><a href="introduction-to-bayesian-statistics.html#cb7-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos=</span><span class="st">&quot;https://cloud.r-project.org&quot;</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-6"><a href="introduction-to-bayesian-statistics.html#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="introduction-to-bayesian-statistics.html#cb7-7" tabindex="-1"></a><span class="co"># Load the packages with library()</span></span>
+<span id="cb7-8"><a href="introduction-to-bayesian-statistics.html#cb7-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;rstan&#39;</span>)</span></code></pre></div>
+<p>Note that when you load <code>rstan</code> from cran you will see some recommendations on using multiple cores for speeding the process. For the best experience, we highly recommend using this code:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-bayesian-statistics.html#cb8-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb8-2"><a href="introduction-to-bayesian-statistics.html#cb8-2" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>This tells RStudio to use multiple core for parallel process whenever Stan is being implemented. Every time you want to use Stan - make sure to load <code>parallel::detectCores()</code> and <code>rstan_options</code> code.</p>
+</div>
+</div>
+<div id="basic-building-blocks-i-about-stan-programming" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Basic building blocks I: About Stan Programming<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-i-about-stan-programming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The section describes how to code up a basic Stan model. This section forms the basis for later, and more complex models.</p>
+<div id="opening-a-stan-script-in-rstudio" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Opening a Stan Script in RStudio<a href="introduction-to-bayesian-statistics.html#opening-a-stan-script-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Alright, let’s open a <strong>Stan</strong> file. You can do this by clicking and selecting <code>File</code> &gt; <code>New File</code> &gt; <code>Stan File</code></p>
+<p><img src="images/general/Open_stan_file.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>When you open a new <strong>Stan</strong> file, you will be greeted with an <code>untitled script</code> which contains the following bits of code:</p>
+<pre class="text"><code>//
+// This Stan program defines a simple model, with a
+// vector of values &#39;y&#39; modeled as normally distributed
+// with mean &#39;mu&#39; and standard deviation &#39;sigma&#39;.
+//
+// Learn more about model development with Stan at:
+//
+//    http://mc-stan.org/users/interfaces/rstan.html
+//    https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+//
+
+// The input data is a vector &#39;y&#39; of length &#39;N&#39;.
+data {
+  int&lt;lower=0&gt; N;
+  vector[N] y;
+}
+
+// The parameters accepted by the model. Our model
+// accepts two parameters &#39;mu&#39; and &#39;sigma&#39;.
+parameters {
+  real mu;
+  real&lt;lower=0&gt; sigma;
+}
+
+// The model to be estimated. We model the output
+// &#39;y&#39; to be normally distributed with mean &#39;mu&#39;
+// and standard deviation &#39;sigma&#39;.
+model {
+  y ~ normal(mu, sigma);
+}</code></pre>
+<p>Do not worry about that - it is just formalities by the developers behind <code>rstan</code>. You can delete everything you see in this script as we will build our own basic script from scratch.</p>
+<p>Once you have deleted the default information save the empty file in the <strong>Week 1</strong> folder naming it <code>Predicting a proportion.stan</code>. Whenever you are saving Stan programme in RStudio always make sure to save it with a <code>.stan</code> ending.</p>
+</div>
+<div id="basic-structure-of-a-stan-script-in-rstudio" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Basic structure of a Stan script in RStudio<a href="introduction-to-bayesian-statistics.html#basic-structure-of-a-stan-script-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A typical <strong>Stan</strong> program consist of the following 6 <strong>blocks</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Data</li>
+<li>Transformed data</li>
+<li>Parameters</li>
+<li>Transformed parameters</li>
+<li>Model</li>
+<li>Generated quantities</li>
+</ol>
+<p>Out of these 6 blocks, the <code>Data</code>, <code>Parameters</code> and <code>Model</code> block <strong>must</strong> be specified. These are three compulsory blocks needed in any Stan script in order for a Bayesian model to work within the <code>rstan</code> environment. Let us define what these three important blocks are.</p>
+<p><strong>FIRST:</strong> The <strong>data block</strong> allows the user to declare how the model reads the dataset from RStudio by specifying the sample size <strong>N</strong> or observations; the number of <strong>k</strong> parameters that needs to be estimated; the names or list of independent variables for the corresponding parameters (e.g., coefficients); as well as data constraints etc., A <strong>data</strong> block is specified accordingly as:</p>
+<pre class="text"><code>data {
+
+}</code></pre>
+<p>It is within these curly brackets will specify these details of our dataset. They must be precise as it will have to correspond with the data that is loaded in RStudio’s memory.</p>
+<p><strong>SECOND:</strong> The <strong>parameters block</strong> allows the use to declare all primitive unknown quantities, including their respective storage types, dimensions, and constraints. The parameters that go here are the ones we want to infer or predict - e.g., includes the <code>mean</code>, <code>variance</code>, <code>sd</code>, <code>coefficient</code> and many more. A <strong>parameters</strong> block is specified after the <strong>data</strong> block:</p>
+<pre class="text"><code>data {
+
+}
+
+parameters {
+    
+}</code></pre>
+<p><strong>THIRD:</strong> The <strong>model block</strong> allows the use to declare and specify the sampling statements for the <strong>dependent variable</strong> (i.e., likelihood function) and parameters (i.e., priors) to be used in the model. A <strong>model</strong> block is specified after the <strong>parameters</strong> block:</p>
+<pre class="text"><code>data {
+
+}
+
+parameters {
+    
+}
+
+model {
+    
+}</code></pre>
+<p>Note that adding a double forward slashes <code>//</code> lets the user add a comment to script. Let add comments to the blocks:</p>
+<pre class="text"><code>// Add comments after double forward slashes 
+
+data {
+    // data block
+
+}
+
+parameters {
+    // parameters block
+    
+}
+
+model {
+    // model block
+    
+}</code></pre>
+<div class="note">
+<p><strong>Important Notes:</strong> Since, the other blocks are not compulsory - we will leave them out for now. But we will come back and explain what those remaining blocks are in <strong>Week 2 and 3</strong>. Now, save your Stan script.</p>
+</div>
+</div>
+</div>
+<div id="basic-building-blocks-ii-data-types-and-constraint-declarations" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Basic building blocks II: Data types and constraint declarations<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-ii-data-types-and-constraint-declarations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Stan, all parameters and data must be defined as variables with a specific type. Note, this quite a pain but going through this step allows <code>rstan</code> to perform really fast. There are four basic <strong>data</strong> types:</p>
+<ol style="list-style-type: decimal">
+<li><code>int</code>: for integers, used for specifying the sample size, and is applied to discrete variables</li>
+<li><code>real</code>: for continuous, is applied to continuous variables (i.e., ratio or interval)</li>
+<li><code>vector</code>: for a column vector of <code>reals</code></li>
+<li><code>matrix</code>: for a matrix of <code>reals</code></li>
+</ol>
+<p>For <strong>constraints</strong>, we specify them on variables. For example, if we are dealing with a proportion <strong>p</strong> we will code it as <code>real&lt;lower=0, upper=1&gt; p</code> tells Stan that <strong>p</strong> can be any value from 0 to 1, inclusive. Note that specifying constraints really help speed Stan up so use them wherever possible.</p>
+<p>Lastly, you can create <strong>arrays</strong> of variables. For example, <code>real p[10]</code> tells Stan that <strong>p</strong> is an array of 10 real values. We can also create a matrix to represent a set of independent variables. Now that we have discussed these points - let work with an actual demonstration to show <strong>data types</strong> and <strong>constraints</strong> work.</p>
+</div>
+<div id="basic-building-blocks-iii-developing-our-model" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Basic building blocks III: Developing our model<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iii-developing-our-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="note">
+<p><strong>PROBLEM:</strong> Last year, in the advanced GEOG0125 course, there was 13 students enrolled. It was Anwar’s first time being a teacher on the course, and hence was quite curious to know what proportion of students will pass with a distinction. Since, he has no data of the pass rates - therefore has no <strong>prior knowledge</strong>. First, he assumes that the <strong>proportion of those passing with a distinction</strong> comes from a <strong>Beta distribution</strong> that is uniform <strong>Beta(1.0, 1.0)</strong>. In term 3, after tedious marking of reports, he observes that 4 students (out of the total: 13) passed with flying colours. What is the posterior distribution of those getting a distinction for GEOG0125?</p>
+</div>
+<p>Let us build our first model that predicts the posterior distribution of those passing GEOG0125 with a distinction. In this simple for modelling proportions (or prevalence), we extract our information:</p>
+<ul>
+<li>Total sample size is 13 (N)</li>
+<li>Number of students who passed (70% and above) is 4 (p)</li>
+<li><strong>Data</strong>: Proportion (or prevalence) of distinction grades is 4/13, but this is just one instance (it could have been these other likely outcomes: 0/13, 1/13, 2/13, 3/13, 4/13, …, 12/13 or even 13/13). Let us represent proportion of distinction grades with some probability distribution <span class="math inline">\(\theta\)</span> which has a <strong>Binomial distribution</strong> (likelihood function).</li>
+<li>There is no prior knowledge, but we are dealing with a <strong>proportion</strong> here so a <strong>Beta distribution</strong> is best for this problem. We are assuming that it has uniform pattern i.e., <strong>Beta(1.0, 1.0)</strong> because all these instance (i.e., 0/13, 1/13, 2/13, 3/13, 4/13, …, 12/13 or even 13/13) have a equal chance of happening. This is an example of an <strong>uninformative prior</strong></li>
+</ul>
+<p>We can code this information in Stan.</p>
+<p><strong>FIRST:</strong> We specify the total number of student as integer <code>int N</code> which cannot be a negative number in the <strong>data</strong> block. Also, we also need to specify the number of students that passed as an integer <code>int p</code> which cannot be a negative number in the <strong>data</strong> block too.</p>
+<pre class="text"><code>data {
+    int&lt;lower = 0&gt; N;
+    int&lt;lower = 0&gt; p;
+}</code></pre>
+<p><strong>SECOND:</strong> For the <strong>parameters</strong> block, here we will need to specify the name of the parameter that we want to infer. Here, its <span class="math inline">\(\theta\)</span> which is the <strong>proportion</strong> of those who got a distinction in GEOG0125. Note that <span class="math inline">\(\theta\)</span> follows a beta distribution and is therefore translated as a probability as a <code>real</code> value that is within the range of 0 to 1, inclusive.</p>
+<pre class="text"><code>data {
+    int&lt;lower = 0&gt; N;
+    int&lt;lower = 0&gt; p;
+}
+
+parameters {
+    real&lt;lower=0, upper=1&gt; theta;
+}</code></pre>
+<p><strong>THIRD:</strong> For the <strong>model</strong> block, here we will need to define our <strong>posterior distributions</strong>. Here, we need to state that <strong>p</strong> likelihood function is sampled from a <strong>binomial distribution</strong> as a function of <strong>N</strong> and <span class="math inline">\(\theta\)</span> (<code>binomial(N, theta)</code>). We also have to say <span class="math inline">\(\theta\)</span> is sampled from a <strong>beta distribution</strong> that is uniform. The model block will be:</p>
+<pre class="text"><code>data {
+    int&lt;lower = 0&gt; N;
+    int&lt;lower = 0&gt; p;
+}
+
+parameters {
+    real&lt;lower=0, upper=1&gt; theta;
+}
+
+model {
+    p ~ binomial(N, theta); // our likelihood function or observation model
+    theta ~ beta(1.0, 1.0); // our prior distribution alpha = 1 and beta = 1
+}</code></pre>
+<div class="note">
+<p><strong>COMPLIMENTS:</strong> Well done, we have built our first Bayesian model. Let save it the script, what we need to do is compile and run it through RStudio to get our results.</p>
+</div>
+</div>
+<div id="basic-building-blocks-iv-compiling-our-stan-code-in-rstudio" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Basic building blocks IV: Compiling our Stan code in RStudio<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-iv-compiling-our-stan-code-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now, let us turn our attention to RStudio. The Stan script needs to be compiled from an R script. We will first need to create a list object using <code>list()</code> to connect the data to the information specified in the <strong>data</strong> before running the function <code>stan()</code> to the Bayesian model to get the results. The <strong>N</strong> and <strong>p</strong> will need to defined in the list object.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introduction-to-bayesian-statistics.html#cb17-1" tabindex="-1"></a><span class="co"># create list object and call it dataset</span></span>
+<span id="cb17-2"><a href="introduction-to-bayesian-statistics.html#cb17-2" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N =</span> <span class="dv">13</span>, <span class="at">p =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>Now, using the <code>stan()</code> to compile and obtain the posterior estimation of the proportions of students passing with a distinction:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-bayesian-statistics.html#cb18-1" tabindex="-1"></a><span class="co"># the directory needs to be set to where you save the datasets and Stan script</span></span>
+<span id="cb18-2"><a href="introduction-to-bayesian-statistics.html#cb18-2" tabindex="-1"></a>prediction.passes <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Predicting a proportion.stan&quot;</span>, <span class="at">data=</span>dataset, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Some notes on the above code’s arguments:</p>
+<ul>
+<li><code>data=</code> we are pushing the data we created from the <code>list()</code> to the Stan script. Stan is calling it.</li>
+<li><code>iter=</code> we are asking the <code>stan()</code> to perform 3,000 iterations on each chain to generate the posterior samples. The chain can be a <strong>MCMC</strong>, <strong>NUTS</strong> or <strong>HMC</strong> algorithm (<strong>NUTS</strong> No-U-turn sampler is the default)</li>
+<li><code>chains=</code> we are asking the <code>stan()</code> function to perform 3 chains (i.e., any of these algorithms can be stated in the function: i.e., <strong>MCMC</strong>, <strong>NUTS</strong> &amp; <strong>HMC</strong>)</li>
+</ul>
+<p>The resulting output can be printed with the function <code>print()</code>. Here, we are going to print the mean, standard error in mean, SD and the IQR ranges with 95% limits (i.e., 2.5% and 97.5%):</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introduction-to-bayesian-statistics.html#cb19-1" tabindex="-1"></a><span class="fu">print</span>(predicting.passes, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<p>We obtain this summary table:</p>
+<pre class="text"><code>Inference for Stan model: Predicting a proportion.
+3 chains, each with iter=3000; warmup=1500; thin=1; 
+post-warmup draws per chain=1500, total post-warmup draws=4500.
+
+        mean se_mean   sd   2.5%    25%   50%   75% 97.5% n_eff Rhat
+theta   0.33    0.00 0.12   0.12   0.24  0.32  0.41  0.58  1495    1
+lp__  -10.08    0.02 0.73 -12.21 -10.26 -9.80 -9.61 -9.55  1879    1
+
+Samples were drawn using NUTS(diag_e) at Thu Jan 12 14:39:10 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+<div class="note">
+<p><strong>What does it all mean?</strong> The top part states that 3 chains were run for 3000 iterations. However, the first 1500 samples generated from each chain were discarded as warm-up, meaning that only 1500 samples from each chain were kept, resulting 4500 (1500x3) total post-warm-up sample draws. The output shows the summary statistics for our <span class="math inline">\(\theta\)</span>. The <code>lp__</code> is the log-probability - which is used to quantify how well the model is for the data but, in my opinion, its not a useful estimate. Instead, use the effective sample size <code>n_eff</code> and <code>Rhat</code>. If the <code>Rhat</code> is less than 1.1 for all parameters - it means that the estimation of our parameters are fine.</p>
+</div>
+</div>
+<div id="basic-building-blocks-v-extract-posterior-samples-and-interpretation" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Basic building blocks V: Extract posterior samples and interpretation<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At this point, let us extract the posterior samples and graph them to understand it posterior distribution. We use the <code>extract()</code> function from the <code>rstan</code> package, and graph them:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-bayesian-statistics.html#cb21-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
+<span id="cb21-2"><a href="introduction-to-bayesian-statistics.html#cb21-2" tabindex="-1"></a>theta.pass_draws <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb21-3"><a href="introduction-to-bayesian-statistics.html#cb21-3" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
+<span id="cb21-4"><a href="introduction-to-bayesian-statistics.html#cb21-4" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>), </span>
+<span id="cb21-5"><a href="introduction-to-bayesian-statistics.html#cb21-5" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Probability of Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
+<p><img src="images/general/histogram_plot_pdy.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>We want to compute the posterior mean, with the 0.025 and 0.975 quantiles (these limits are referred to as <strong>95% credibility limits (95% CrI)</strong>). Here is how we compute them:</p>
+<pre class="text"><code># Calculating posterior mean (estimator)
+mean(theta.pass_draws)
+
+[1] 0.3305062
+
+# Calculating posterior intervals
+quantile(theta.pass_draws, probs=c(0.025, 0.975))
+
+2.5%     97.5% 
+0.1239263 0.5800643 </code></pre>
+<div class="note">
+<p><strong>Interpretation:</strong> The predicted proportion of students passing the GEOG0125 from our sample posterior distribution was 0.3305 (33.05%). Our predictions, with 95% credibility, can be within the limits of 0.1239 and 0.5801. Formally writing as <span class="math inline">\(\theta\)</span> = 33.05% (95% CrI: 12.39-58.01%).</p>
+</div>
+</div>
+<div id="basic-building-blocks-vi-updating-our-prediction-with-new-information" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Basic building blocks VI: Updating our prediction with new information<a href="introduction-to-bayesian-statistics.html#basic-building-blocks-vi-updating-our-prediction-with-new-information" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can use the 0.3305 as our new prior as opposed to using a uniform again to make an updated prediction. The updated beta distribution takes a new form of <strong>Beta(5, 10)</strong> centered on 0.3305. This is an <strong>informative prior</strong> because we have information now. This was derived from multiplying the likelihood function (i.e., <strong>Binomial(13, 4)</strong>) with the prior (<strong>Beta(1,1)</strong>) results in a Beta distribution again. This is known as a <strong>conjugate</strong>.</p>
+<p>We can use this information in fact to make a prediction on the current 2022/23 cohort - hmmm, I wonder… how many of you will get a distinction in GEOG0125? Let’s see:</p>
+<ul>
+<li>Total sample size is now 26 (N)</li>
+<li>Assuming roughly a third (like last year) will probably get a distinction equates to 9 (p)</li>
+<li>Let us represent the proportion of distinction grades with some probability distribution <span class="math inline">\(\theta\)</span> with a <strong>Binomial distribution</strong> (likelihood function) [Binomial(26, 9)].</li>
+<li>We have prior knowledge of last year’s <strong>proportion</strong> (0.3305) which has a <strong>Beta distribution</strong> [Beta(5, 10)] - this is our new <strong>informative prior</strong></li>
+<li>Let updates the codes:</li>
+</ul>
+<p><strong>Updated dataset in our RScript</strong></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-bayesian-statistics.html#cb23-1" tabindex="-1"></a>dataset.updated <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="dv">26</span>, <span class="at">p=</span><span class="dv">9</span>)</span></code></pre></div>
+<p><strong>Updated Stan script</strong></p>
+<pre class="text"><code>data {
+    int&lt;lower = 0&gt; N;
+    int&lt;lower = 0&gt; p;
+}
+
+parameters {
+    real&lt;lower=0, upper=1&gt; theta;
+}
+
+model {
+    p ~ binomial(N, theta); // our likelihood function or observation model
+    theta ~ beta(5, 10);    // our prior distribution updated to alpha = 5 and beta = 10
+}</code></pre>
+<p><strong>Obtaining updated posterior samples by compiling new Stan script</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-bayesian-statistics.html#cb25-1" tabindex="-1"></a>predicting.passes.updated <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Predicting a proportion updated.stan&quot;</span>, <span class="at">data=</span>dataset.updated, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-2"><a href="introduction-to-bayesian-statistics.html#cb25-2" tabindex="-1"></a><span class="fu">print</span>(predicting.passes.updated, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<p><strong>Updated output summary table</strong></p>
+<pre class="text"><code>Inference for Stan model: Predicting a proportion.
+3 chains, each with iter=3000; warmup=1500; thin=1; 
+post-warmup draws per chain=1500, total post-warmup draws=4500.
+
+        mean se_mean   sd   2.5%    25%    50%    75%  97.5% n_eff Rhat
+theta   0.34    0.00 0.07   0.20   0.29   0.34   0.39   0.49  1956    1
+lp__  -26.83    0.02 0.74 -28.94 -26.97 -26.54 -26.37 -26.32  1582    1
+
+Samples were drawn using NUTS(diag_e) at Thu Jan 12 17:20:47 2023.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+<p><strong>Histogram of posterior samples’ distribution</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-bayesian-statistics.html#cb27-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
+<span id="cb27-2"><a href="introduction-to-bayesian-statistics.html#cb27-2" tabindex="-1"></a>theta.pass_draws.new <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes.updated, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]] </span>
+<span id="cb27-3"><a href="introduction-to-bayesian-statistics.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="introduction-to-bayesian-statistics.html#cb27-4" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
+<span id="cb27-5"><a href="introduction-to-bayesian-statistics.html#cb27-5" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws.new, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb27-6"><a href="introduction-to-bayesian-statistics.html#cb27-6" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples [Updated]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Probability of Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
+<p><img src="images/general/histogram_plot_pdy2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>Obtain updated posterior proportion and 95% CrI</strong></p>
+<pre class="text"><code># Calculating posterior mean (estimator)
+mean(theta.pass_draws.new)
+
+[1] 0.3420825
+
+# Calculating posterior intervals
+quantile(theta.pass_draws.new, probs=c(0.025, 0.975))
+     2.5%     97.5% 
+0.2027673 0.4935101 </code></pre>
+<div class="note">
+<p><strong>Interpretation:</strong> For the current cohort, the predicted proportion of students passing the GEOG0125 from our updated posterior distribution was 0.3421 (34.21%). Our predictions, with 95% credibility, can be within the limits of 0.2027 and 0.4935. We can formally write this as <span class="math inline">\(\theta\)</span> = 34.21% (95% CrI: 20.27-49.35%).</p>
+</div>
+</div>
+<div id="tasks" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Tasks<a href="introduction-to-bayesian-statistics.html#tasks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="task-1---low-level-arsenic-poisoning-in-cornwall-uk" class="section level3 hasAnchor" number="2.9.1">
+<h3><span class="header-section-number">2.9.1</span> Task 1 - Low-level arsenic poisoning in Cornwall, UK<a href="introduction-to-bayesian-statistics.html#task-1---low-level-arsenic-poisoning-in-cornwall-uk" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Try this first problem in Stan</strong>: Suppose, in a small survey, a random sample of 50 villagers from a large population in Cornwall were at risk of arsenic poisoning due to long-term low-level environmental exposure status were selected. Each person’s disease status (i.e., metallic toxicity) was recorded as either <strong>Diseased</strong> or <strong>None</strong>. 19 of the respondents have found to be diseased. The distribution of the prevalence is assumed to be of a Beta distribution with <strong>Beta(3,5)</strong>.</p>
+<p>What is the predicted posterior prevalence of arsenic poisoning in Cornwall and its 95% Credibility intervals?</p>
+</div>
+<div id="task-2---body-mass-index-bmi-problem" class="section level3 hasAnchor" number="2.9.2">
+<h3><span class="header-section-number">2.9.2</span> Task 2 - Body mass index (BMI) problem<a href="introduction-to-bayesian-statistics.html#task-2---body-mass-index-bmi-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Try this second problem in Stan</strong>: The mean BMI value is 23 with SD of 1.2. Simulate sample of 1000 with BMI values based on this distribution <code>N(23, 1.2)</code> and perform Bayesian inference.</p>
+<p>What is the posterior mean BMI and its 95% Credibility intervals?</p>
+<p><strong>Hints:</strong></p>
+<ol style="list-style-type: decimal">
+<li>In the R script, use the function <code>rnorm()</code> to generate your sample of 1000 BMI points</li>
+<li>In the R script, create a <code>list()</code> with <code>N</code> and <code>bmi</code> defined</li>
+<li>In the Stan script, define the data block in accordance to the <code>list()</code> object</li>
+<li>In the Stan script, the <code>bmi</code> values are measured outcome. Code this in the model block as a likelihood function using the <code>norm(mu, sigma)</code> notation</li>
+<li>In the Stan script, use the parameter block, and make sure to code your <code>mu</code> (mean) and <code>sigma</code> (standard deviation) as real (non-negative) numbers</li>
+</ol>
+<div class="note">
+<p><strong>Note:</strong> Solutions for task 1 and 2 will be made available later today</p>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="getting-started.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesian-generalised-linear-models-glms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/UCLPG-MSC-SGDS/GEOG0125/edit/main/Intro_to_RStan.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
