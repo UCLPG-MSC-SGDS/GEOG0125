@@ -34,7 +34,7 @@ You can download the lecture notes and data sets for the practical lesson from t
 |9 | **[Lecture Notes]** **[Datasets]** | Spatiotemproal Modelling |
 |10 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Research%20Methodology%20and%20Study%20Design.pdf) | Study Design, Research & Revision  |
 
-**Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | **[Week 2]** | **[Week 3]** | **[Week 7]** | **[Week 8]** | **[Week 9]**
+**Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | [**[Week 2]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%202%20Solutions%20for%20Tasks%201%20and%202.zip) | **[Week 3]** | **[Week 7]** | **[Week 8]** | **[Week 9]**
 
 <div class = "note">
 **Important note:** The solutions will be made available each week after the seminars are completed. 
