@@ -38,8 +38,6 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 4. **Book**: [Theory and Applications] Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd Edition). **Chapter 7: GAMs in Practice**. Pages 325-398.
 
-5. **Dissertation** [Application] Qi, G. (2023). **Investigating the Crime Recovery Patterns in Nottingham in the Post-Lockdown Period using Social Disorganisation Theory**. UCL Undergraduate Dissertation 2022/23. Department of Geography. Submitted BA Geography with Social Data Sciences. Download: [**[CLICK]**]()
-
 ## Week 7: Bayesian Hierarchical Regression Models {-}
 
 1. **Article**: [Tutorial in Stan] Sorensen, T., & Vasishth, S. (2016). Bayesian linear mixed models using Stan: A tutorial for psychologists, linguists, and cognitive scientists. **Tutorials in Quantitative Methods for Psychology**. 12(3):175-200. DOI: [**10.20982/tqmp.12.3.p175**](https://www.tqmp.org/RegularArticles/vol12-3/p175/p175.pdf)
