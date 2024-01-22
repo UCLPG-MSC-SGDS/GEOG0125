@@ -30,7 +30,15 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 ## Week 3: Bayesian Generalised Additive Models (GAMs) {-}
 
-[**TBC**]
+1. **Online**: [Tutorial]. Fitting GAMs with brms: Part 1 a Simple GAM. LINK: https://fromthebottomoftheheap.net/2018/04/21/fitting-gams-with-brms/
+
+2. **Online**: [Tutorial] Chapter 2: Interpreting and Visualizing GAMs. LINK: https://noamross.github.io/gams-in-r-course/chapter2
+
+3. **Book**: [Theory] Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd Edition). **Chapter 4: Introducing GAMs**. Pages 161-191.
+
+4. **Book**: [Theory and Applications] Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd Edition). **Chapter 7: GAMs in Practice**. Pages 325-398.
+
+5. **Dissertation** [Application] Qi, G. (2023). **Investigating the Crime Recovery Patterns in Nottingham in the Post-Lockdown Period using Social Disorganisation Theory**. UCL Undergraduate Dissertation 2022/23. Department of Geography. Submitted BA Geography with Social Data Sciences. Download: [**[CLICK]**]()
 
 ## Week 7: Bayesian Hierarchical Regression Models {-}
 
