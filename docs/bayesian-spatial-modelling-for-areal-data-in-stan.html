@@ -267,12 +267,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
 <li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR smoothed model</a>
+<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR model</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model"><i class="fa fa-check"></i><b>6.7.1</b> Defining the ICAR component of the Spatial model</a></li>
-<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script"><i class="fa fa-check"></i><b>6.7.2</b> Adding the blocks in our ICAR Stan script</a></li>
+<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block"><i class="fa fa-check"></i><b>6.7.1</b> Data block</a></li>
+<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block"><i class="fa fa-check"></i><b>6.7.2</b> Transformed data block</a></li>
+<li class="chapter" data-level="6.7.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block"><i class="fa fa-check"></i><b>6.7.3</b> Parameters block</a></li>
+<li class="chapter" data-level="6.7.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block"><i class="fa fa-check"></i><b>6.7.4</b> Transformed parameters block</a></li>
+<li class="chapter" data-level="6.7.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block"><i class="fa fa-check"></i><b>6.7.5</b> Model block</a></li>
+<li class="chapter" data-level="6.7.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block"><i class="fa fa-check"></i><b>6.7.6</b> Generated quantities block</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for Spatial ICAR modelling</a>
+<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for the Spatial ICAR risk modelling</a>
 <ul>
 <li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
 <li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
@@ -370,22 +374,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb90-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
 <span id="cb90-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb90-2" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>This tells RStudio to use the multiple cores in your computer for parallel processing whenever Stan is being implemented. Every time you want to use Stan - make sure to load <code>parallel::detectCores()</code> and <code>rstan_options</code> code.</p>
-<div class="note">
-<p><strong>Important Notes:</strong> Make sure to be using the latest version of <code>RStan</code> (2.26.13). Check in your list of packages. If you are using the old version (i.e., 2.21.1) you may encounter problems with creating the functions in Stan script. It is recommended that you remove version 2.21.1 and install the latest development version 2.26.13. See why <a href="https://discourse.mc-stan.org/t/a-parser-expected-warning-on-a-code-that-works/30650"><strong>[LINK]</strong></a></p>
-<p>Instruction to do this are as follows:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-1" tabindex="-1"></a><span class="co"># remove rstan and StanHeaders</span></span>
-<span id="cb91-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-2" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="fu">c</span>(<span class="st">&quot;StanHeaders&quot;</span>, <span class="st">&quot;rstan&quot;</span>))</span>
-<span id="cb91-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-3" tabindex="-1"></a><span class="co"># install the latest development version 2.26.13 from direct source</span></span>
-<span id="cb91-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span></code></pre></div>
-</div>
 </div>
 <div id="datasets-setting-up-the-work-directory-4" class="section level3 hasAnchor" number="6.5.2">
 <h3><span class="header-section-number">6.5.2</span> Datasets &amp; setting up the work directory<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 8</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 8’s</strong> folder.</p>
 <p>For Windows, the code for setting the work directory will be:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb92-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
 <p>For MAC, the code for setting the work directory will be:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb92-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
 <p>The dataset for this practical are:</p>
 <ul>
 <li><code>Road Casualties Data 2015-2020.csv</code></li>
@@ -399,12 +395,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>The shapefile <code>England Local Authority Shapefile.shp</code> contains the boundaries for all 307 local authorities in England. The <code>England Regions Shapefile.shp</code> contains the boundaries for all 10 regions that make up England.</p>
 <p>Let us load these dataset to memory:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-1" tabindex="-1"></a><span class="co"># load the shape files</span></span>
-<span id="cb94-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-2" tabindex="-1"></a>england_LA_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Local Authority Shapefile.shp&quot;</span>)</span>
-<span id="cb94-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-3" tabindex="-1"></a>england_Region_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Regions Shapefile.shp&quot;</span>)</span>
-<span id="cb94-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-4" tabindex="-1"></a></span>
-<span id="cb94-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-5" tabindex="-1"></a><span class="co"># load in the cross-sectional road accident dataset</span></span>
-<span id="cb94-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-6" tabindex="-1"></a>road_accidents <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Road Casualties Data 2015-2020.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-1" tabindex="-1"></a><span class="co"># load the shape files</span></span>
+<span id="cb93-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-2" tabindex="-1"></a>england_LA_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Local Authority Shapefile.shp&quot;</span>)</span>
+<span id="cb93-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-3" tabindex="-1"></a>england_Region_shp <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;England Regions Shapefile.shp&quot;</span>)</span>
+<span id="cb93-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-4" tabindex="-1"></a></span>
+<span id="cb93-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-5" tabindex="-1"></a><span class="co"># load in the cross-sectional road accident dataset</span></span>
+<span id="cb93-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-6" tabindex="-1"></a>road_accidents <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Road Casualties Data 2015-2020.csv&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="data-preparation-in-rstudio" class="section level2 hasAnchor" number="6.6">
@@ -413,8 +409,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">6.6.1</span> Calculation for expected numbers<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In order to estimate the risk of casualties due to road accidents at an LA-level in England, we will need to first obtain a column that contains estimates from expected number of road casualties. This is derived from the <code>Population</code> column which as <strong>denominators</strong> or <strong>reference population size</strong> which is multiplied to the overall incidence rates of road accidents to get the number of expected casualties for each LA area.</p>
 <p>You can use the <code>expected()</code> function to compute this column into the <code>road_accident</code> data frame</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-1" tabindex="-1"></a><span class="co"># calculate the expected number of cases</span></span>
-<span id="cb95-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-2" tabindex="-1"></a>road_accidents<span class="sc">$</span>ExpectedNum <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">expected</span>(<span class="at">population =</span> road_accidents<span class="sc">$</span>Population, <span class="at">cases =</span> road_accidents<span class="sc">$</span>Casualties, <span class="at">n.strata =</span> <span class="dv">1</span>), <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-1" tabindex="-1"></a><span class="co"># calculate the expected number of cases</span></span>
+<span id="cb94-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-2" tabindex="-1"></a>road_accidents<span class="sc">$</span>ExpectedNum <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">expected</span>(<span class="at">population =</span> road_accidents<span class="sc">$</span>Population, <span class="at">cases =</span> road_accidents<span class="sc">$</span>Casualties, <span class="at">n.strata =</span> <span class="dv">1</span>), <span class="dv">0</span>)</span></code></pre></div>
 <p>This particular column <code>ExpectedNum</code> is important, it must be computed and used as an offset in our spatial model.</p>
 </div>
 <div id="converting-the-spatial-adjacency-matrix-to-nodes-edges" class="section level3 hasAnchor" number="6.6.2">
@@ -423,17 +419,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="images/general/Nodes_Edges.png" width="60%" style="display: block; margin: auto;" /></p>
 <p>We can perform this by first merging in the road accident data to the LA-level shapefile. Once this action is completed, we will then need to coerce the spatial object to be from a simple features (i.e., <code>sf</code>) object to the spatial object (i.e., <code>sp</code>).</p>
 <p>Here is the code:</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-1" tabindex="-1"></a><span class="co"># merge the attribute table to the shapefile</span></span>
-<span id="cb96-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-2" tabindex="-1"></a>spatial.data <span class="ot">&lt;-</span> <span class="fu">merge</span>(england_LA_shp, road_accidents, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">&quot;LAD21CD&quot;</span>, <span class="st">&quot;LAD21NM&quot;</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">&quot;LAD21CD&quot;</span>, <span class="st">&quot;LAD21NM&quot;</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb96-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-3" tabindex="-1"></a><span class="co"># reordering the columns</span></span>
-<span id="cb96-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-4" tabindex="-1"></a>spatial.data <span class="ot">&lt;-</span> spatial.data[, <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">6</span>)]</span>
-<span id="cb96-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-5" tabindex="-1"></a><span class="co"># need to be coerced into a spatial object</span></span>
-<span id="cb96-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-6" tabindex="-1"></a>sp.object <span class="ot">&lt;-</span> <span class="fu">as</span>(spatial.data, <span class="st">&quot;Spatial&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-1" tabindex="-1"></a><span class="co"># merge the attribute table to the shapefile</span></span>
+<span id="cb95-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-2" tabindex="-1"></a>spatial.data <span class="ot">&lt;-</span> <span class="fu">merge</span>(england_LA_shp, road_accidents, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">&quot;LAD21CD&quot;</span>, <span class="st">&quot;LAD21NM&quot;</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">&quot;LAD21CD&quot;</span>, <span class="st">&quot;LAD21NM&quot;</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-3" tabindex="-1"></a><span class="co"># reordering the columns</span></span>
+<span id="cb95-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-4" tabindex="-1"></a>spatial.data <span class="ot">&lt;-</span> spatial.data[, <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">6</span>)]</span>
+<span id="cb95-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-5" tabindex="-1"></a><span class="co"># need to be coerced into a spatial object</span></span>
+<span id="cb95-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-6" tabindex="-1"></a>sp.object <span class="ot">&lt;-</span> <span class="fu">as</span>(spatial.data, <span class="st">&quot;Spatial&quot;</span>)</span></code></pre></div>
 <p>Now, we are going to need the <strong>nodes</strong> and <strong>edges</strong> from the <code>sp.object</code> using the <code>shape2mat()</code> function - this changes it into a matrix object. From the matrix object, we will be able to prepare the data from spatial ICAR model using the <code>prep_icar_data()</code> function. Here, is the code:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-1" tabindex="-1"></a><span class="co"># needs to be coerced into a matrix object</span></span>
-<span id="cb97-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-2" tabindex="-1"></a>adjacencyMatrix <span class="ot">&lt;-</span> <span class="fu">shape2mat</span>(sp.object)</span>
-<span id="cb97-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-3" tabindex="-1"></a><span class="co"># we extract the components for the ICAR model</span></span>
-<span id="cb97-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-4" tabindex="-1"></a>extractComponents <span class="ot">&lt;-</span> <span class="fu">prep_icar_data</span>(adjacencyMatrix)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-1" tabindex="-1"></a><span class="co"># needs to be coerced into a matrix object</span></span>
+<span id="cb96-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-2" tabindex="-1"></a>adjacencyMatrix <span class="ot">&lt;-</span> <span class="fu">shape2mat</span>(sp.object)</span>
+<span id="cb96-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-3" tabindex="-1"></a><span class="co"># we extract the components for the ICAR model</span></span>
+<span id="cb96-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb96-4" tabindex="-1"></a>extractComponents <span class="ot">&lt;-</span> <span class="fu">prep_icar_data</span>(adjacencyMatrix)</span></code></pre></div>
 <p>From the <code>extractComponents</code> object, we will need to extract the following contents:</p>
 <ul>
 <li><code>$group_size</code> this is the number of areal units under observation listed in the shapefile (should be the same in the road accidents dataset)</li>
@@ -442,242 +438,268 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>$n_edges</code> creates the network as show area is connected to what neighbourhood. It’s still an adjacency matrix using the queen contiguity matrix but as a network.</li>
 </ul>
 <p>Here is the code for performing the extraction:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(extractComponents<span class="sc">$</span>group_size)</span>
-<span id="cb98-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-2" tabindex="-1"></a>nod1 <span class="ot">&lt;-</span> extractComponents<span class="sc">$</span>node1</span>
-<span id="cb98-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-3" tabindex="-1"></a>nod2 <span class="ot">&lt;-</span> extractComponents<span class="sc">$</span>node2</span>
-<span id="cb98-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-4" tabindex="-1"></a>n_edges <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(extractComponents<span class="sc">$</span>n_edges)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(extractComponents<span class="sc">$</span>group_size)</span>
+<span id="cb97-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-2" tabindex="-1"></a>nod1 <span class="ot">&lt;-</span> extractComponents<span class="sc">$</span>node1</span>
+<span id="cb97-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-3" tabindex="-1"></a>nod2 <span class="ot">&lt;-</span> extractComponents<span class="sc">$</span>node2</span>
+<span id="cb97-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-4" tabindex="-1"></a>n_edges <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(extractComponents<span class="sc">$</span>n_edges)</span></code></pre></div>
 <p>Note that the information needed are stored in <code>n</code>, <code>nod1</code>, <code>nod2</code> and <code>n_edges</code>.</p>
 </div>
 <div id="create-the-dataset-to-be-compiled-in-stan" class="section level3 hasAnchor" number="6.6.3">
 <h3><span class="header-section-number">6.6.3</span> Create the dataset to be compiled in Stan<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the list step in the data preparation, we need to define the variables needed to be compiled in Stan. The outcome <code>Casualties</code>, independent variable <code>IMDScore</code> and offset variable <code>ExpectedNum</code> needs to be extracted into separate vectors. The data needs to be aligned with the areas in shapefile as the result will be churned to that order. So make sure the data is already linked in to the geometries!</p>
 <p>Here is the code:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb99-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>Casualties</span>
-<span id="cb99-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb99-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>IMDScore</span>
-<span id="cb99-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb99-3" tabindex="-1"></a>e <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>ExpectedNum</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>Casualties</span>
+<span id="cb98-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>IMDScore</span>
+<span id="cb98-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-3" tabindex="-1"></a>e <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>ExpectedNum</span></code></pre></div>
 <p>Now, we create our dataset for Stan:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb100-1" tabindex="-1"></a><span class="co"># put all components into a list object</span></span>
-<span id="cb100-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb100-2" tabindex="-1"></a>stan.spatial.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span>n, <span class="at">N_edges=</span>n_edges, <span class="at">node1=</span>nod1, <span class="at">node2=</span>nod2, <span class="at">Y=</span>y, <span class="at">X=</span>x, <span class="at">E=</span>e)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb99-1" tabindex="-1"></a><span class="co"># put all components into a list object</span></span>
+<span id="cb99-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb99-2" tabindex="-1"></a>stan.spatial.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span>n, <span class="at">N_edges=</span>n_edges, <span class="at">node1=</span>nod1, <span class="at">node2=</span>nod2, <span class="at">Y=</span>y, <span class="at">X=</span>x, <span class="at">Offset=</span>e)</span></code></pre></div>
 <p>The above information is going to be passed to Stan in the <code>data block</code>. Now, we are in the position to develop our <strong>spatial intrinsic conditional autoregressive (ICAR) model</strong>. Now open your Stan script and we begin.</p>
 </div>
 </div>
-<div id="creating-the-script-for-the-spatial-icar-smoothed-model" class="section level2 hasAnchor" number="6.7">
-<h2><span class="header-section-number">6.7</span> Creating the script for the Spatial ICAR smoothed model<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-smoothed-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="defining-the-icar-component-of-the-spatial-model" class="section level3 hasAnchor" number="6.7.1">
-<h3><span class="header-section-number">6.7.1</span> Defining the ICAR component of the Spatial model<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#defining-the-icar-component-of-the-spatial-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Here, we need to create a function for the ICAR component in our model to define the <strong>prior</strong> of spatial random effect <span class="math inline">\(\phi\)</span>. This is essentially a probability density computed from the <strong>sum of the squared pairwise differences</strong> between the spatial effect in area <span class="math inline">\(\phi_i\)</span> against another <span class="math inline">\(\phi_j\)</span>. This bit is also a reconstruction for the adjacency matrix.</p>
-<p>It is a function based on <code>nodes1</code>, <code>nodes2</code> (i.e., list of adjacent region/area pairs) and the exact number of areas <code>N</code> in a study area.</p>
-<p>We create the function as <code>icar_normal_lpdf()</code>, where the inputs will be <code>N</code>, <code>nodes1</code> and <code>nodes2</code>to get <code>phi</code>. In the model block (as you will soon see) - we will specify the prior for <span class="math inline">\(\phi\)</span> as <code>phi ~ icar_normal(N, node1, node2)</code>. It should be noted that in this function <code>phi</code> is a vector, <code>N</code> is a simple integer, and the <code>node1</code> and <code>node2</code> is an array. The following program fragment shows the Stan parameter and model block to compute the spatial effects vector through the statement <code>phi ~ icar_normal(N, node1, node2)</code> (which you will see later):</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
-}</code></pre>
-<div class="note">
-<p><strong>Important Notes:</strong> Use the above function as this will help you to generate the spatial random effects for each region</p>
-</div>
-</div>
-<div id="adding-the-blocks-in-our-icar-stan-script" class="section level3 hasAnchor" number="6.7.2">
-<h3><span class="header-section-number">6.7.2</span> Adding the blocks in our ICAR Stan script<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#adding-the-blocks-in-our-icar-stan-script" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="data-block" class="section level4 hasAnchor" number="6.7.2.1">
-<h4><span class="header-section-number">6.7.2.1</span> Data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="creating-the-script-for-the-spatial-icar-model" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Creating the script for the Spatial ICAR model<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-block" class="section level3 hasAnchor" number="6.7.1">
+<h3><span class="header-section-number">6.7.1</span> Data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the <code>data block</code>, we specify the following:</p>
 <ul>
-<li>The total number of areal unit observations <code>N</code> as an integer (i.e., <code>307</code>);</li>
-<li>The total number edges <code>N_edges</code> as an integer (i.e., <code>823</code>);</li>
-<li>The <code>nodes1</code> based on the size of <code>N_edges</code> (i.e., <code>823</code>) must be specified as an array to connect with <code>nodes2</code>;</li>
-<li>The <code>nodes2</code> based on the size of <code>N_edges</code> (i.e., <code>823</code>) must be specified as an array to connect with <code>nodes1</code>;</li>
-<li>We define our <code>Y</code> outcome (i.e., road accidents) as an <code>array</code> of size <code>N</code> (i.e., <code>307</code>) which is an <code>integer</code>;</li>
-<li>We define our independent variables <code>X</code> as a <code>vector</code> of size <code>N</code> (i.e., <code>307</code>);</li>
-<li>We must define our offset for the expected numbers <code>E</code> as a vector of size <code>N</code> (i.e., <code>307</code>);</li>
+<li>The total number of areal unit observations <code>N</code> as an integer (i.e., <code>307</code>), this corresponds to <code>n</code>;</li>
+<li>The total number edges <code>N_edges</code> as an integer (i.e., <code>823</code>), this corresponds to <code>n_edges</code>;</li>
+<li>The <code>nodes1</code> based on the size of <code>N_edges</code> (i.e., <code>823</code>) must be specified as an array to connect with <code>nodes2</code>, this corresponds to <code>nod1</code>;</li>
+<li>The <code>nodes2</code> based on the size of <code>N_edges</code> (i.e., <code>823</code>) must be specified as an array to connect with <code>nodes1</code>, this corresponds to <code>nod2</code>;</li>
+<li>We define our <code>Y</code> outcome (i.e., road accidents) as an <code>array</code> of size <code>N</code> (i.e., <code>307</code>) which is an <code>integer</code>, this corresponds to <code>y</code>;</li>
+<li>We define our independent variables <code>X</code> as a <code>vector</code> of size <code>N</code> (i.e., <code>307</code>), this corresponds to <code>x</code>;</li>
+<li>We must define our offset for the expected numbers <code>Offset</code> as a vector of size <code>N</code> (i.e., <code>307</code>), this corresponds to <code>e</code>;</li>
 </ul>
-<p>Here is what our model block will look like:</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
-}
-data {
-    int&lt;lower=0&gt; N;
-    int&lt;lower=0&gt; N_edges;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node1;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node2;
-    array[N] int&lt;lower=0&gt; Y;                                         // dependent variable i.e., number of road accidents
-    vector&lt;lower=0&gt;[N] X;                                            // independent variable i.e., deprivation score
-    vector&lt;lower=0&gt;[N] E;                                            // estimated number of expected cases of road accidents
+<p>Here is what our <code>model</code>data block` would look like:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }</code></pre>
 </div>
-<div id="transformed-data-block" class="section level4 hasAnchor" number="6.7.2.2">
-<h4><span class="header-section-number">6.7.2.2</span> Transformed data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>We are going a <code>transformed data block</code> to our script. Here, we are simply changing the expected numbers by taking its <code>log()</code> and creating another vector <code>log_offset</code>. This will be added to the <code>poisson_log()</code> sampling statement in our likelihood function of the spatial model. Here, we specify it as follows:</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
+<div id="transformed-data-block" class="section level3 hasAnchor" number="6.7.2">
+<h3><span class="header-section-number">6.7.2</span> Transformed data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We are going to include a transformed data block. Here, we are simply changing the expected numbers by taking its <code>log()</code> and creating another vector called log_offset. This will be added to the <code>poisson_log()</code> sampling statement in our likelihood function of the spatial model to account for the reference population in England.</p>
+<p>Here, we specify it as follows:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }
-data {
-    int&lt;lower=0&gt; N;
-    int&lt;lower=0&gt; N_edges;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node1;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node2;
-    array[N] int&lt;lower=0&gt; Y;                                         // dependent variable i.e., number of road accidents
-    vector&lt;lower=0&gt;[N] X;                                            // independent variable i.e., deprivation score
-    vector&lt;lower=0&gt;[N] E;                                            // estimated number of expected cases of road accidents
-}
+
 transformed data {
-    vector[N] log_offset = log(E);                                   // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }</code></pre>
 </div>
-<div id="parameters-block" class="section level4 hasAnchor" number="6.7.2.3">
-<h4><span class="header-section-number">6.7.2.3</span> Parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="parameters-block" class="section level3 hasAnchor" number="6.7.3">
+<h3><span class="header-section-number">6.7.3</span> Parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the <code>parameters block</code>, we will need to specify the following:</p>
 <ul>
 <li>The global intercept i.e., <code>alpha</code> for the entire study area (i.e., average risk of road accidents on a population-level);</li>
 <li>The coefficient <code>beta</code> for our independent variable <code>X</code> which is the <code>IMDScore</code>;</li>
-<li>We also specify <code>sigma</code> as a <code>real</code> value which is some error or standard deviation that is multiplied to the spatial effects <code>phi</code>;</li>
-<li>We define the spatial effects <code>phi</code> to be <code>vector</code> of size <code>N</code>;</li>
+<li>We also specify <code>sigma</code> as a <code>real</code> value which is some error or standard deviation that is multiplied to the combined effects of our structured and unstructured random effects;</li>
+<li>We define the <strong>structured</strong> spatial random effects <code>phi</code> to be vector of size <code>N</code>;</li>
+<li>We define the <strong>unstructured</strong> spatial random effects <code>theta</code> to be vector of size <code>N</code>;</li>
+<li>We define <code>rho</code> as the proportion of the variation coming from the structured spatial random effects;</li>
 </ul>
-<p>We add the block as follows:</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
+<p>We add the <code>parameters block</code> as follows:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }
-data {
-    int&lt;lower=0&gt; N;
-    int&lt;lower=0&gt; N_edges;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node1;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node2;
-    array[N] int&lt;lower=0&gt; Y;                                        // dependent variable i.e., number of road accidents
-    vector&lt;lower=0&gt;[N] X;                                           // independent variable i.e., deprivation score
-    vector&lt;lower=0&gt;[N] E;                                           // estimated number of expected cases of road accidents
-}
+
 transformed data {
-    vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-    real alpha;                                                     // define the intercept (overall risk in population)
-    real beta;                                                      // define the coefficient for the deprivation score variable
-    real&lt;lower=0&gt; sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-    vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real&lt;lower=0&gt; sigma;                                                   // overall standard deviation
+  real&lt;lower=0, upper=1&gt; rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }</code></pre>
 </div>
-<div id="model-block" class="section level4 hasAnchor" number="6.7.2.4">
-<h4><span class="header-section-number">6.7.2.4</span> Model block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>We build our likelihood function and specify the priors for each parameter under the <code>model block</code>. We are using a typical Poisson model with a log link function as we are assuming there’s some linear relationship between the counts and IMD score, but here we are also taking into account the spatial structure in the vector parameter for <code>phi</code>:</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
+<div id="transformed-parameters-block" class="section level3 hasAnchor" number="6.7.4">
+<h3><span class="header-section-number">6.7.4</span> Transformed parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here, we calculate the combined random effects from the structured and unstructured component for our model:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }
-data {
-    int&lt;lower=0&gt; N;
-    int&lt;lower=0&gt; N_edges;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node1;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node2;
-    array[N] int&lt;lower=0&gt; Y;                                        // dependent variable i.e., number of road accidents
-    vector&lt;lower=0&gt;[N] X;                                           // independent variable i.e., deprivation score
-    vector&lt;lower=0&gt;[N] E;                                           // estimated number of expected cases of road accidents
-}
+
 transformed data {
-    vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-    real alpha;                                                     // define the intercept (overall risk in population)
-    real beta;                                                      // define the coefficient for the deprivation score variable
-    real&lt;lower=0&gt; sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-    vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real&lt;lower=0&gt; sigma;                                                   // overall standard deviation
+  real&lt;lower=0, upper=1&gt; rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }
-model {
-    phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
-    Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
-    alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
-    beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
-    sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
-    sum(phi) ~ normal(0, 0.001*N);
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;             // formulation for the combined random effect
 }</code></pre>
 </div>
-<div id="generated-quantities-block" class="section level4 hasAnchor" number="6.7.2.5">
-<h4><span class="header-section-number">6.7.2.5</span> Generated quantities block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Lastly, we instruct Stan on the parameters we want to report. We want them as <strong>relative risk ratio (RR)</strong>. We use the <code>generated quantities block</code> to obtain these estimates by exponentiation of our regression model:</p>
-<pre class="text"><code>functions {
-    real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-        return -0.5 * dot_self(phi[node1] - phi[node2]);
-    }
+<div id="model-block" class="section level3 hasAnchor" number="6.7.5">
+<h3><span class="header-section-number">6.7.5</span> Model block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We build our likelihood function and specify the priors for each parameter under the <code>model block</code>. We are using a typical Poisson model with a log link function as we are assuming there’s some linear relationship between the road accident counts and IMD score, but here we are also taking into account the combined spatial and non-spatial random effects:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }
-data {
-    int&lt;lower=0&gt; N;
-    int&lt;lower=0&gt; N_edges;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node1;
-    array[N_edges] int&lt;lower=1, upper=N&gt; node2;
-    array[N] int&lt;lower=0&gt; Y;                                        // dependent variable i.e., number of road accidents
-    vector&lt;lower=0&gt;[N] X;                                           // independent variable i.e., deprivation score
-    vector&lt;lower=0&gt;[N] E;                                           // estimated number of expected cases of road accidents
-}
+
 transformed data {
-    vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-    real alpha;                                                     // define the intercept (overall risk in population)
-    real beta;                                                      // define the coefficient for the deprivation score variable
-    real&lt;lower=0&gt; sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-    vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real&lt;lower=0&gt; sigma;                                                   // overall standard deviation
+  real&lt;lower=0, upper=1&gt; rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;                    // formulation for the combined random effect
+}
+
 model {
-    phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
-    Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
-    alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
-    beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
-    sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
-    sum(phi) ~ normal(0, 0.001*N);
+  Y ~ poisson_log(log_Offset + alpha + X * beta + combined * sigma);    // likelihood function: multivariable Poisson ICAR regression model
+                                                                        // setting priors
+  alpha ~ normal(0.0, 1.0);                                             // prior for alpha: weakly informative
+  beta ~ normal(0.0, 1.0);                                              // prior for betas: weakly informative
+  theta ~ normal(0.0, 1.0);                                             // prior for theta: weakly informative
+  sigma ~ normal(0.0, 1.0);                                             // prior for sigma: weakly informative
+  rho ~ beta(0.5, 0.5);                                                 // prior for rho
+  target += -0.5 * dot_self(phi[node1] - phi[node2]);                   // calculates the spatial weights
+  sum(phi) ~ normal(0, 0.001 * N);                                      // priors for phi
+}</code></pre>
+</div>
+<div id="generated-quantities-block" class="section level3 hasAnchor" number="6.7.6">
+<h3><span class="header-section-number">6.7.6</span> Generated quantities block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lastly, we instruct Stan on the parameters we want to report. We want them as <strong>relative risk ratio (RR)</strong>. We can use the <code>generated quantities block</code> to obtain these estimates by exponentiation of the ICAR regression model:</p>
+<pre class="text"><code>data {
+  int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
+  int&lt;lower=0&gt; N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int&lt;lower=1, upper=N&gt; node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
+  vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
+  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }
+
+transformed data {
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+}
+
+parameters {
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real&lt;lower=0&gt; sigma;                                                   // overall standard deviation
+  real&lt;lower=0, upper=1&gt; rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
+}
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;                    // formulation for the combined random effect
+}
+
+model {
+  Y ~ poisson_log(log_Offset + alpha + X * beta + combined * sigma);    // likelihood function: multivariable Poisson ICAR regression model
+                                                                        // setting priors
+  alpha ~ normal(0.0, 1.0);                                             // prior for alpha: weakly informative
+  beta ~ normal(0.0, 1.0);                                              // prior for betas: weakly informative
+  theta ~ normal(0.0, 1.0);                                             // prior for theta: weakly informative
+  sigma ~ normal(0.0, 1.0);                                             // prior for sigma: weakly informative
+  rho ~ beta(0.5, 0.5);                                                 // prior for rho
+  target += -0.5 * dot_self(phi[node1] - phi[node2]);                   // calculates the spatial weights
+  sum(phi) ~ normal(0, 0.001 * N);                                      // priors for phi
+}
+
 generated quantities {
-    vector[N] eta = alpha + beta*X + phi*sigma;                     // do eta equals alpha + beta*X + phi*sigma to get the relative risk for areas 
-    vector[N] mu = exp(eta);                                        // the exponentiate eta to mu areas-specific relative risk ratios (RRs)
+  vector[N] eta = alpha + X * beta + combined * sigma;                  // compute eta and exponentiate into mu                   
+  vector[N] rr_mu = exp(eta);                                           // output the neighbourhood-specific relative risks in mu
+  real rr_beta = exp(beta);                                             // output the risk ratios for each coefficient
+  real rr_alpha = exp(alpha);                                           // output the risk ratios for the intercept
 }</code></pre>
 <div class="note">
 <p>Well done! You have coded your first spatial risk model. Alright, let us save the script as <code>icar_poisson_model.stan</code>. We can now compile and run it through RStudio to get our posterior estimates as <strong>risk ratios (RR)</strong> for each areas. We can also get the <strong>exceedance probabilities</strong>. The next steps are easy from this point onwards.</p>
 </div>
 </div>
 </div>
-</div>
-<div id="compiling-stan-code-for-spatial-icar-modelling" class="section level2 hasAnchor" number="6.8">
-<h2><span class="header-section-number">6.8</span> Compiling Stan code for Spatial ICAR modelling<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-spatial-icar-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="compiling-stan-code-for-the-spatial-icar-risk-modelling" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Compiling Stan code for the Spatial ICAR risk modelling<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="printing-of-the-global-results" class="section level3 hasAnchor" number="6.8.1">
 <h3><span class="header-section-number">6.8.1</span> Printing of the global results<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now, let us turn our attention to RStudio. Using the <code>stan()</code> to compile the saved script to obtain the posterior estimation of the parameters from our model:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb107-1" tabindex="-1"></a>icar_poisson_fit <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;icar_poisson_model.stan&quot;</span>, <span class="at">data=</span>stan.spatial.dataset, <span class="at">iter=</span><span class="dv">20000</span>, <span class="at">chains=</span><span class="dv">6</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb106-1" tabindex="-1"></a>icar_poisson_fit <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;icar_poisson_model.stan&quot;</span>, <span class="at">data=</span>stan.spatial.dataset, <span class="at">iter=</span><span class="dv">20000</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">12</span>), <span class="at">chains=</span><span class="dv">6</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>We can see our estimated results for <code>alpha</code>, <code>beta</code> and <code>sigma</code>:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb108-1" tabindex="-1"></a><span class="co"># remove that annoying scientific notation</span></span>
-<span id="cb108-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb108-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
-<span id="cb108-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb108-3" tabindex="-1"></a><span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb107-1" tabindex="-1"></a><span class="co"># remove that annoying scientific notation</span></span>
+<span id="cb107-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb107-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb107-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb107-3" tabindex="-1"></a><span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary</span></code></pre></div>
 <p><strong>Output from summary()$summary function:</strong></p>
-<pre class="text"><code>              mean      se_mean          sd        2.5%        97.5%    n_eff     Rhat
-alpha  0.132105883 0.0046872419 0.085604021 -0.04109926 0.3001698223 333.5444 1.020028
-beta  -0.008203683 0.0002366832 0.004319974 -0.01669401 0.0005396596 333.1404 1.020069
-sigma  1.032680985 0.0017143449 0.047901705  0.94219323 1.1295132135 780.7384 1.004863</code></pre>
+<pre class="text"><code>              mean       se_mean          sd         2.5%       97.5%     n_eff     Rhat
+alpha  0.162965832 0.00052694848 0.084071562 -0.001856892  0.32898381 25454.344 1.000094
+beta  -0.009775948 0.00002545072 0.004085887 -0.017779845 -0.00177424 25773.456 1.000076
+sigma  0.627153399 0.00078449468 0.052970350  0.538581209  0.74606811  4559.169 1.001467</code></pre>
 <p>Here is the <strong>interpretation</strong>:</p>
 <ul>
-<li><code>alpha</code> is the global mean (or average) in the population under study. It means on average the road accident occurrence in England for the period 2015 to 2020 is <strong>0.1321 (95% CrI: -0.0411 to 0.3002)</strong>. If we take the exponent of this value i.e., <code>exp(0.132105883)</code> - we get the relative risks of road accidents which is 1.14 times higher in England <strong>(95% CrI: 0.959 to 1.35)</strong>. The result is not significant as the null value exists between these limits.</li>
-<li><code>beta</code> is the coefficient for <code>IMDScore</code>. This means that its yields a decrease on average for road accidents throughout England for more deprived areas <strong>-0.0082 (95% CI: -0.016 to 0.00053)</strong>. This is negligible and not significant; and if you exponentiate this value its really close to the null value (1).</li>
+<li><code>alpha</code> is the global mean (or average) in the population under study. It means on average the road accident occurrence in England for the period 2015 to 2020 is <strong>0.1629 (95% CrI: -0.00185 to 0.3289)</strong>. If we take the exponent of this value i.e., <code>exp(0.162965832)</code> - we get the relative risks of road accidents which is 1.17 times higher in England <strong>(95% CrI: 0.998 to 1.38)</strong>. The result is not significant as the null value of 1 exists between its lower and upper limits.</li>
+<li><code>beta</code> is the coefficient for <code>IMDScore</code>. This means that its yields a decrease on average for road accidents throughout England for more deprived areas <strong>-0.0097 (95% CI: -0.0177 to -0.00177424)</strong>. This is negligible negative relationship that is statistically significant; while it is significant, if we exponentiate these values its really close to the null value (1), so we can rule out this relationship!</li>
 <li><code>sigma</code> is the overall standard deviation or global error.</li>
 </ul>
 <p>Note, we can view the <strong>spatial effects</strong> i.e., <code>phi</code> for each area using this code:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb110-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
-<span id="cb110-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb110-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;phi&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb109-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
+<span id="cb109-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb109-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;phi&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
 <p>Alternatively, you can use the <code>print()</code> function to get a detailed output:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb111-1" tabindex="-1"></a><span class="fu">print</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;phi&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb110-1" tabindex="-1"></a><span class="fu">print</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <p><strong>Output from print() function:</strong></p>
 <pre class="text"><code>Inference for Stan model: anon_model.
 6 chains, each with iter=20000; warmup=10000; thin=1; 
 post-warmup draws per chain=10000, total post-warmup draws=60000.
 
        mean se_mean   sd  2.5% 97.5% n_eff Rhat
-alpha  0.13       0 0.09 -0.04  0.30   334 1.02
-beta  -0.01       0 0.00 -0.02  0.00   333 1.02
-sigma  1.03       0 0.05  0.94  1.13   781 1.00
+alpha  0.16       0 0.08  0.00  0.33 25454    1
+beta  -0.01       0 0.00 -0.02  0.00 25773    1
+sigma  0.63       0 0.05  0.54  0.75  4559    1
 
-Samples were drawn using NUTS(diag_e) at Wed Mar  8 21:06:27 2023.
+Samples were drawn using NUTS(diag_e) at Fri Mar  8 07:41:39 2024.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -699,24 +721,24 @@ table(diagnostic.checks$valid)</code></pre>
 <div id="extraction-of-the-area-specific-relative-risks" class="section level3 hasAnchor" number="6.8.3">
 <h3><span class="header-section-number">6.8.3</span> Extraction of the area-specific relative risks<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you run the following code:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
-<span id="cb114-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb113-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
+<span id="cb113-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb113-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;rr_mu&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
 <p>We see the relative risk (RR) estimates for the first areas under the column <code>mu</code> with their corresponding credibility limits under the <code>2.5%</code> and <code>97.5%</code> column. We are going to extract this information into a data frame and applying the cleaning and renaming of columns accordingly:</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-1" tabindex="-1"></a><span class="co"># extraction key posterior results for the generated quantities </span></span>
-<span id="cb115-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-2" tabindex="-1"></a>relativeRisk.results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span>
-<span id="cb115-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-3" tabindex="-1"></a><span class="co"># now cleaning up this table up</span></span>
-<span id="cb115-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-4" tabindex="-1"></a><span class="co"># first, insert clean row numbers to new data frame</span></span>
-<span id="cb115-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-5" tabindex="-1"></a><span class="fu">row.names</span>(relativeRisk.results) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(relativeRisk.results)</span>
-<span id="cb115-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-6" tabindex="-1"></a><span class="co"># second, rearrange the columns into order</span></span>
-<span id="cb115-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-7" tabindex="-1"></a>relativeRisk.results <span class="ot">&lt;-</span> relativeRisk.results[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">7</span>)]</span>
-<span id="cb115-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-8" tabindex="-1"></a><span class="co"># third, rename the columns appropriately</span></span>
-<span id="cb115-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-9" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rr&quot;</span></span>
-<span id="cb115-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-10" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rrlower&quot;</span></span>
-<span id="cb115-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-11" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rrupper&quot;</span></span>
-<span id="cb115-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-12" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rHAT&quot;</span></span>
-<span id="cb115-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-13" tabindex="-1"></a></span>
-<span id="cb115-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-14" tabindex="-1"></a><span class="co"># view clean table </span></span>
-<span id="cb115-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb115-15" tabindex="-1"></a><span class="fu">head</span>(relativeRisk.results)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-1" tabindex="-1"></a><span class="co"># extraction key posterior results for the generated quantities </span></span>
+<span id="cb114-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-2" tabindex="-1"></a>relativeRisk.results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;rr_mu&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span>
+<span id="cb114-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-3" tabindex="-1"></a><span class="co"># now cleaning up this table up</span></span>
+<span id="cb114-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-4" tabindex="-1"></a><span class="co"># first, insert clean row numbers to new data frame</span></span>
+<span id="cb114-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-5" tabindex="-1"></a><span class="fu">row.names</span>(relativeRisk.results) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(relativeRisk.results)</span>
+<span id="cb114-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-6" tabindex="-1"></a><span class="co"># second, rearrange the columns into order</span></span>
+<span id="cb114-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-7" tabindex="-1"></a>relativeRisk.results <span class="ot">&lt;-</span> relativeRisk.results[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">7</span>)]</span>
+<span id="cb114-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-8" tabindex="-1"></a><span class="co"># third, rename the columns appropriately</span></span>
+<span id="cb114-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-9" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rr&quot;</span></span>
+<span id="cb114-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-10" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rrlower&quot;</span></span>
+<span id="cb114-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-11" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rrupper&quot;</span></span>
+<span id="cb114-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-12" tabindex="-1"></a><span class="fu">colnames</span>(relativeRisk.results)[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;rHAT&quot;</span></span>
+<span id="cb114-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-13" tabindex="-1"></a></span>
+<span id="cb114-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-14" tabindex="-1"></a><span class="co"># view clean table </span></span>
+<span id="cb114-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb114-15" tabindex="-1"></a><span class="fu">head</span>(relativeRisk.results)</span></code></pre></div>
 <p>See clean table:</p>
 <pre class="text"><code>         rr   rrlower   rrupper      rHAT valid
 1 0.6295692 0.5759348 0.6859993 0.9999354     1
@@ -726,71 +748,71 @@ table(diagnostic.checks$valid)</code></pre>
 5 0.8885551 0.8284516 0.9505547 1.0000141     1
 6 0.7971718 0.7451160 0.8513495 0.9999757     1</code></pre>
 <p>Insert these columns into the <code>spatial.data</code> object as follow:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-1" tabindex="-1"></a><span class="co"># now, we proceed to generate our risk maps</span></span>
-<span id="cb117-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-2" tabindex="-1"></a><span class="co"># align the results to the areas in shapefile</span></span>
-<span id="cb117-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-3" tabindex="-1"></a>spatial.data<span class="sc">$</span>rr <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rr&quot;</span>]</span>
-<span id="cb117-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-4" tabindex="-1"></a>spatial.data<span class="sc">$</span>rrlower <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rrlower&quot;</span>]</span>
-<span id="cb117-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>rrupper <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rrupper&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb116-1" tabindex="-1"></a><span class="co"># now, we proceed to generate our risk maps</span></span>
+<span id="cb116-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb116-2" tabindex="-1"></a><span class="co"># align the results to the areas in shapefile</span></span>
+<span id="cb116-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb116-3" tabindex="-1"></a>spatial.data<span class="sc">$</span>rr <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rr&quot;</span>]</span>
+<span id="cb116-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb116-4" tabindex="-1"></a>spatial.data<span class="sc">$</span>rrlower <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rrlower&quot;</span>]</span>
+<span id="cb116-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb116-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>rrupper <span class="ot">&lt;-</span> relativeRisk.results[, <span class="st">&quot;rrupper&quot;</span>]</span></code></pre></div>
 <p>These relative will allow us to see the mapped risks of road accidents across local authorities in England. We also want a supporting map indicate whether the risks are significant or not. Here, we create an extra column in the <code>spatial.data</code> called <code>Significance</code>.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-1" tabindex="-1"></a><span class="co"># create categories to define if an area has significant increase or decrease in risk, or nothing all </span></span>
-<span id="cb118-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-2" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb118-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-3" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&gt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>    <span class="co"># NOT SIGNIFICANT</span></span>
-<span id="cb118-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-4" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># NOT SIGNIFICANT</span></span>
-<span id="cb118-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&gt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&gt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># SIGNIFICANT INCREASE</span></span>
-<span id="cb118-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-6" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&lt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>   <span class="co"># SIGNIFICANT DECREASE</span></span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-1" tabindex="-1"></a><span class="co"># create categories to define if an area has significant increase or decrease in risk, or nothing all </span></span>
+<span id="cb117-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-2" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb117-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-3" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&gt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>    <span class="co"># NOT SIGNIFICANT</span></span>
+<span id="cb117-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-4" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># NOT SIGNIFICANT</span></span>
+<span id="cb117-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&gt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&gt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># SIGNIFICANT INCREASE</span></span>
+<span id="cb117-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-6" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&lt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>   <span class="co"># SIGNIFICANT DECREASE</span></span></code></pre></div>
 </div>
 <div id="mapping-of-rr-and-significance" class="section level3 hasAnchor" number="6.8.4">
 <h3><span class="header-section-number">6.8.4</span> Mapping of RR and significance<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The next set of codes are all cosmetics for the creating our risk map for road accidents. Here is the code:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-1" tabindex="-1"></a><span class="co"># For map design for the relative risk -- you want to understand or get a handle on what the distribution for risks look like</span></span>
-<span id="cb119-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-2" tabindex="-1"></a><span class="co"># this would inform you of how to create the labelling for the legends when make a map in tmap</span></span>
-<span id="cb119-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-3" tabindex="-1"></a><span class="fu">summary</span>(spatial.data<span class="sc">$</span>rr)</span>
-<span id="cb119-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-4" tabindex="-1"></a><span class="fu">hist</span>(spatial.data<span class="sc">$</span>rr)</span>
-<span id="cb119-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-5" tabindex="-1"></a></span>
-<span id="cb119-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-6" tabindex="-1"></a><span class="co"># creating the labels</span></span>
-<span id="cb119-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-7" tabindex="-1"></a>RiskCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&gt;0.0 to 0.25&quot;</span>, <span class="st">&quot;0.26 to 0.50&quot;</span>, <span class="st">&quot;0.51 to 0.75&quot;</span>, <span class="st">&quot;0.76 to 0.99&quot;</span>, <span class="st">&quot;1.00 &amp; &lt;1.01&quot;</span>,</span>
-<span id="cb119-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-8" tabindex="-1"></a>    <span class="st">&quot;1.01 to 1.10&quot;</span>, <span class="st">&quot;1.11 to 1.25&quot;</span>, <span class="st">&quot;1.26 to 1.50&quot;</span>, <span class="st">&quot;1.51 to 1.75&quot;</span>, <span class="st">&quot;1.76 to 2.00&quot;</span>, <span class="st">&quot;2.01 to 3.00&quot;</span>)</span>
-<span id="cb119-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-9" tabindex="-1"></a></span>
-<span id="cb119-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-10" tabindex="-1"></a><span class="co"># next, we are creating the discrete colour changes for my legends and want to use a divergent colour scheme</span></span>
-<span id="cb119-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-11" tabindex="-1"></a><span class="co"># scheme ranges from extreme dark blues to light blues to white to light reds to extreme dark reds</span></span>
-<span id="cb119-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-12" tabindex="-1"></a><span class="co"># you can pick your own colour choices by checking out this link [https://colorbrewer2.org]</span></span>
-<span id="cb119-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-13" tabindex="-1"></a></span>
-<span id="cb119-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-14" tabindex="-1"></a>RRPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#65bafe&quot;</span>,<span class="st">&quot;#98cffe&quot;</span>,<span class="st">&quot;#cbe6fe&quot;</span>,<span class="st">&quot;#dfeffe&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;#fed5d5&quot;</span>,<span class="st">&quot;#fcbba1&quot;</span>,<span class="st">&quot;#fc9272&quot;</span>,<span class="st">&quot;#fb6a4a&quot;</span>,<span class="st">&quot;#de2d26&quot;</span>,<span class="st">&quot;#a50f15&quot;</span>)</span>
-<span id="cb119-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-15" tabindex="-1"></a></span>
-<span id="cb119-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-16" tabindex="-1"></a><span class="co"># categorising the risk values to match the labelling in RiskCategorylist object</span></span>
-<span id="cb119-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-17" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb119-18"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-18" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.25</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">4</span></span>
-<span id="cb119-19"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-19" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.25</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.50</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
-<span id="cb119-20"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-20" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.75</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span></span>
-<span id="cb119-21"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-21" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.75</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb119-22"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-22" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="fl">1.00</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;</span> <span class="fl">1.01</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb119-23"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-23" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="fl">1.01</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.10</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb119-24"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-24" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.10</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.25</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb119-25"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-25" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.25</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.50</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb119-26"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-26" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.75</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb119-27"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-27" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.75</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">2.00</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb119-28"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-28" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">2.00</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb119-29"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-29" tabindex="-1"></a></span>
-<span id="cb119-30"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-30" tabindex="-1"></a><span class="co"># check to see if legend scheme is balanced - if a number is missing that categorisation is wrong!</span></span>
-<span id="cb119-31"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-31" tabindex="-1"></a><span class="fu">table</span>(spatial.data<span class="sc">$</span>RelativeRiskCat)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-1" tabindex="-1"></a><span class="co"># For map design for the relative risk -- you want to understand or get a handle on what the distribution for risks look like</span></span>
+<span id="cb118-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-2" tabindex="-1"></a><span class="co"># this would inform you of how to create the labelling for the legends when make a map in tmap</span></span>
+<span id="cb118-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-3" tabindex="-1"></a><span class="fu">summary</span>(spatial.data<span class="sc">$</span>rr)</span>
+<span id="cb118-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-4" tabindex="-1"></a><span class="fu">hist</span>(spatial.data<span class="sc">$</span>rr)</span>
+<span id="cb118-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-5" tabindex="-1"></a></span>
+<span id="cb118-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-6" tabindex="-1"></a><span class="co"># creating the labels</span></span>
+<span id="cb118-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-7" tabindex="-1"></a>RiskCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&gt;0.0 to 0.25&quot;</span>, <span class="st">&quot;0.26 to 0.50&quot;</span>, <span class="st">&quot;0.51 to 0.75&quot;</span>, <span class="st">&quot;0.76 to 0.99&quot;</span>, <span class="st">&quot;1.00 &amp; &lt;1.01&quot;</span>,</span>
+<span id="cb118-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-8" tabindex="-1"></a>    <span class="st">&quot;1.01 to 1.10&quot;</span>, <span class="st">&quot;1.11 to 1.25&quot;</span>, <span class="st">&quot;1.26 to 1.50&quot;</span>, <span class="st">&quot;1.51 to 1.75&quot;</span>, <span class="st">&quot;1.76 to 2.00&quot;</span>, <span class="st">&quot;2.01 to 3.00&quot;</span>)</span>
+<span id="cb118-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-9" tabindex="-1"></a></span>
+<span id="cb118-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-10" tabindex="-1"></a><span class="co"># next, we are creating the discrete colour changes for my legends and want to use a divergent colour scheme</span></span>
+<span id="cb118-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-11" tabindex="-1"></a><span class="co"># scheme ranges from extreme dark blues to light blues to white to light reds to extreme dark reds</span></span>
+<span id="cb118-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-12" tabindex="-1"></a><span class="co"># you can pick your own colour choices by checking out this link [https://colorbrewer2.org]</span></span>
+<span id="cb118-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-13" tabindex="-1"></a></span>
+<span id="cb118-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-14" tabindex="-1"></a>RRPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#65bafe&quot;</span>,<span class="st">&quot;#98cffe&quot;</span>,<span class="st">&quot;#cbe6fe&quot;</span>,<span class="st">&quot;#dfeffe&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;#fed5d5&quot;</span>,<span class="st">&quot;#fcbba1&quot;</span>,<span class="st">&quot;#fc9272&quot;</span>,<span class="st">&quot;#fb6a4a&quot;</span>,<span class="st">&quot;#de2d26&quot;</span>,<span class="st">&quot;#a50f15&quot;</span>)</span>
+<span id="cb118-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-15" tabindex="-1"></a></span>
+<span id="cb118-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-16" tabindex="-1"></a><span class="co"># categorising the risk values to match the labelling in RiskCategorylist object</span></span>
+<span id="cb118-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-17" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb118-18"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-18" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.25</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">4</span></span>
+<span id="cb118-19"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-19" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.25</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.50</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
+<span id="cb118-20"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-20" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">0.75</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span></span>
+<span id="cb118-21"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-21" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">0.75</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb118-22"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-22" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="fl">1.00</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;</span> <span class="fl">1.01</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb118-23"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-23" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;=</span> <span class="fl">1.01</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.10</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb118-24"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-24" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.10</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.25</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb118-25"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-25" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.25</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.50</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb118-26"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-26" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">1.75</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb118-27"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-27" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">1.75</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="fl">2.00</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb118-28"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-28" tabindex="-1"></a>spatial.data<span class="sc">$</span>RelativeRiskCat[spatial.data<span class="sc">$</span>rr<span class="sc">&gt;</span> <span class="fl">2.00</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rr <span class="sc">&lt;=</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb118-29"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-29" tabindex="-1"></a></span>
+<span id="cb118-30"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-30" tabindex="-1"></a><span class="co"># check to see if legend scheme is balanced - if a number is missing that categorisation is wrong!</span></span>
+<span id="cb118-31"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-31" tabindex="-1"></a><span class="fu">table</span>(spatial.data<span class="sc">$</span>RelativeRiskCat)</span></code></pre></div>
 <p>Generating the maps as a paneled output:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-1" tabindex="-1"></a><span class="co"># map of relative risk</span></span>
-<span id="cb120-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-2" tabindex="-1"></a>rr_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
-<span id="cb120-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-3" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;RelativeRiskCat&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Relavtive Risk&quot;</span>, <span class="at">palette =</span> RRPalette, <span class="at">labels =</span> RiskCategorylist) <span class="sc">+</span></span>
-<span id="cb120-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-4" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.05</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
-<span id="cb120-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-5" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb120-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-6" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
-<span id="cb120-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-7" tabindex="-1"></a></span>
-<span id="cb120-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-8" tabindex="-1"></a><span class="co"># map of significance regions</span></span>
-<span id="cb120-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-9" tabindex="-1"></a>sg_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
-<span id="cb120-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-10" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;Significance&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Significance Categories&quot;</span>, </span>
-<span id="cb120-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-11" tabindex="-1"></a>        <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#33a6fe&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#fe0000&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Significantly low&quot;</span>, <span class="st">&quot;Not Significant&quot;</span>, <span class="st">&quot;Significantly high&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb120-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-12" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.10</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
-<span id="cb120-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-13" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb120-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-14" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
-<span id="cb120-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-15" tabindex="-1"></a></span>
-<span id="cb120-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-16" tabindex="-1"></a><span class="co"># create side-by-side plot</span></span>
-<span id="cb120-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-17" tabindex="-1"></a><span class="fu">tmap_arrange</span>(rr_map, sg_map, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-1" tabindex="-1"></a><span class="co"># map of relative risk</span></span>
+<span id="cb119-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-2" tabindex="-1"></a>rr_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
+<span id="cb119-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-3" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;RelativeRiskCat&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Relavtive Risk&quot;</span>, <span class="at">palette =</span> RRPalette, <span class="at">labels =</span> RiskCategorylist) <span class="sc">+</span></span>
+<span id="cb119-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-4" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.05</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
+<span id="cb119-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-5" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb119-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-6" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
+<span id="cb119-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-7" tabindex="-1"></a></span>
+<span id="cb119-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-8" tabindex="-1"></a><span class="co"># map of significance regions</span></span>
+<span id="cb119-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-9" tabindex="-1"></a>sg_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
+<span id="cb119-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-10" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;Significance&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Significance Categories&quot;</span>, </span>
+<span id="cb119-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-11" tabindex="-1"></a>        <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#33a6fe&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;#fe0000&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Significantly low&quot;</span>, <span class="st">&quot;Not Significant&quot;</span>, <span class="st">&quot;Significantly high&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb119-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-12" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.10</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
+<span id="cb119-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-13" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb119-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-14" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
+<span id="cb119-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-15" tabindex="-1"></a></span>
+<span id="cb119-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-16" tabindex="-1"></a><span class="co"># create side-by-side plot</span></span>
+<span id="cb119-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb119-17" tabindex="-1"></a><span class="fu">tmap_arrange</span>(rr_map, sg_map, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><strong>Output:</strong></p>
 <p><img src="images/general/RR_SG.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
@@ -798,43 +820,43 @@ table(diagnostic.checks$valid)</code></pre>
 <h3><span class="header-section-number">6.8.5</span> Extracting and mapping of the exceedance probabilities<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Exceedance probabilities</strong> allows the user to quantify the levels of uncertainty surrounding the risks we quantified. We can use a threshold for instance an <code>RR &gt; 1</code> and ask what is the probability that an area has an excess risk of road accidents and visualise this as well.</p>
 <p>Just like the RRs, we are going to extract this information into a vector and include it into our <code>spatial.data</code> object. For this extraction, we will need to use functions from the tidybayes and tidyverse packages i.e., <code>spread_draws()</code>, <code>group_by()</code>, <code>summarise()</code> and <code>pull()</code>:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-1" tabindex="-1"></a><span class="co"># extract the exceedence probabilities from the icar_possion_fit object</span></span>
-<span id="cb121-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-2" tabindex="-1"></a><span class="co"># compute the probability that an area has a relative risk ratio &gt; 1.0</span></span>
-<span id="cb121-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-3" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">mean</span>(x <span class="sc">&gt;</span> <span class="fl">1.00</span>)}</span>
-<span id="cb121-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-4" tabindex="-1"></a>excProbrr <span class="ot">&lt;-</span> icar_poisson_fit <span class="sc">%&gt;%</span> <span class="fu">spread_draws</span>(mu[i]) <span class="sc">%&gt;%</span> </span>
-<span id="cb121-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-5" tabindex="-1"></a>    <span class="fu">group_by</span>(i) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">threshold</span>(mu)) <span class="sc">%&gt;%</span></span>
-<span id="cb121-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-6" tabindex="-1"></a>    <span class="fu">pull</span>(mu)</span>
-<span id="cb121-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-7" tabindex="-1"></a></span>
-<span id="cb121-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-8" tabindex="-1"></a><span class="co"># insert the exceedance values into the spatial data frame</span></span>
-<span id="cb121-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-9" tabindex="-1"></a>spatial.data<span class="sc">$</span>excProb <span class="ot">&lt;-</span> excProbrr</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-1" tabindex="-1"></a><span class="co"># extract the exceedence probabilities from the icar_possion_fit object</span></span>
+<span id="cb120-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-2" tabindex="-1"></a><span class="co"># compute the probability that an area has a relative risk ratio &gt; 1.0</span></span>
+<span id="cb120-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-3" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">mean</span>(x <span class="sc">&gt;</span> <span class="fl">1.00</span>)}</span>
+<span id="cb120-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-4" tabindex="-1"></a>excProbrr <span class="ot">&lt;-</span> icar_poisson_fit <span class="sc">%&gt;%</span> <span class="fu">spread_draws</span>(rr_mu[i]) <span class="sc">%&gt;%</span> </span>
+<span id="cb120-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-5" tabindex="-1"></a>    <span class="fu">group_by</span>(i) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">rr_mu=</span><span class="fu">threshold</span>(rr_mu)) <span class="sc">%&gt;%</span></span>
+<span id="cb120-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-6" tabindex="-1"></a>    <span class="fu">pull</span>(rr_mu)</span>
+<span id="cb120-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-7" tabindex="-1"></a></span>
+<span id="cb120-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-8" tabindex="-1"></a><span class="co"># insert the exceedance values into the spatial data frame</span></span>
+<span id="cb120-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-9" tabindex="-1"></a>spatial.data<span class="sc">$</span>excProb <span class="ot">&lt;-</span> excProbrr</span></code></pre></div>
 <p>The next set of codes are all cosmetics for the creating our probability exceedance map for road accidents. Here is the code:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-1" tabindex="-1"></a><span class="co"># create the labels for the probabilities</span></span>
-<span id="cb122-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-2" tabindex="-1"></a>ProbCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;0.01&quot;</span>, <span class="st">&quot;0.01-0.09&quot;</span>, <span class="st">&quot;0.10-0.19&quot;</span>, <span class="st">&quot;0.20-0.29&quot;</span>, <span class="st">&quot;0.30-0.39&quot;</span>, <span class="st">&quot;0.40-0.49&quot;</span>,<span class="st">&quot;0.50-0.59&quot;</span>, <span class="st">&quot;0.60-0.69&quot;</span>, <span class="st">&quot;0.70-0.79&quot;</span>, <span class="st">&quot;0.80-0.89&quot;</span>, <span class="st">&quot;0.90-0.99&quot;</span>, <span class="st">&quot;1.00&quot;</span>)</span>
-<span id="cb122-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-3" tabindex="-1"></a></span>
-<span id="cb122-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-4" tabindex="-1"></a><span class="co"># categorising the probabilities in bands of 10s</span></span>
-<span id="cb122-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb122-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-6" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="dv">0</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.01</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb122-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-7" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.01</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.10</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb122-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-8" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.10</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.20</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb122-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-9" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.20</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb122-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-10" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.30</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.40</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb122-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-11" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.40</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.50</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb122-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-12" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.60</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
-<span id="cb122-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-13" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.60</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.70</span>] <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb122-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-14" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.70</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.80</span>] <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb122-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-15" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.80</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.90</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb122-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-16" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.90</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">1.00</span>] <span class="ot">&lt;-</span> <span class="dv">11</span></span>
-<span id="cb122-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-17" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb <span class="sc">==</span> <span class="fl">1.00</span>] <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb122-18"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-18" tabindex="-1"></a></span>
-<span id="cb122-19"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-19" tabindex="-1"></a><span class="co"># check to see if legend scheme is balanced</span></span>
-<span id="cb122-20"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-20" tabindex="-1"></a><span class="fu">table</span>(spatial.data<span class="sc">$</span>ProbCat)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-1" tabindex="-1"></a><span class="co"># create the labels for the probabilities</span></span>
+<span id="cb121-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-2" tabindex="-1"></a>ProbCategorylist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;0.01&quot;</span>, <span class="st">&quot;0.01-0.09&quot;</span>, <span class="st">&quot;0.10-0.19&quot;</span>, <span class="st">&quot;0.20-0.29&quot;</span>, <span class="st">&quot;0.30-0.39&quot;</span>, <span class="st">&quot;0.40-0.49&quot;</span>,<span class="st">&quot;0.50-0.59&quot;</span>, <span class="st">&quot;0.60-0.69&quot;</span>, <span class="st">&quot;0.70-0.79&quot;</span>, <span class="st">&quot;0.80-0.89&quot;</span>, <span class="st">&quot;0.90-0.99&quot;</span>, <span class="st">&quot;1.00&quot;</span>)</span>
+<span id="cb121-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-3" tabindex="-1"></a></span>
+<span id="cb121-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-4" tabindex="-1"></a><span class="co"># categorising the probabilities in bands of 10s</span></span>
+<span id="cb121-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb121-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-6" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="dv">0</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.01</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb121-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-7" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.01</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.10</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb121-8"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-8" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.10</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.20</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb121-9"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-9" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.20</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb121-10"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-10" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.30</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.40</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb121-11"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-11" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.40</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.50</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb121-12"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-12" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.50</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.60</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb121-13"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-13" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.60</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.70</span>] <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb121-14"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-14" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.70</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.80</span>] <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb121-15"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-15" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.80</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">0.90</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb121-16"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-16" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb<span class="sc">&gt;=</span><span class="fl">0.90</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>excProb<span class="sc">&lt;</span> <span class="fl">1.00</span>] <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb121-17"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-17" tabindex="-1"></a>spatial.data<span class="sc">$</span>ProbCat[spatial.data<span class="sc">$</span>excProb <span class="sc">==</span> <span class="fl">1.00</span>] <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb121-18"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-18" tabindex="-1"></a></span>
+<span id="cb121-19"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-19" tabindex="-1"></a><span class="co"># check to see if legend scheme is balanced</span></span>
+<span id="cb121-20"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb121-20" tabindex="-1"></a><span class="fu">table</span>(spatial.data<span class="sc">$</span>ProbCat)</span></code></pre></div>
 <p>Generating the probability map output:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-1" tabindex="-1"></a><span class="co"># map of exceedance probabilities</span></span>
-<span id="cb123-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-2" tabindex="-1"></a><span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
-<span id="cb123-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-3" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;ProbCat&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Probability&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;GnBu&quot;</span>, <span class="at">labels =</span> ProbCategorylist) <span class="sc">+</span></span>
-<span id="cb123-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-4" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">border.col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
-<span id="cb123-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-5" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb123-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb123-6" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-1" tabindex="-1"></a><span class="co"># map of exceedance probabilities</span></span>
+<span id="cb122-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-2" tabindex="-1"></a><span class="fu">tm_shape</span>(spatial.data) <span class="sc">+</span> </span>
+<span id="cb122-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-3" tabindex="-1"></a>    <span class="fu">tm_fill</span>(<span class="st">&quot;ProbCat&quot;</span>, <span class="at">style =</span> <span class="st">&quot;cat&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Probability&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;GnBu&quot;</span>, <span class="at">labels =</span> ProbCategorylist) <span class="sc">+</span></span>
+<span id="cb122-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-4" tabindex="-1"></a>    <span class="fu">tm_shape</span>(england_Region_shp) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">border.col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> <span class="fu">tm_text</span>(<span class="st">&quot;name&quot;</span>, <span class="at">size =</span> <span class="st">&quot;AREA&quot;</span>) <span class="sc">+</span></span>
+<span id="cb122-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-5" tabindex="-1"></a>    <span class="fu">tm_layout</span>(<span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.title.size =</span> <span class="fl">0.8</span>, <span class="at">legend.text.size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb122-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb122-6" tabindex="-1"></a>    <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>)) <span class="sc">+</span> <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span></code></pre></div>
 <p><strong>Output:</strong></p>
 <p><img src="images/general/probability_map.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="note">

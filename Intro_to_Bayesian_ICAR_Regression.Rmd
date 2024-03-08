@@ -75,18 +75,6 @@ rstan_options(auto_write = TRUE)
 
 This tells RStudio to use the multiple cores in your computer for parallel processing whenever Stan is being implemented. Every time you want to use Stan - make sure to load `parallel::detectCores()` and `rstan_options` code.
 
-<div class="note">
-**Important Notes:** Make sure to be using the latest version of `RStan` (2.26.13). Check in your list of packages. If you are using the old version (i.e., 2.21.1) you may encounter problems with creating the functions in Stan script. It is recommended that you remove version 2.21.1 and install the latest development version 2.26.13. See why [**[LINK]**](https://discourse.mc-stan.org/t/a-parser-expected-warning-on-a-code-that-works/30650)
-
-Instruction to do this are as follows:
-```{r, eval=FALSE}
-# remove rstan and StanHeaders
-remove.packages(c("StanHeaders", "rstan"))
-# install the latest development version 2.26.13 from direct source
-install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
-```
-</div>
-
 ### Datasets & setting up the work directory 
 
 Go to your folder **GEOG0125** and create a sub folder called "**Week 8**" within the **GEOG0125** folder. Here, we will store all our R & Stan scripts as well as datasets. Set your work directory to **Week 8's** folder.
@@ -188,7 +176,7 @@ nod2 <- extractComponents$node2
 n_edges <- as.numeric(extractComponents$n_edges)
 ```
 
-Note that the information needed are stored in `n`, `nod1`, `nod2` and `n_edges`. 
+Note that the information needed are stored in `n`, `nod1`, `nod2` and `n_edges`.
 
 ### Create the dataset to be compiled in Stan
 
@@ -206,208 +194,235 @@ Now, we create our dataset for Stan:
 
 ```{r, eval=FALSE}
 # put all components into a list object
-stan.spatial.dataset <- list(N=n, N_edges=n_edges, node1=nod1, node2=nod2, Y=y, X=x, E=e)
+stan.spatial.dataset <- list(N=n, N_edges=n_edges, node1=nod1, node2=nod2, Y=y, X=x, Offset=e)
 ```
 
 The above information is going to be passed to Stan in the `data block`. Now, we are in the position to develop our **spatial intrinsic conditional autoregressive (ICAR) model**. Now open your Stan script and we begin.
 
-## Creating the script for the Spatial ICAR smoothed model
+## Creating the script for the Spatial ICAR model
 
-### Defining the ICAR component of the Spatial model
-
-Here, we need to create a function for the ICAR component in our model to define the **prior** of spatial random effect $\phi$. This is essentially a probability density computed from the **sum of the squared pairwise differences** between the spatial effect in area $\phi_i$ against another $\phi_j$. This bit is also a reconstruction for the adjacency matrix.
-
-It is a function based on `nodes1`, `nodes2` (i.e., list of adjacent region/area pairs) and the exact number of areas `N` in a study area.
-
-We create the function as `icar_normal_lpdf()`, where the inputs will be `N`, `nodes1` and `nodes2`to get `phi`. In the model block (as you will soon see) - we will specify the prior for $\phi$ as `phi ~ icar_normal(N, node1, node2)`. It should be noted that in this function `phi` is a vector, `N` is a simple integer, and the `node1` and `node2` is an array. The following program fragment shows the Stan parameter and model block to compute the spatial effects vector through the statement `phi ~ icar_normal(N, node1, node2)` (which you will see later):
-
-```{r, eval=FALSE, highlight=FALSE}
-
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
-```
-
-<div class="note">
-**Important Notes:** Use the above function as this will help you to generate the spatial random effects for each region
-</div>
-
-### Adding the blocks in our ICAR Stan script
-
-#### Data block
+### Data block
  
 In the `data block`, we specify the following:
 
-- The total number of areal unit observations `N` as an integer (i.e., `307`);
-- The total number edges `N_edges` as an integer (i.e., `823`);
-- The `nodes1` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes2`;
-- The `nodes2` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes1`;
-- We define our `Y` outcome (i.e., road accidents) as an `array` of size `N` (i.e., `307`) which is an `integer`; 
-- We define our independent variables `X` as a `vector` of size `N` (i.e., `307`); 
-- We must define our offset for the expected numbers `E` as a vector of size `N` (i.e., `307`);
+- The total number of areal unit observations `N` as an integer (i.e., `307`), this corresponds to `n`;
+- The total number edges `N_edges` as an integer (i.e., `823`), this corresponds to `n_edges`;
+- The `nodes1` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes2`, this corresponds to `nod1`;
+- The `nodes2` based on the size of `N_edges` (i.e., `823`) must be specified as an array to connect with `nodes1`, this corresponds to `nod2`;
+- We define our `Y` outcome (i.e., road accidents) as an `array` of size `N` (i.e., `307`) which is an `integer`, this corresponds to `y`; 
+- We define our independent variables `X` as a `vector` of size `N` (i.e., `307`), this corresponds to `x`; 
+- We must define our offset for the expected numbers `Offset` as a vector of size `N` (i.e., `307`), this corresponds to `e`;
 
-Here is what our model block will look like:
+Here is what our `model`data block` would look like:
 
 ```{r, eval=FALSE, highlight=FALSE}
 
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
 data {
-	int<lower=0> N;
-	int<lower=0> N_edges;
-	array[N_edges] int<lower=1, upper=N> node1;
-	array[N_edges] int<lower=1, upper=N> node2;
-	array[N] int<lower=0> Y;                                         // dependent variable i.e., number of road accidents
-	vector<lower=0>[N] X;                                            // independent variable i.e., deprivation score
-	vector<lower=0>[N] E;                                            // estimated number of expected cases of road accidents
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
 }
 ```
 
-#### Transformed data block
+### Transformed data block
 
-We are going a `transformed data block` to our script. Here, we are simply changing the expected numbers by taking its `log()` and creating another vector `log_offset`. This will be added to the `poisson_log()` sampling statement in our likelihood function of the spatial model. Here, we specify it as follows:
+We are going to include a transformed data block. Here, we are simply changing the expected numbers by taking its `log()` and creating another vector called log_offset. This will be added to the `poisson_log()` sampling statement in our likelihood function of the spatial model to account for the reference population in England.
+
+Here, we specify it as follows:
 
 ```{r, eval=FALSE, highlight=FALSE}
 
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
 data {
-	int<lower=0> N;
-	int<lower=0> N_edges;
-	array[N_edges] int<lower=1, upper=N> node1;
-	array[N_edges] int<lower=1, upper=N> node2;
-	array[N] int<lower=0> Y;                                         // dependent variable i.e., number of road accidents
-	vector<lower=0>[N] X;                                            // independent variable i.e., deprivation score
-	vector<lower=0>[N] E;                                            // estimated number of expected cases of road accidents
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
 }
+
 transformed data {
-	vector[N] log_offset = log(E);                                   // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
 ```
 
-#### Parameters block
+### Parameters block
 
 For the `parameters block`, we will need to specify the following:
 
 - The global intercept i.e., `alpha` for the entire study area (i.e., average risk of road accidents on a population-level);
 - The coefficient `beta` for our independent variable `X` which is the `IMDScore`;
-- We also specify `sigma` as a `real` value which is some error or standard deviation that is multiplied to the spatial effects `phi`;
-- We define  the spatial effects `phi` to be `vector` of size `N`;  
+- We also specify `sigma` as a `real` value which is some error or standard deviation that is multiplied to the combined effects of our structured and unstructured random effects;
+- We define the **structured** spatial random effects `phi` to be vector of size `N`;
+- We define the **unstructured** spatial random effects `theta` to be vector of size `N`;
+- We define `rho` as the proportion of the variation coming from the structured spatial random effects;
 
-We add the block as follows:
+We add the `parameters block` as follows:
 
 ```{r, eval=FALSE, highlight=FALSE}
 
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
 data {
-	int<lower=0> N;
-	int<lower=0> N_edges;
-	array[N_edges] int<lower=1, upper=N> node1;
-	array[N_edges] int<lower=1, upper=N> node2;
-	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
-	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
-	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
 }
+
 transformed data {
-	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-	real alpha;                                                     // define the intercept (overall risk in population)
-	real beta;                                                      // define the coefficient for the deprivation score variable
-	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real<lower=0> sigma;                                                   // overall standard deviation
+  real<lower=0, upper=1> rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }
 ```
 
-#### Model block
+### Transformed parameters block
 
-We build our likelihood function and specify the priors for each parameter under the `model block`. We are using a typical Poisson model with a log link function as we are assuming there's some linear relationship between the counts and IMD score, but here we are also taking into account the spatial structure in the vector parameter for `phi`:
+Here, we calculate the combined random effects from the structured and unstructured component for our model:
 
 ```{r, eval=FALSE, highlight=FALSE}
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
+
 data {
-	int<lower=0> N;
-	int<lower=0> N_edges;
-	array[N_edges] int<lower=1, upper=N> node1;
-	array[N_edges] int<lower=1, upper=N> node2;
-	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
-	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
-	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
 }
+
 transformed data {
-	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-	real alpha;                                                     // define the intercept (overall risk in population)
-	real beta;                                                      // define the coefficient for the deprivation score variable
-	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real<lower=0> sigma;                                                   // overall standard deviation
+  real<lower=0, upper=1> rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }
-model {
-	phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
-	Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
-	alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
-	beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
-	sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
-	sum(phi) ~ normal(0, 0.001*N);
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;             // formulation for the combined random effect
 }
 ```
 
-#### Generated quantities block
+### Model block
 
-Lastly, we instruct Stan on the parameters we want to report. We want them as **relative risk ratio (RR)**. We use the `generated quantities block` to obtain these estimates by exponentiation of our regression model:
+We build our likelihood function and specify the priors for each parameter under the `model block`. We are using a typical Poisson model with a log link function as we are assuming there's some linear relationship between the road accident counts and IMD score, but here we are also taking into account the combined spatial and non-spatial random effects:
 
 ```{r, eval=FALSE, highlight=FALSE}
-functions {
-	real icar_normal_lpdf(vector phi, int N, array[] int node1, array[] int node2) {
-		return -0.5 * dot_self(phi[node1] - phi[node2]);
-	}
-}
+
 data {
-	int<lower=0> N;
-	int<lower=0> N_edges;
-	array[N_edges] int<lower=1, upper=N> node1;
-	array[N_edges] int<lower=1, upper=N> node2;
-	array[N] int<lower=0> Y;                                        // dependent variable i.e., number of road accidents
-	vector<lower=0>[N] X;                                           // independent variable i.e., deprivation score
-	vector<lower=0>[N] E;                                           // estimated number of expected cases of road accidents
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
 }
+
 transformed data {
-	vector[N] log_offset = log(E);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }
+
 parameters {
-	real alpha;                                                     // define the intercept (overall risk in population)
-	real beta;                                                      // define the coefficient for the deprivation score variable
-	real<lower=0> sigma;                                            // define the overall standard deviation producted with spatial effect smoothing term phi
-	vector[N] phi;                                                  // spatial effect smoothing term or spatial ICAR component of the model 
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real<lower=0> sigma;                                                   // overall standard deviation
+  real<lower=0, upper=1> rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
 }
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;                    // formulation for the combined random effect
+}
+
 model {
-	phi ~ icar_normal(N, node1, node2);                             // prior for the spatial random effects
-	Y ~ poisson_log(log_offset + alpha + beta*X + phi*sigma);       // likelihood function i.e., spatial ICAR model using Possion distribution
-	alpha ~ normal(0.0, 1.0);                                       // prior for intercept   (weak/uninformative prior)
-	beta ~ normal(0.0, 1.0);                                        // prior for coefficient (weak/uninformative prior)
-	sigma ~ normal(0.0, 1.0);                                       // prior for SD          (weak/uninformative prior)
-	sum(phi) ~ normal(0, 0.001*N);
+  Y ~ poisson_log(log_Offset + alpha + X * beta + combined * sigma);    // likelihood function: multivariable Poisson ICAR regression model
+                                                                        // setting priors
+  alpha ~ normal(0.0, 1.0);                                             // prior for alpha: weakly informative
+  beta ~ normal(0.0, 1.0);                                              // prior for betas: weakly informative
+  theta ~ normal(0.0, 1.0);                                             // prior for theta: weakly informative
+  sigma ~ normal(0.0, 1.0);                                             // prior for sigma: weakly informative
+  rho ~ beta(0.5, 0.5);                                                 // prior for rho
+  target += -0.5 * dot_self(phi[node1] - phi[node2]);                   // calculates the spatial weights
+  sum(phi) ~ normal(0, 0.001 * N);                                      // priors for phi
 }
+```
+
+### Generated quantities block
+
+Lastly, we instruct Stan on the parameters we want to report. We want them as **relative risk ratio (RR)**. We can use the `generated quantities block` to obtain these estimates by exponentiation of the ICAR regression model:
+
+```{r, eval=FALSE, highlight=FALSE}
+
+data {
+  int<lower=0> N;                                                        // number of spatial units or neighbourhoods
+  int<lower=0> N_edges;                                                  // number of edges connecting adjacent areas using Queens contiguity
+  array[N_edges] int<lower=1, upper=N> node1;                            // list of index areas showing which spatial units are neighbours
+  array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
+  array[N] int<lower=0> Y;                                               // dependent variable
+  vector<lower=0>[N] X;                                                  // Single independent variable
+  vector<lower=0>[N] Offset;                                             // offset variable
+}
+
+transformed data {
+    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+}
+
+parameters {
+  real alpha;                                                            // intercept
+  real beta;                                                             // covariates
+  real<lower=0> sigma;                                                   // overall standard deviation
+  real<lower=0, upper=1> rho;                                            // proportion unstructured vs. spatially structured variance
+  vector[N] theta;                                                       // unstructured random effects
+  vector[N] phi;                                                         // structured spatial random effects
+}
+
+transformed parameters {
+  vector[N] combined;                                                    // values derived from adding the unstructure and structured effect of each area
+  combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;                    // formulation for the combined random effect
+}
+
+model {
+  Y ~ poisson_log(log_Offset + alpha + X * beta + combined * sigma);    // likelihood function: multivariable Poisson ICAR regression model
+                                                                        // setting priors
+  alpha ~ normal(0.0, 1.0);                                             // prior for alpha: weakly informative
+  beta ~ normal(0.0, 1.0);                                              // prior for betas: weakly informative
+  theta ~ normal(0.0, 1.0);                                             // prior for theta: weakly informative
+  sigma ~ normal(0.0, 1.0);                                             // prior for sigma: weakly informative
+  rho ~ beta(0.5, 0.5);                                                 // prior for rho
+  target += -0.5 * dot_self(phi[node1] - phi[node2]);                   // calculates the spatial weights
+  sum(phi) ~ normal(0, 0.001 * N);                                      // priors for phi
+}
+
 generated quantities {
-	vector[N] eta = alpha + beta*X + phi*sigma;                     // do eta equals alpha + beta*X + phi*sigma to get the relative risk for areas 
-	vector[N] mu = exp(eta);                                        // the exponentiate eta to mu areas-specific relative risk ratios (RRs)
+  vector[N] eta = alpha + X * beta + combined * sigma;                  // compute eta and exponentiate into mu                   
+  vector[N] rr_mu = exp(eta);                                           // output the neighbourhood-specific relative risks in mu
+  real rr_beta = exp(beta);                                             // output the risk ratios for each coefficient
+  real rr_alpha = exp(alpha);                                           // output the risk ratios for the intercept
 }
 ```
 
@@ -415,14 +430,14 @@ generated quantities {
 Well done! You have coded your first spatial risk model. Alright, let us save the script as `icar_poisson_model.stan`. We can now compile and run it through RStudio to get our posterior estimates as **risk ratios (RR)** for each areas. We can also get the **exceedance probabilities**. The next steps are easy from this point onwards.
 </div>
 
-## Compiling Stan code for Spatial ICAR modelling
+## Compiling Stan code for the Spatial ICAR risk modelling
 
 ### Printing of the global results
 
 Now, let us turn our attention to RStudio. Using the `stan()` to compile the saved script to obtain the posterior estimation of the parameters from our model:
 
 ```{r, eval=FALSE}
-icar_poisson_fit = stan("icar_poisson_model.stan", data=stan.spatial.dataset, iter=20000, chains=6, verbose = FALSE)
+icar_poisson_fit = stan("icar_poisson_model.stan", data=stan.spatial.dataset, iter=20000, control = list(max_treedepth = 12), chains=6, verbose = FALSE)
 ```
 
 We can see our estimated results for `alpha`, `beta` and `sigma`:
@@ -436,16 +451,16 @@ summary(icar_poisson_fit, pars=c("alpha", "beta", "sigma"), probs=c(0.025, 0.975
 **Output from summary()$summary function:**
 
 ```{r, eval=FALSE, highlight=FALSE}
-              mean      se_mean          sd        2.5%        97.5%    n_eff     Rhat
-alpha  0.132105883 0.0046872419 0.085604021 -0.04109926 0.3001698223 333.5444 1.020028
-beta  -0.008203683 0.0002366832 0.004319974 -0.01669401 0.0005396596 333.1404 1.020069
-sigma  1.032680985 0.0017143449 0.047901705  0.94219323 1.1295132135 780.7384 1.004863
+              mean       se_mean          sd         2.5%       97.5%     n_eff     Rhat
+alpha  0.162965832 0.00052694848 0.084071562 -0.001856892  0.32898381 25454.344 1.000094
+beta  -0.009775948 0.00002545072 0.004085887 -0.017779845 -0.00177424 25773.456 1.000076
+sigma  0.627153399 0.00078449468 0.052970350  0.538581209  0.74606811  4559.169 1.001467
 ```
 
 Here is the **interpretation**:
 
-- `alpha` is the global mean (or average) in the population under study. It means on average the road accident occurrence in England for the period 2015 to 2020 is  **0.1321 (95% CrI: -0.0411 to 0.3002)**. If we take the exponent of this value i.e., `exp(0.132105883)` - we get the relative risks of road accidents which is 1.14 times higher in England **(95% CrI: 0.959 to 1.35)**. The result is not significant as the null value exists between these limits.
-- `beta` is the coefficient for `IMDScore`. This means that its yields a decrease on average for road accidents throughout England for more deprived areas **-0.0082 (95% CI: -0.016 to 0.00053)**. This is negligible and not significant; and if you exponentiate this value its really close to the null value (1). 
+- `alpha` is the global mean (or average) in the population under study. It means on average the road accident occurrence in England for the period 2015 to 2020 is  **0.1629 (95% CrI: -0.00185 to 0.3289)**. If we take the exponent of this value i.e., `exp(0.162965832)` - we get the relative risks of road accidents which is 1.17 times higher in England **(95% CrI: 0.998 to 1.38)**. The result is not significant as the null value of 1 exists between its lower and upper limits.
+- `beta` is the coefficient for `IMDScore`. This means that its yields a decrease on average for road accidents throughout England for more deprived areas **-0.0097 (95% CI: -0.0177 to -0.00177424)**. This is negligible negative relationship that is statistically significant; while it is significant, if we exponentiate these values its really close to the null value (1), so we can rule out this relationship! 
 - `sigma` is the overall standard deviation or global error.
 
 Note, we can view the **spatial effects** i.e., `phi` for each area using this code:
@@ -458,7 +473,7 @@ head(summary(icar_poisson_fit, pars=c("phi"), probs=c(0.025, 0.975))$summary)
 Alternatively, you can use the `print()` function to get a detailed output:
 
 ```{r, eval=FALSE}
-print(icar_poisson_fit, pars=c("alpha", "beta", "sigma", "phi"), probs=c(0.025, 0.975))
+print(icar_poisson_fit, pars=c("alpha", "beta", "sigma"), probs=c(0.025, 0.975))
 ```
 
 **Output from print() function:**
@@ -469,11 +484,11 @@ Inference for Stan model: anon_model.
 post-warmup draws per chain=10000, total post-warmup draws=60000.
 
        mean se_mean   sd  2.5% 97.5% n_eff Rhat
-alpha  0.13       0 0.09 -0.04  0.30   334 1.02
-beta  -0.01       0 0.00 -0.02  0.00   333 1.02
-sigma  1.03       0 0.05  0.94  1.13   781 1.00
+alpha  0.16       0 0.08  0.00  0.33 25454    1
+beta  -0.01       0 0.00 -0.02  0.00 25773    1
+sigma  0.63       0 0.05  0.54  0.75  4559    1
 
-Samples were drawn using NUTS(diag_e) at Wed Mar  8 21:06:27 2023.
+Samples were drawn using NUTS(diag_e) at Fri Mar  8 07:41:39 2024.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).
@@ -504,7 +519,7 @@ If you run the following code:
 
 ```{r, eval=FALSE}
 # show first 6 rows only instead of the full 307
-head(summary(icar_poisson_fit, pars=c("mu"), probs=c(0.025, 0.975))$summary)
+head(summary(icar_poisson_fit, pars=c("rr_mu"), probs=c(0.025, 0.975))$summary)
 ```
 
 We see the relative risk (RR) estimates for the first areas under the column `mu` with their corresponding credibility limits under the `2.5%` and `97.5%` column. We are going to extract this information into a data frame and applying the cleaning and renaming of columns accordingly:
@@ -512,7 +527,7 @@ We see the relative risk (RR) estimates for the first areas under the column `mu
 ```{r, eval=FALSE}
 
 # extraction key posterior results for the generated quantities 
-relativeRisk.results <- as.data.frame(summary(icar_poisson_fit, pars=c("mu"), probs=c(0.025, 0.975))$summary)
+relativeRisk.results <- as.data.frame(summary(icar_poisson_fit, pars=c("rr_mu"), probs=c(0.025, 0.975))$summary)
 # now cleaning up this table up
 # first, insert clean row numbers to new data frame
 row.names(relativeRisk.results) <- 1:nrow(relativeRisk.results)
@@ -640,9 +655,9 @@ Just like the RRs, we are going to extract this information into a vector and in
 # extract the exceedence probabilities from the icar_possion_fit object
 # compute the probability that an area has a relative risk ratio > 1.0
 threshold <- function(x){mean(x > 1.00)}
-excProbrr <- icar_poisson_fit %>% spread_draws(mu[i]) %>% 
-	group_by(i) %>% summarise(mu=threshold(mu)) %>%
-	pull(mu)
+excProbrr <- icar_poisson_fit %>% spread_draws(rr_mu[i]) %>% 
+	group_by(i) %>% summarise(rr_mu=threshold(rr_mu)) %>%
+	pull(rr_mu)
 
 # insert the exceedance values into the spatial data frame
 spatial.data$excProb <- excProbrr
