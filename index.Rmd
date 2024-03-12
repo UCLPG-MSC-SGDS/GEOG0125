@@ -31,8 +31,8 @@ You can download the lecture notes and data sets for the practical lesson from t
 |3 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%203%20Lecture%20-%20Bayesian%20GAMs.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%203.zip) | Bayesian Generalised Additive Models (GAMs) |
 |7 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%207.zip) | Bayesian Hierarchical Regression Models |
 |8 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Bayesian Spatial Risk Models |
-|9 | **[Lecture Notes]** **[Datasets]** | Spatiotemproal Modelling |
-|10 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Research%20Methodology%20and%20Study%20Design.pdf) | Study Design, Research & Revision  |
+|9 | [**[Lecture Notes]**]() **[Datasets]** | Updating & Spatiotemproal Modelling |
+|10 | [**[Lecture Notes]**]() | Study Design, Research & Revision  |
 
 **Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | [**[Week 2]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%202%20Solutions%20for%20Tasks%201%20and%202.zip) | **[Week 3]** | [**[Week 7]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%207%20Solutions%20for%20Task.zip) |[**[Week 8]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%208%20Solutions%20for%20Tasks.zip) | **[Week 9]**
 
