@@ -60,13 +60,21 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 7. **Article**: [History, how the ICAR model was improved] Riebler, A., _et al_ (2016). An intuitive Bayesian spatial model for disease mapping that accounts for scaling. **Statistical methods in medical research**. 25(4): 1145-1165. DOI: [**10.1177/0962280216660421**](https://doi.org/10.1177/0962280216660421)
 
-## Week 9: Bayesian Updating for Spatiotemporal Areal Analysis {-}
+## Week 9: Bayesian Updating and Spatiotemporal Modelling {-}
 
-[**TBC**]
+1. **Book**: [R-INLA Tutorials] Moraga, P. (2020). Geospatial Health Data: Modeling and Vizualisation with R-INLA and Shiny. **Chapters 5: Areal Data**. Pages 53-74.
+
+2. **Book**: [R-INLA Tutorials] Moraga, P. (2020). Geospatial Health Data: Modeling and Vizualisation with R-INLA and Shiny. **Chapters 6: Spatial modeling of areal. Lip cancer in Scotland**. Pages 75-88.
+
+3. **Book**: [R-INLA Tutorials] Moraga, P. (2020). Geospatial Health Data: Modeling and Vizualisation with R-INLA and Shiny. **Chapters 7: Spatio-temporal modeling of areal data. Lung cancer in Ohio**. Pages 93-108.
+
+4. **Book**: [R-INLA Methodology] Blangiardo, M, & Cameletti, M. (2015). Spatial and Spatio-temporal Bayesian Models in R-INLA. **Chapters 6: Spatial modeling**. Sections 6.1-6.3, Pages 173-192.
+
+5. **Book**: [R-INLA Methodology] Blangiardo, M, & Cameletti, M. (2015). Spatial and Spatio-temporal Bayesian Models in R-INLA. **Chapters 7: Spatio-temporal models**. Sections 7.1-7.2, Pages 253-258.
 
 ## Week 10: Study Design, Research Methodology & Revision {-}
 
-[**TBC**]
+[**Not Applicable**]
 
 ## Excellent & Incredibly Useful Tutorial Videos for Learning Stan Code {-}
 
