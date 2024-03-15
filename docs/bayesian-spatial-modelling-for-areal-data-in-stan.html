@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="bayesian-hierarchical-regression-models.html"/>
-<link rel="next" href="research-methods-study-design-and-revision.html"/>
+<link rel="next" href="bayesian-updating-spatial-temporal-modelling.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -252,44 +252,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>6</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes"><i class="fa fa-check"></i><b>6.1</b> Lecture recording (Length: 40:58 minutes)</a></li>
-<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
-<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.3</b> Learning outcomes</a></li>
-<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes"><i class="fa fa-check"></i><b>6.4</b> Demonstration recording (Length: 51:46 minutes)</a></li>
-<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start"><i class="fa fa-check"></i><b>6.5</b> Before we start…</a>
+<li class="chapter" data-level="6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2"><i class="fa fa-check"></i><b>6.2</b> Learning outcomes</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.5.1</b> Loading and installing packages</a></li>
-<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.5.2</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="6.2.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3"><i class="fa fa-check"></i><b>6.2.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="6.2.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4"><i class="fa fa-check"></i><b>6.2.2</b> Datasets &amp; setting up the work directory</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.6</b> Data preparation in RStudio</a>
+<li class="chapter" data-level="6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>6.3</b> Data preparation in RStudio</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.6.1</b> Calculation for expected numbers</a></li>
-<li class="chapter" data-level="6.6.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.6.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
-<li class="chapter" data-level="6.6.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.6.3</b> Create the dataset to be compiled in Stan</a></li>
+<li class="chapter" data-level="6.3.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>6.3.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="6.3.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>6.3.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="6.3.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>6.3.3</b> Create the dataset to be compiled in Stan</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model"><i class="fa fa-check"></i><b>6.7</b> Creating the script for the Spatial ICAR model</a>
+<li class="chapter" data-level="6.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model"><i class="fa fa-check"></i><b>6.4</b> Creating the script for the Spatial ICAR model</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block"><i class="fa fa-check"></i><b>6.7.1</b> Data block</a></li>
-<li class="chapter" data-level="6.7.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block"><i class="fa fa-check"></i><b>6.7.2</b> Transformed data block</a></li>
-<li class="chapter" data-level="6.7.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block"><i class="fa fa-check"></i><b>6.7.3</b> Parameters block</a></li>
-<li class="chapter" data-level="6.7.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block"><i class="fa fa-check"></i><b>6.7.4</b> Transformed parameters block</a></li>
-<li class="chapter" data-level="6.7.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block"><i class="fa fa-check"></i><b>6.7.5</b> Model block</a></li>
-<li class="chapter" data-level="6.7.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block"><i class="fa fa-check"></i><b>6.7.6</b> Generated quantities block</a></li>
+<li class="chapter" data-level="6.4.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block"><i class="fa fa-check"></i><b>6.4.1</b> Data block</a></li>
+<li class="chapter" data-level="6.4.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block"><i class="fa fa-check"></i><b>6.4.2</b> Transformed data block</a></li>
+<li class="chapter" data-level="6.4.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block"><i class="fa fa-check"></i><b>6.4.3</b> Parameters block</a></li>
+<li class="chapter" data-level="6.4.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block"><i class="fa fa-check"></i><b>6.4.4</b> Transformed parameters block</a></li>
+<li class="chapter" data-level="6.4.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block"><i class="fa fa-check"></i><b>6.4.5</b> Model block</a></li>
+<li class="chapter" data-level="6.4.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block"><i class="fa fa-check"></i><b>6.4.6</b> Generated quantities block</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling"><i class="fa fa-check"></i><b>6.8</b> Compiling Stan code for the Spatial ICAR risk modelling</a>
+<li class="chapter" data-level="6.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling"><i class="fa fa-check"></i><b>6.5</b> Compiling Stan code for the Spatial ICAR risk modelling</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.8.1</b> Printing of the global results</a></li>
-<li class="chapter" data-level="6.8.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.8.2</b> Rapid diagnostics of the rHATs</a></li>
-<li class="chapter" data-level="6.8.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.8.3</b> Extraction of the area-specific relative risks</a></li>
-<li class="chapter" data-level="6.8.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.8.4</b> Mapping of RR and significance</a></li>
-<li class="chapter" data-level="6.8.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.8.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>6.5.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>6.5.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="6.5.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>6.5.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="6.5.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>6.5.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="6.5.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>6.5.5</b> Extracting and mapping of the exceedance probabilities</a></li>
 </ul></li>
-<li class="chapter" data-level="6.9" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.9</b> Task</a></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>6.6</b> Task</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>7</b> Research Methods, Study Design and Revision</a>
+<li class="chapter" data-level="7" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html"><i class="fa fa-check"></i><b>7</b> Bayesian Updating &amp; Spatial Temporal Modelling</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>7.1</b> Lecture (Length: 51:03 minutes)</a></li>
-<li class="chapter" data-level="7.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>7.2</b> Revision (Length: 17:56 minutes)</a></li>
+<li class="chapter" data-level="7.1" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#part-1-bayesian-updating"><i class="fa fa-check"></i><b>7.2</b> Part 1: Bayesian Updating</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#loading-and-installing-packages-4"><i class="fa fa-check"></i><b>7.2.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="7.2.2" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#datasets-setting-up-the-work-directory-5"><i class="fa fa-check"></i><b>7.2.2</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="7.2.3" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#data-preparation-in-rstudio-1"><i class="fa fa-check"></i><b>7.2.3</b> Data preparation in RStudio</a></li>
+<li class="chapter" data-level="7.2.4" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#full-stan-script-for-the-spatial-icar-model"><i class="fa fa-check"></i><b>7.2.4</b> Full Stan script for the Spatial ICAR model</a></li>
+<li class="chapter" data-level="7.2.5" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#compiling-stan-code-for-the-baseline-icar-model"><i class="fa fa-check"></i><b>7.2.5</b> Compiling Stan code for the Baseline ICAR model</a></li>
+<li class="chapter" data-level="7.2.6" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#apply-the-bayesian-updating-on-subsequent-data-sets"><i class="fa fa-check"></i><b>7.2.6</b> Apply the Bayesian updating on subsequent data sets</a></li>
+<li class="chapter" data-level="7.2.7" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#list-of-key-outputs"><i class="fa fa-check"></i><b>7.2.7</b> List of key outputs</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#part-2-spatial-temporal-bayesian-modelling"><i class="fa fa-check"></i><b>7.3</b> Part 2: Spatial Temporal Bayesian Modelling</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#data-preparation"><i class="fa fa-check"></i><b>7.3.1</b> Data preparation</a></li>
+<li class="chapter" data-level="7.3.2" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#creating-an-adjacency-matrix"><i class="fa fa-check"></i><b>7.3.2</b> Creating an adjacency matrix</a></li>
+<li class="chapter" data-level="7.3.3" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#model-formation-inference-with-inla"><i class="fa fa-check"></i><b>7.3.3</b> Model formation &amp; inference with INLA</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="bayesian-updating-spatial-temporal-modelling.html"><a href="bayesian-updating-spatial-temporal-modelling.html#finished"><i class="fa fa-check"></i><b>7.4</b> Finished!</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html"><i class="fa fa-check"></i><b>8</b> Research Methods, Study Design and Revision</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#lecture-length-5103-minutes"><i class="fa fa-check"></i><b>8.1</b> Lecture (Length: 51:03 minutes)</a></li>
+<li class="chapter" data-level="8.2" data-path="research-methods-study-design-and-revision.html"><a href="research-methods-study-design-and-revision.html#revision-length-1756-minutes"><i class="fa fa-check"></i><b>8.2</b> Revision (Length: 17:56 minutes)</a></li>
 </ul></li>
 </ul>
 
@@ -310,47 +328,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="bayesian-spatial-modelling-for-areal-data-in-stan" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> Bayesian Spatial Modelling for Areal Data in Stan<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#bayesian-spatial-modelling-for-areal-data-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="lecture-recording-length-4058-minutes" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Lecture recording (Length: 40:58 minutes)<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#lecture-recording-length-4058-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://web.microsoftstream.com/embed/video/aac25518-124a-4a00-bfbe-6af58639cb03?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
-</div>
-</div>
-<div class="note">
-<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/aac25518-124a-4a00-bfbe-6af58639cb03"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
-</div>
-</div>
-<div id="introduction-4" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Introduction<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction-4" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This week’s practical you will be introduced to applying spatial Bayesian models for risk assessments for areal-level discrete outcomes. This a powerful tool used often in many applications e.g., spatial epidemiology, disaster risk reduction and environmental criminology and many more.</p>
 <p>This exercise will focus on casualty data resulting from road accidents by car users (and/or occupants) in the UK. Road traffic accidents &amp; injuries are a serious problem worldwide. In fact, it is one of the leading causes of death attributed to significant life-years lost and as a consequence is associated with considerable economic losses to impacted individuals and families. There are many individual, environmental and geographical risk factors for road-related casualties. Here, we will use a series of spatial models from a Bayesian framework to estimate the <strong>area-specific relative risks (RR)</strong> of casualties due to road accidents in local authority areas across the England; and we will quantify the levels of uncertainty using a device called <strong>exceedance probabilities</strong>.</p>
 </div>
-<div id="learning-outcomes-2" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Learning outcomes<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="learning-outcomes-2" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Learning outcomes<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You will learn how to:</p>
 <ul>
 <li>Implement the <strong>Spatial intrinsic conditional autoregressive model (ICAR)</strong> to areal data in <strong>RStan</strong>;</li>
 <li>How to use the ICAR model to predict the <strong>area-specific relative risks (RR)</strong> for areal units and how to determine whether the levels of such risk are <strong>statistically significant or not</strong> through 95% credible intervals (95% CrI);</li>
 <li>How to determine the <strong>Exceedance Probability</strong> i.e., the probability that an area has an excess risk of an outcome that exceeds a given risk threshold (e.g., RR &gt; 1 (null value));</li>
 </ul>
-<p>You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.</p>
-</div>
-<div id="demonstration-recording-length-5146-minutes" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Demonstration recording (Length: 51:46 minutes)<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#demonstration-recording-length-5146-minutes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://web.microsoftstream.com/embed/video/292021c1-01d2-4e29-8347-06da68804fd6?autoplay=false&amp;showinfo=true" width="711" height="400" style="border:none;" data-external="1"></iframe>
-</div>
-</div>
-<div class="note">
-<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/292021c1-01d2-4e29-8347-06da68804fd6"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
-</div>
-</div>
-<div id="before-we-start" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Before we start…<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#before-we-start" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="loading-and-installing-packages-3" class="section level3 hasAnchor" number="6.5.1">
-<h3><span class="header-section-number">6.5.1</span> Loading and installing packages<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="loading-and-installing-packages-3" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Loading and installing packages<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will need to install the following new packages:</p>
 <ul>
 <li><code>SpatialEpi</code>: grants access to function <code>expected()</code> to calculated expected numbers</li>
@@ -375,8 +367,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb90-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb90-2" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>This tells RStudio to use the multiple cores in your computer for parallel processing whenever Stan is being implemented. Every time you want to use Stan - make sure to load <code>parallel::detectCores()</code> and <code>rstan_options</code> code.</p>
 </div>
-<div id="datasets-setting-up-the-work-directory-4" class="section level3 hasAnchor" number="6.5.2">
-<h3><span class="header-section-number">6.5.2</span> Datasets &amp; setting up the work directory<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="datasets-setting-up-the-work-directory-4" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Datasets &amp; setting up the work directory<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 8</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 8’s</strong> folder.</p>
 <p>For Windows, the code for setting the work directory will be:</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb91-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 8&quot;</span>)</span></code></pre></div>
@@ -403,18 +395,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb93-6" tabindex="-1"></a>road_accidents <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Road Casualties Data 2015-2020.csv&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="data-preparation-in-rstudio" class="section level2 hasAnchor" number="6.6">
-<h2><span class="header-section-number">6.6</span> Data preparation in RStudio<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="calculation-for-expected-numbers" class="section level3 hasAnchor" number="6.6.1">
-<h3><span class="header-section-number">6.6.1</span> Calculation for expected numbers<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="data-preparation-in-rstudio" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Data preparation in RStudio<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="calculation-for-expected-numbers" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Calculation for expected numbers<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In order to estimate the risk of casualties due to road accidents at an LA-level in England, we will need to first obtain a column that contains estimates from expected number of road casualties. This is derived from the <code>Population</code> column which as <strong>denominators</strong> or <strong>reference population size</strong> which is multiplied to the overall incidence rates of road accidents to get the number of expected casualties for each LA area.</p>
 <p>You can use the <code>expected()</code> function to compute this column into the <code>road_accident</code> data frame</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-1" tabindex="-1"></a><span class="co"># calculate the expected number of cases</span></span>
 <span id="cb94-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-2" tabindex="-1"></a>road_accidents<span class="sc">$</span>ExpectedNum <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">expected</span>(<span class="at">population =</span> road_accidents<span class="sc">$</span>Population, <span class="at">cases =</span> road_accidents<span class="sc">$</span>Casualties, <span class="at">n.strata =</span> <span class="dv">1</span>), <span class="dv">0</span>)</span></code></pre></div>
 <p>This particular column <code>ExpectedNum</code> is important, it must be computed and used as an offset in our spatial model.</p>
 </div>
-<div id="converting-the-spatial-adjacency-matrix-to-nodes-edges" class="section level3 hasAnchor" number="6.6.2">
-<h3><span class="header-section-number">6.6.2</span> Converting the spatial adjacency matrix to nodes &amp; edges<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="converting-the-spatial-adjacency-matrix-to-nodes-edges" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Converting the spatial adjacency matrix to nodes &amp; edges<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will need to transform the image below into a list of nodes and edges accordingly as Stan can only identify adjacency with a set of paired nodes with edges that connect them. For instance, <code>node1</code> is the index region and <code>node2</code> is the list of neighbouring regions connected to the index region in <code>node1</code></p>
 <p><img src="images/general/Nodes_Edges.png" width="60%" style="display: block; margin: auto;" /></p>
 <p>We can perform this by first merging in the road accident data to the LA-level shapefile. Once this action is completed, we will then need to coerce the spatial object to be from a simple features (i.e., <code>sf</code>) object to the spatial object (i.e., <code>sp</code>).</p>
@@ -444,8 +436,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb97-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-4" tabindex="-1"></a>n_edges <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(extractComponents<span class="sc">$</span>n_edges)</span></code></pre></div>
 <p>Note that the information needed are stored in <code>n</code>, <code>nod1</code>, <code>nod2</code> and <code>n_edges</code>.</p>
 </div>
-<div id="create-the-dataset-to-be-compiled-in-stan" class="section level3 hasAnchor" number="6.6.3">
-<h3><span class="header-section-number">6.6.3</span> Create the dataset to be compiled in Stan<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-the-dataset-to-be-compiled-in-stan" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Create the dataset to be compiled in Stan<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the list step in the data preparation, we need to define the variables needed to be compiled in Stan. The outcome <code>Casualties</code>, independent variable <code>IMDScore</code> and offset variable <code>ExpectedNum</code> needs to be extracted into separate vectors. The data needs to be aligned with the areas in shapefile as the result will be churned to that order. So make sure the data is already linked in to the geometries!</p>
 <p>Here is the code:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>Casualties</span>
@@ -457,10 +449,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The above information is going to be passed to Stan in the <code>data block</code>. Now, we are in the position to develop our <strong>spatial intrinsic conditional autoregressive (ICAR) model</strong>. Now open your Stan script and we begin.</p>
 </div>
 </div>
-<div id="creating-the-script-for-the-spatial-icar-model" class="section level2 hasAnchor" number="6.7">
-<h2><span class="header-section-number">6.7</span> Creating the script for the Spatial ICAR model<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="data-block" class="section level3 hasAnchor" number="6.7.1">
-<h3><span class="header-section-number">6.7.1</span> Data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="creating-the-script-for-the-spatial-icar-model" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Creating the script for the Spatial ICAR model<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-block" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the <code>data block</code>, we specify the following:</p>
 <ul>
 <li>The total number of areal unit observations <code>N</code> as an integer (i.e., <code>307</code>), this corresponds to <code>n</code>;</li>
@@ -482,8 +474,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
 }</code></pre>
 </div>
-<div id="transformed-data-block" class="section level3 hasAnchor" number="6.7.2">
-<h3><span class="header-section-number">6.7.2</span> Transformed data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="transformed-data-block" class="section level3 hasAnchor" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Transformed data block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We are going to include a transformed data block. Here, we are simply changing the expected numbers by taking its <code>log()</code> and creating another vector called log_offset. This will be added to the <code>poisson_log()</code> sampling statement in our likelihood function of the spatial model to account for the reference population in England.</p>
 <p>Here, we specify it as follows:</p>
 <pre class="text"><code>data {
@@ -500,8 +492,8 @@ transformed data {
     vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
 }</code></pre>
 </div>
-<div id="parameters-block" class="section level3 hasAnchor" number="6.7.3">
-<h3><span class="header-section-number">6.7.3</span> Parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="parameters-block" class="section level3 hasAnchor" number="6.4.3">
+<h3><span class="header-section-number">6.4.3</span> Parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the <code>parameters block</code>, we will need to specify the following:</p>
 <ul>
 <li>The global intercept i.e., <code>alpha</code> for the entire study area (i.e., average risk of road accidents on a population-level);</li>
@@ -535,8 +527,8 @@ parameters {
   vector[N] phi;                                                         // structured spatial random effects
 }</code></pre>
 </div>
-<div id="transformed-parameters-block" class="section level3 hasAnchor" number="6.7.4">
-<h3><span class="header-section-number">6.7.4</span> Transformed parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="transformed-parameters-block" class="section level3 hasAnchor" number="6.4.4">
+<h3><span class="header-section-number">6.4.4</span> Transformed parameters block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here, we calculate the combined random effects from the structured and unstructured component for our model:</p>
 <pre class="text"><code>data {
   int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
@@ -566,8 +558,8 @@ transformed parameters {
   combined = sqrt(1 - rho) * theta + sqrt(rho) * phi;                    // formulation for the combined random effect
 }</code></pre>
 </div>
-<div id="model-block" class="section level3 hasAnchor" number="6.7.5">
-<h3><span class="header-section-number">6.7.5</span> Model block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="model-block" class="section level3 hasAnchor" number="6.4.5">
+<h3><span class="header-section-number">6.4.5</span> Model block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We build our likelihood function and specify the priors for each parameter under the <code>model block</code>. We are using a typical Poisson model with a log link function as we are assuming there’s some linear relationship between the road accident counts and IMD score, but here we are also taking into account the combined spatial and non-spatial random effects:</p>
 <pre class="text"><code>data {
   int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
@@ -609,8 +601,8 @@ model {
   sum(phi) ~ normal(0, 0.001 * N);                                      // priors for phi
 }</code></pre>
 </div>
-<div id="generated-quantities-block" class="section level3 hasAnchor" number="6.7.6">
-<h3><span class="header-section-number">6.7.6</span> Generated quantities block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="generated-quantities-block" class="section level3 hasAnchor" number="6.4.6">
+<h3><span class="header-section-number">6.4.6</span> Generated quantities block<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lastly, we instruct Stan on the parameters we want to report. We want them as <strong>relative risk ratio (RR)</strong>. We can use the <code>generated quantities block</code> to obtain these estimates by exponentiation of the ICAR regression model:</p>
 <pre class="text"><code>data {
   int&lt;lower=0&gt; N;                                                        // number of spatial units or neighbourhoods
@@ -663,10 +655,10 @@ generated quantities {
 </div>
 </div>
 </div>
-<div id="compiling-stan-code-for-the-spatial-icar-risk-modelling" class="section level2 hasAnchor" number="6.8">
-<h2><span class="header-section-number">6.8</span> Compiling Stan code for the Spatial ICAR risk modelling<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="printing-of-the-global-results" class="section level3 hasAnchor" number="6.8.1">
-<h3><span class="header-section-number">6.8.1</span> Printing of the global results<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="compiling-stan-code-for-the-spatial-icar-risk-modelling" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Compiling Stan code for the Spatial ICAR risk modelling<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="printing-of-the-global-results" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Printing of the global results<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now, let us turn our attention to RStudio. Using the <code>stan()</code> to compile the saved script to obtain the posterior estimation of the parameters from our model:</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb106-1" tabindex="-1"></a>icar_poisson_fit <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;icar_poisson_model.stan&quot;</span>, <span class="at">data=</span>stan.spatial.dataset, <span class="at">iter=</span><span class="dv">20000</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">12</span>), <span class="at">chains=</span><span class="dv">6</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>We can see our estimated results for <code>alpha</code>, <code>beta</code> and <code>sigma</code>:</p>
@@ -704,8 +696,8 @@ For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 </div>
-<div id="rapid-diagnostics-of-the-rhats" class="section level3 hasAnchor" number="6.8.2">
-<h3><span class="header-section-number">6.8.2</span> Rapid diagnostics of the rHATs<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="rapid-diagnostics-of-the-rhats" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Rapid diagnostics of the rHATs<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Before mapping the relative risks, we must check if the any of the estimates i.e., <code>alpha</code>, <code>beta</code>, <code>sigma</code> and all <code>phi</code> exceed the <strong>rHAT</strong> value of 1.1. This is an indication that iterations did not perform well if an <code>rHAT</code> for a parameter is above <code>1.1</code>. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of <code>1</code>’s (Valid) and <code>0</code>’s (Not valid). We can tabulate it to see the numbers:</p>
 <pre class="text"><code># diagnostic check on the rHats - put everything into a data frame
 diagnostic.checks &lt;- as.data.frame(summary(icar_poisson_fit, pars=c(&quot;alpha&quot;, &quot;beta&quot;, &quot;sigma&quot;, &quot;phi&quot;, &quot;lp__&quot;), probs=c(0.025, 0.5, 0.975))$summary)
@@ -718,8 +710,8 @@ table(diagnostic.checks$valid)</code></pre>
 <p><strong>NOTES</strong>: To avoid such complications, it is always to best to run about <code>10000</code>, <code>15000</code> or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.1.</p>
 </div>
 </div>
-<div id="extraction-of-the-area-specific-relative-risks" class="section level3 hasAnchor" number="6.8.3">
-<h3><span class="header-section-number">6.8.3</span> Extraction of the area-specific relative risks<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="extraction-of-the-area-specific-relative-risks" class="section level3 hasAnchor" number="6.5.3">
+<h3><span class="header-section-number">6.5.3</span> Extraction of the area-specific relative risks<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you run the following code:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb113-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
 <span id="cb113-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb113-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;rr_mu&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
@@ -761,8 +753,8 @@ table(diagnostic.checks$valid)</code></pre>
 <span id="cb117-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-5" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&gt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&gt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># SIGNIFICANT INCREASE</span></span>
 <span id="cb117-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb117-6" tabindex="-1"></a>spatial.data<span class="sc">$</span>Significance[spatial.data<span class="sc">$</span>rrlower<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span> spatial.data<span class="sc">$</span>rrupper<span class="sc">&lt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>   <span class="co"># SIGNIFICANT DECREASE</span></span></code></pre></div>
 </div>
-<div id="mapping-of-rr-and-significance" class="section level3 hasAnchor" number="6.8.4">
-<h3><span class="header-section-number">6.8.4</span> Mapping of RR and significance<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="mapping-of-rr-and-significance" class="section level3 hasAnchor" number="6.5.4">
+<h3><span class="header-section-number">6.5.4</span> Mapping of RR and significance<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The next set of codes are all cosmetics for the creating our risk map for road accidents. Here is the code:</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-1" tabindex="-1"></a><span class="co"># For map design for the relative risk -- you want to understand or get a handle on what the distribution for risks look like</span></span>
 <span id="cb118-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb118-2" tabindex="-1"></a><span class="co"># this would inform you of how to create the labelling for the legends when make a map in tmap</span></span>
@@ -816,8 +808,8 @@ table(diagnostic.checks$valid)</code></pre>
 <p><strong>Output:</strong></p>
 <p><img src="images/general/RR_SG.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="extracting-and-mapping-of-the-exceedance-probabilities" class="section level3 hasAnchor" number="6.8.5">
-<h3><span class="header-section-number">6.8.5</span> Extracting and mapping of the exceedance probabilities<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="extracting-and-mapping-of-the-exceedance-probabilities" class="section level3 hasAnchor" number="6.5.5">
+<h3><span class="header-section-number">6.5.5</span> Extracting and mapping of the exceedance probabilities<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Exceedance probabilities</strong> allows the user to quantify the levels of uncertainty surrounding the risks we quantified. We can use a threshold for instance an <code>RR &gt; 1</code> and ask what is the probability that an area has an excess risk of road accidents and visualise this as well.</p>
 <p>Just like the RRs, we are going to extract this information into a vector and include it into our <code>spatial.data</code> object. For this extraction, we will need to use functions from the tidybayes and tidyverse packages i.e., <code>spread_draws()</code>, <code>group_by()</code>, <code>summarise()</code> and <code>pull()</code>:</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb120-1" tabindex="-1"></a><span class="co"># extract the exceedence probabilities from the icar_possion_fit object</span></span>
@@ -864,8 +856,8 @@ table(diagnostic.checks$valid)</code></pre>
 </div>
 </div>
 </div>
-<div id="task-1" class="section level2 hasAnchor" number="6.9">
-<h2><span class="header-section-number">6.9</span> Task<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="task-1" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Task<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Try your hand on this problem in Stan</strong>: Build a spatial ICAR model using data on counts of low birth weights in Georgia US to create the following maps:</p>
 <ol style="list-style-type: decimal">
 <li>Map showing the relative risk of low birth weight across the 163 counties in Georgia</li>
@@ -888,7 +880,7 @@ table(diagnostic.checks$valid)</code></pre>
         </div>
       </div>
 <a href="bayesian-hierarchical-regression-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="research-methods-study-design-and-revision.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bayesian-updating-spatial-temporal-modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

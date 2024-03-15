@@ -1,15 +1,5 @@
 # Bayesian Spatial Modelling for Areal Data in Stan
 
-## Lecture recording (Length: 40:58 minutes)
-```{r, warnings=FALSE, message=FALSE, echo=FALSE}
-library(vembedr)
-embed_msstream('aac25518-124a-4a00-bfbe-6af58639cb03', height=400) %>% use_align('center')
-```
-
-<div class="note">
-**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/aac25518-124a-4a00-bfbe-6af58639cb03). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
-</div>
-
 ## Introduction
 
 This week's practical you will be introduced to applying spatial Bayesian models for risk assessments for areal-level discrete outcomes. This a powerful tool used often in many applications e.g., spatial epidemiology, disaster risk reduction and environmental criminology and many more. 
@@ -23,20 +13,6 @@ You will learn how to:
  - Implement the **Spatial intrinsic conditional autoregressive model (ICAR)** to areal data in **RStan**;
  - How to use the ICAR model to predict the **area-specific relative risks (RR)** for areal units and how to determine whether the levels of such risk are **statistically significant or not** through 95% credible intervals (95% CrI);
  - How to determine the **Exceedance Probability** i.e., the probability that an area has an excess risk of an outcome that exceeds a given risk threshold (e.g., RR > 1 (null value));
- 
-You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.
-
-## Demonstration recording (Length: 51:46 minutes)
-```{r, warnings=FALSE, message=FALSE, echo=FALSE}
-library(vembedr)
-embed_msstream('292021c1-01d2-4e29-8347-06da68804fd6', height=400) %>% use_align('center')
-```
-
-<div class="note">
-**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/292021c1-01d2-4e29-8347-06da68804fd6). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
-</div>
-
-## Before we start...
 
 ### Loading and installing packages
 
