@@ -28,23 +28,13 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 3. **Book**: [Theory] Gelman, A _et al_. (2014). Bayesian Data Analysis (3rd Edition).**Chapters 14: Introduction to Regression Models**. Pages 353-378.
 
-## Week 3: Bayesian Generalised Additive Models (GAMs) {-}
-
-1. **Online**: [Tutorial]. Fitting GAMs with brms: Part 1 a Simple GAM. LINK: https://fromthebottomoftheheap.net/2018/04/21/fitting-gams-with-brms/
-
-2. **Online**: [Tutorial] Chapter 2: Interpreting and Visualizing GAMs. LINK: https://noamross.github.io/gams-in-r-course/chapter2
-
-3. **Book**: [Theory] Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd Edition). **Chapter 4: Introducing GAMs**. Pages 161-191.
-
-4. **Book**: [Theory and Applications] Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd Edition). **Chapter 7: GAMs in Practice**. Pages 325-398.
-
-## Week 7: Bayesian Hierarchical Regression Models {-}
+## Week 3: Bayesian Hierarchical Models {-}
 
 1. **Article**: [Tutorial in Stan] Sorensen, T., & Vasishth, S. (2016). Bayesian linear mixed models using Stan: A tutorial for psychologists, linguists, and cognitive scientists. **Tutorials in Quantitative Methods for Psychology**. 12(3):175-200. DOI: [**10.20982/tqmp.12.3.p175**](https://www.tqmp.org/RegularArticles/vol12-3/p175/p175.pdf)
 
 2. **Book**: [Theory] Gelman, A _et al_. (2014). Bayesian Data Analysis (3rd Edition).**Chapters 15: Hierarchical Linear Models**. Pages 381-402.
 
-## Week 8: Spatial Intrinsic Conditional Autoregressive Modelling (ICAR) {-}
+## Week 4: Spatial Risk Models (Part I) {-}
 
 1. **Article**: [Methodology] Li, L. _et al_ (2022). An ecological study exploring the geospatial associations between socioeconomic deprivation and fire-related dwelling casualties in the England (2010–2019). **Applied Geography**. 144(1027718). DOI: [**10.1016/j.apgeog.2022.102718**](https://doi.org/10.1016/j.apgeog.2022.102718).
 
@@ -60,7 +50,7 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 7. **Article**: [History, how the ICAR model was improved] Riebler, A., _et al_ (2016). An intuitive Bayesian spatial model for disease mapping that accounts for scaling. **Statistical methods in medical research**. 25(4): 1145-1165. DOI: [**10.1177/0962280216660421**](https://doi.org/10.1177/0962280216660421)
 
-## Week 9: Bayesian Updating and Spatiotemporal Modelling {-}
+## Week 5: Spatiotemproal Risk Models & Bayesian Updating (Part II) {-}
 
 1. **Book**: [R-INLA Tutorials] Moraga, P. (2020). Geospatial Health Data: Modeling and Vizualisation with R-INLA and Shiny. **Chapters 5: Areal Data**. Pages 53-74.
 
@@ -72,11 +62,7 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 5. **Book**: [R-INLA Methodology] Blangiardo, M, & Cameletti, M. (2015). Spatial and Spatio-temporal Bayesian Models in R-INLA. **Chapters 7: Spatio-temporal models**. Sections 7.1-7.2, Pages 253-258.
 
-## Week 10: Study Design, Research Methodology & Revision {-}
-
-[**Not Applicable**]
-
-## Excellent & Incredibly Useful Tutorial Videos for Learning Stan Code {-}
+## An Excellent & Incredibly Useful Set of Tutorial Videos for Learning Stan Code {-}
 
 1. Bayesian Inference with Stan Episode 1: Motivation [**[Video]**](https://youtu.be/ZVri1VgK54U?si=_YQk8AvMjP1hVSI6)
 2. Bayesian Inference with Stan Episode 2: Theory and concepts [**[Video]**](https://www.youtube.com/watch?v=S-qU3lUG6Ck)
@@ -85,9 +71,9 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 
 ## 4-Day Summer Workshop: Introduction to Bayesian Inference and Modelling [2022/23] {-}
 
-UCL SODA CPD Workshop [**[SOURCE]**](https://uclpg-msc-sgds.github.io/UCL-SODA-CPD-RStan/)
+UCL SODA CPD Workshop in 2022/2023 [**[SOURCE]**](https://uclpg-msc-sgds.github.io/UCL-SODA-CPD-RStan/)
 
-1. Day 1: Introduction to Bayesian Inference using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=P0XttSki1jQ) [**[Live Demonstration]**](https://www.youtube.com/watch?v=N_P_EtT1MZk)
-2. Day 2: Bayesian Generalised Linear Models using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=BXuppKiEHXU) [**[Live Demonstration]**](https://www.youtube.com/watch?v=cE9DEZAZnsY)
-3. Day 3: Bayesian Generalised Hierarchical Regression Models [**[Lecture Video (Part 1)]**](https://www.youtube.com/watch?v=hP86-T_k38k)[**[Lecture Video (Part 2)]**](https://www.youtube.com/watch?v=r1RPPAtFV0w)[**[Live Demonstration]**](https://www.youtube.com/watch?v=DFi_ao4TbAQ)
-4. Day 4: Bayesian Spatial Modelling for Areal Data in Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=IIFOwxtfuPU) [**[Live Demonstration]**](https://www.youtube.com/watch?v=bEzTC5WbBIA)
+1. Day 1: Introduction to Bayesian Inference using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=P0XttSki1jQ) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=N_P_EtT1MZk)
+2. Day 2: Bayesian Generalised Linear Models using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=BXuppKiEHXU) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=cE9DEZAZnsY)
+3. Day 3: Bayesian Generalised Hierarchical Regression Models [**[Lecture Video (Part 1)]**](https://www.youtube.com/watch?v=hP86-T_k38k) | [**[Lecture Video (Part 2)]**](https://www.youtube.com/watch?v=r1RPPAtFV0w) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=DFi_ao4TbAQ)
+4. Day 4: Bayesian Spatial Modelling for Areal Data in Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=IIFOwxtfuPU) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=bEzTC5WbBIA)

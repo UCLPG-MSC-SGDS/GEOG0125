@@ -18,31 +18,27 @@ Welcome to **GEOG0125: Advanced Topics in Social Geographic Data Science**, one 
 
 ## Description {-}
 
-This particular facet in the advanced topics course aims to cover an **Introduction to Bayesian statistics** in RStudio using [**Stan**](https://mc-stan.org), which is an interface to RStudio that allows state-of-the-art statistical modelling and Bayesian computation. We will introduce you to the absolute basics of writing your own probabilistic codes for carrying out a broad range of multivariable models within the Bayesian framework: **Generalised Linear Modelling (GLMs)**; **Hierarchical Models**; and **Generalized Additive Models (GAMs)**. Thereafter, you will be shown how to create **Spatial & Spatiotemporal Bayesian models** using **Conditional Autoregression (CARs)** for risk prediction and uncertainty using **exceedance probabilities**, which have significant applications to many fields such as **spatial epidemiology**, **social sciences**, or **disaster risk reduction** and many more.
+This particular facet in the advanced topics course aims to cover an **Introduction to Bayesian Inference** in RStudio using [**Stan**](https://mc-stan.org), which is an interface to RStudio that allows state-of-the-art statistical modelling and Bayesian computation. We will introduce you to the absolute basics of writing your own probabilistic codes for carrying out a broad range of multivariable regression models within the Bayesian framework: **Generalised Linear Modelling (GLMs)**; **Hierarchical Models**; and most notably for **Spatial Risk Models**; and **Spatiotemporal Risk Models and Bayesian Updating** for prediction in risk assessment and uncertainties with **exceedance probabilities**, which all have significant applications to many fields such as **spatial epidemiology**, **social sciences**, or **disaster risk reduction** and many more.
 
-All lecture notes, recommended reading and seminar learning materials as well as supplementary video content developed by **Dr. Anwar Musah** will be hosted on this webpage.
+All lecture notes, recommended reading and seminar learning materials as well as supplementary video content will be hosted on this webpage.
 
 You can download the lecture notes and data sets for the practical lesson from the table below.
 
 | **Week** | **Downloads** | **Topics** |
 |:----------------|:------------------------|:--------------------------------------|
-|1 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%201%20Lecture%20-%20Introduction%20to%20Bayesian%20Statistics.pdf) | Introduction to Bayesian Statistics |
+|1 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%201%20Lecture%20-%20Introduction%20to%20Bayesian%20Statistics.pdf) | Introduction to Bayesian Inference |
 |2 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%202%20Lecture%20-%20Bayesian%20GLMs.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%202.zip) | Bayesian Generalised Linear Models (GLMs) |
-|3 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%203%20Lecture%20-%20Bayesian%20GAMs.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%203.zip) | Bayesian Generalised Additive Models (GAMs) |
-|7 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%207.zip) | Bayesian Hierarchical Regression Models |
-|8 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Bayesian Spatial Risk Models |
-|9 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Spatial%20temporal%20Models%20and%20Bayesian%20Updating.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%209.zip) | Updating & Spatiotemproal Modelling |
-|10 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%2010%20Lecture%20-%20Research%20Methodology%20and%20Study%20Design.pdf) | Study Design, Research & Revision  |
-
-**Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | [**[Week 2]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%202%20Solutions%20for%20Tasks%201%20and%202.zip) | [**[Week 7]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%207%20Solutions%20for%20Task.zip) |[**[Week 8]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%208%20Solutions%20for%20Tasks.zip)
+|3 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%207.zip) | Bayesian Hierarchical Models |
+|4 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Spatial Risk Models (Part I) |
+|5 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Spatial%20temporal%20Models%20and%20Bayesian%20Updating.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%209.zip) | Spatiotemproal Risk Models & Bayesian Updating (Part II) |
 
 <div class = "note">
-**Important note:** The solutions will be made available each week after the seminars are completed. 
+**Important note:** The solutions will be made available by Wednesday emailed via Moodle. 
 </div>
 
 ## Timetable and key locations {-}
 
-The **Lectures** are held every week in-person on **Tuesday** from 10:00am to 11:00am at the **North West Wing Building (Room G07)** [**[MAP]**](http://www.ucl.ac.uk/maps/north-west-wing-building). The **computer seminar practicals** will be at the same location from 11:00am to 01:00pm on **Friday**.
+The **Lectures** are held every week in-person on **Tuesday** from 10:00am to 11:00am at the **UCL GOSICH's Wolfson Centre in Room A (Ground Floor)** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA). The **computer practicals** will be at the **North West Wing Building in Room G07** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA) from 11:00am to 01:00pm on **Friday**.
 
 ::: note
 **IMPORTANT NOTE**: Please bring your own laptops with you to the computer practicals on Friday.
