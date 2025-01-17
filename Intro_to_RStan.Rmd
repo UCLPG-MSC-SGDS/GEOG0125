@@ -1,14 +1,11 @@
-# Introduction to Bayesian Statistics
+# Introduction to Bayesian Inference
 
-## Lecture recording (Length: 59:50 minutes)
+## Lecture recording (Length: 1:00:02 minutes)
 ```{r, warnings=FALSE, message=FALSE, echo=FALSE}
 library(vembedr)
-embed_msstream('b5586b26-ea2f-489c-84f4-ff4182372cb1', height=400) %>% use_align('center')
+embed_youtube('iWT6Ly1Gewo', height=400) %>% use_align('center')
 ```
-
-<div class="note">
-**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/b5586b26-ea2f-489c-84f4-ff4182372cb1). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
-</div>
+[[**Watch on YouTube**]](https://youtu.be/iWT6Ly1Gewo)
 
 ## Introduction
 
@@ -24,11 +21,12 @@ Today’s session aims to introduce you to the basic Stan programming etiquette 
 
 You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.
 
-### Demonstration recording (Length: 38:23 minutes)
+### Demonstration recording (Length: 38:26 minutes)
 ```{r, warnings=FALSE, message=FALSE, echo=FALSE}
 library(vembedr)
-embed_msstream('e70853ca-4452-4363-9474-539547a238f9', height=400) %>% use_align('center')
+embed_youtube('5k1pxhmqWtI', height=400) %>% use_align('center')
 ```
+[[**Watch on YouTube**]](https://youtu.be/5k1pxhmqWtI)
 
 <div class="note">
 **Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/e70853ca-4452-4363-9474-539547a238f9). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.

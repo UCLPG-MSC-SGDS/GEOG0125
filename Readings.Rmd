@@ -68,12 +68,3 @@ Contact me via email (**a.musah@ucl.ac.uk**) if you are having problems securing
 2. Bayesian Inference with Stan Episode 2: Theory and concepts [**[Video]**](https://www.youtube.com/watch?v=S-qU3lUG6Ck)
 3. Bayesian Inference with Stan Episode 3: Linear Regression [**[Video]**](https://youtu.be/BeBkFKKhel4?si=Ik2Kkge8lmTe0Akv)
 4. Bayesian Inference with Stan Episode 4: Logistic Regression [**[Video]**](https://youtu.be/LFPMrCYcT-M?si=K0LumJqnzo84142y)
-
-## 4-Day Summer Workshop: Introduction to Bayesian Inference and Modelling [2022/23] {-}
-
-UCL SODA CPD Workshop in 2022/2023 [**[SOURCE]**](https://uclpg-msc-sgds.github.io/UCL-SODA-CPD-RStan/)
-
-1. Day 1: Introduction to Bayesian Inference using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=P0XttSki1jQ) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=N_P_EtT1MZk)
-2. Day 2: Bayesian Generalised Linear Models using Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=BXuppKiEHXU) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=cE9DEZAZnsY)
-3. Day 3: Bayesian Generalised Hierarchical Regression Models [**[Lecture Video (Part 1)]**](https://www.youtube.com/watch?v=hP86-T_k38k) | [**[Lecture Video (Part 2)]**](https://www.youtube.com/watch?v=r1RPPAtFV0w) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=DFi_ao4TbAQ)
-4. Day 4: Bayesian Spatial Modelling for Areal Data in Stan [**[Lecture Video]**](https://www.youtube.com/watch?v=IIFOwxtfuPU) | [**[Live Demonstration]**](https://www.youtube.com/watch?v=bEzTC5WbBIA)

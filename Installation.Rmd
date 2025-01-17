@@ -8,15 +8,9 @@ knitr::include_graphics('images/general/Stan_logo.png', error = FALSE)
 
 [**Stan**](https://mc-stan.org) is an interface for several statistical software packages (e.g., RStudio, Python, Julia, Stata, and MATLAB) which allows the user to perform state-of-the-art statistical modelling within a Bayesian framework. For R users, the package is called `rstan` which interfaces Stan and RStudio.  
 
-The focus of this workshop will be solely on Stan and RStudio. We will show you how one can develop and compile Stan scripts for Bayesian inference through RStudio to perform basic parameter estimation, as well as a wide range of regression-based techniques starting with the simplest univariable linear models and its different families to the more advanced multivariable spatial risk models.
+The focus will be solely on Stan and RStudio. We will show you how one can develop and compile Stan scripts for Bayesian inference through RStudio to perform basic parameter estimation, as well as a wide range of regression-based techniques starting with the simplest univariable linear models and its different families (logistic and Poisson) to the more advanced multivariable spatial risk models.
 
 Before all that, let us install the appropriate software. The next section will guide you through the installation process.
-
-<div class="warning">
-**Important note**: The installation process is a bit involved for all the wrong reasons. For some strange reason, **Stan** (i.e., `rstan` package) works perfectly with any previous release of **R** that's **version 4.2.x**. However, `rstan` don't seem to work properly with the latest builds for **R** that's **version 4.3.x**. So to avoid grief, do not install any version of **R** that's **version 4.3.x**. 
-
-If you have **R 4.3.x** installed. Please remove it, as well as we recommend the removal of any historical folders that are R-program-based hidden in your machine as safety measure to avoid any conflicts with the things we are about to install. 
-</div>
 
 ## Installation of R & RStudio
 
@@ -24,76 +18,55 @@ If you have **R 4.3.x** installed. Please remove it, as well as we recommend the
 knitr::include_graphics('images/general/RBase_RStudio_logo.png', error = FALSE) 
 ```
 
-This section takes you through the installation process for [**R (Base)**](https://www.r-project.org) and [**RStudio**](https://www.rstudio.com) on MAC and Windows.  
+This section takes you through the installation process for [**R (Base)**](https://www.r-project.org) and [**RStudio**](https://www.rstudio.com) on MAC and Windows.
+
+If you are a MAC user, go to **section 1.2.1**
+
+If you are a Windows user, jump to **section 1.2.2**
 
 ### Installation process for MAC users
 
-You will need to have the following software installed for the `rstan` package to work on MAC.
+You will need to have the following software installed for the `rstan` package to work on MAC. It is recommended to have the latest version of **R** and **RStudio**
 
-1. R (version 4.2.3)
-2. RStudio (version 2023.06.0-421)
-3. XQuartz (version 2.8.5)
-4. XCode (version 14.3.1 (14E300c))
+1. R (version 4.4.2) and RStudio (version 2024.12.0+427)
+2. XQuartz (version 2.8.5)
+3. XCode (version 16.2)
+4. GNU Fortran (version 12.2)
 
-If you already have R and RStudio installed, then the first thing to do is to remove them entirely from our MAC machine. Please follow the guidance outlined here.
+If you already have these installed, you can jump straight to the section on installing Stan.
 
-**Removal steps:**
+**[1] Installation of R (4.4.2) and RStudio (2024.12.0-427) on MAC:**
 
-Before deleting R and RStudio. We need to find this folder called **“R.framework”** on our MAC PC and delete it from our machine entirely, so that when we install R (version 4.2.3) and `rstan` there would not be any crashes or conflicts between the versions, packages etc.,
-
-To find the **“R.framework”** folder on a MAC PC:
-
-1.	Go your **“Finder”** application and click it.
-2.	Click **“Go”** in the menu bar.
-3.  Click **“Go to Folder”** on the pull down menu and a panel will appear.
-
-```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
-knitr::include_graphics('images/general/MAC_removal_steps_1-3.png', error = FALSE) 
-```
-
-4.	Type `/Library/Frameworks/` in the panel and press the return (or enter) button in the search panel to go the **"Frameworks"** folder.
-
-```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
-knitr::include_graphics('images/general/MAC_removal_steps_4.png', error = FALSE) 
-```
-
-5. From the list of folders under **"Frameworks"**. Highlight **“R.framework”** folder and right-click then delete it.
-6. Go back to your **Applications** folder and delete **R** and **RStudio** apps and empty out your **Bin**
-
-**Installation of R (4.2.3) and RStudio (2023.06.0-421) on MAC:**
+For R (Base), please ensure you have installed the correct version for your MAC (Intel) or MAC (M1, M2/M3) OS. 
 
 **OS User type**| **R (Base)** | **RStudio Desktop**
 ------------ | ------------- | -------------
-MAC | [**R-4.2.3.pkg**](https://cran.ma.imperial.ac.uk/bin/macosx/base/R-4.2.3.pkg)| [**RStudio-2023.06.0-421.dmg**](https://download1.rstudio.org/electron/macos/RStudio-2023.06.0-421.dmg)
+MAC (Intel) | [**R-4.4.2-x86_64.pkg**](https://cran.ma.imperial.ac.uk/bin/macosx/big-sur-x86_64/base/R-4.4.2-x86_64.pkg)| [**RStudio-2024.12.1-427.dmg**](https://download1.rstudio.org/electron/macos/RStudio-2024.12.0-467.dmg)
+MAC (M1, M2 or M3) | [**R-4.4.2-arm64.pkg**](https://cran.ma.imperial.ac.uk/bin/macosx/big-sur-arm64/base/R-4.4.2-arm64.pkg)| [**RStudio-2024.12.1-427.dmg**](https://download1.rstudio.org/electron/macos/RStudio-2024.12.0-467.dmg)
 
-1. Download the file for **R-4.2.3.pkg** attached in the table above. 
-2. Double-click the downloaded file (i.e., **R-4.2.3.pkg**) and follow the steps to complete the installation.
+1. Download the correct version of **R (Base)** for your system. 
+2. Double-click on the downloaded file (i.e., **R-4.4.2-x86_64.pkg** or **R-4.4.2-arm64.pkg**) and follow the steps to complete the installation.
 3. Now, we can download the file (i.e., `.dmg`) for **RStudio** from the link provided in the above table.
-4. Double-click the downloaded file (i.e., **RStudio-2023.06.0-421.dmg**) and then drag and drop the RStudio icon into the **Applications** folder to complete the installation.
+4. Double-click the downloaded file (i.e., **RStudio-2024.12.1-427.dmg**) and then drag and drop the RStudio icon into the **Applications** folder to complete the installation.
 
-**Installation of XQuartz (2.8.5):**
+**[2] Installation of XQuartz (2.8.5):**
 
-Some functions in R and Stan require some of the libraries from **XQuartz** to function properly on your MAC.
+Some functions in **R (Base)** and **Stan** require some of the libraries from **XQuartz** in order to function smoothly on your MAC OS.
 
-1. Download the latest version of **XQuartz** (**XQuartz-2.8.5.pkg**) by clicking on this [**LINK**](https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg) and simply complete the installation process by following the steps.
+1. Download the latest version of **XQuartz** (**XQuartz-2.8.5.pkg**) by clicking on this [**LINK**](https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg) and simply complete the installation process by following the steps on your system.
 
-**Installation of XCode (14.3.1 [14E300c]):**
+**[3] Installation of XCode (16.2):**
 
-Some functions in R and Stan require some of the external developer tools from **XCode** application to function properly on your MAC.
+Some functions in **R (Base)** and **Stan** require some of the external developer tools from the **XCode** application to function properly on your MAC OS.
 
-1. Go to the App Store application and get the **XCode** app downloaded by clicking on this [**LINK**](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
-2. Once it is downloaded, you can click on the "OPEN" button to verify it's been downloaded. A window will prompt you to complete installation.
-3. Lastly, and for safe measures - we going to run this through our **Terminal**. You can open the Terminal program by going to the **Applications** **>** **Utilities** folder and select the **Terminal** application
+1. Go to the **App Store** application and get the **XCode** app downloaded by clicking on this [**LINK**](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
+2. Once it has downloaded, you can click on the "OPEN" button to verify it's been downloaded. A window will prompt you to complete installation.
 
-```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
-knitr::include_graphics('images/general/Utilities_folder.png', error = FALSE) 
-```
+**[4] GNU Fortran (version 12.2):**
 
-4. In the terminal, type the following code `xcode-select --install`. If you get the following error message shown in the code chunk below, then it means that the **XCode** program has been installed properly - no need to do anything at this point. Otherwise, the terminal will proceed to install the **XCode** tool remotely.
+**R (Base)** and some packages require the **GNU Fortran 12.2** compiler to execute smoothly on your MAC OS.
 
-```{r, eval=FALSE, highlight=FALSE}
-xcode-select: error: command line tools are already installed, use "Software Update" in System Settings to install updates
-```
+1. Download the latest version of **GNU Fortran 12.2** (**gfortran-12.2-universal.pkg**) by clicking on this [**LINK**](https://mac.r-project.org/tools/gfortran-12.2-universal.pkg) and simply complete the installation process by following the steps on your system.
 
 This completes the installation process for R and RStudio on MAC.
 
@@ -101,52 +74,29 @@ This completes the installation process for R and RStudio on MAC.
 
 You will need to have the following software installed for the `rstan` package to work on Windows.
 
-1. R (version 4.2.3)
-2. Rtools42 (version 4.2)
+1. R (version 4.4.2)
+2. RTools44 (version 4.4.0)
 2. RStudio (version 2023.06.0-421)
 
-If you already have R and RStudio installed, then the first thing to do is to remove them entirely from our Windows machine. Please follow the guidance outlined here:
+If you already have these installed - you can jump to the section on installing Stan:
 
-**Removal steps**
-
-1. Type **"Add or remove programs”** in the bottom search bar.
-2. The **“Add or remove programs”** settings should appear. Click it to show the **“Apps & Features”** window.
-3. Under this section – completely uninstall **R (4.3.x)**.
-4. Repeat the third steps for removing **RStudio** and **Rtools 4.3.**
-
-```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
-knitr::include_graphics('images/general/uninstalling_windows.png', error = FALSE) 
-```
-
-Now, we going to delete any folders with R-related programs which are hidden in our computer. We will check three locations in our PC (i.e., Local, Program Files or Programs Files (x86) folder).
-
-5. Type the path `C:\Users\Your_username\AppData\Local` in the search bar on the File Explorer window and press "Enter". It should take you to the **“Local”** folder. Here, delete the following folders if you see them: **“R”**, **“RStudio”** and/or **“RStudio-Desktop”**.
-
-```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
-knitr::include_graphics('images/general/Windows_paths.png', error = FALSE) 
-```
-
-6. Repeat the steps in 5 by typing the path `C:\Program Files` in this search bar on the File Explorer window. Pressing "Enter" will direct you to the **“Program Files”** folder. Again, check and delete any folders that’s **“R”**, **“RStudio”** and/or **“RStudio-Desktop”**.
-
-7. Lastly, repeat the steps in 5 or 6 by checking the folder **“Program Files (x86)”** using this path `C:\Program Files (x86)` and delete accordingly.
-
-**Installation of R (4.3.2) and RStudio (2023.06.0-421) on Windows:**
+**[1] Installation of R (4.3.2) and RStudio (2023.06.0-421) on Windows:**
 
 **OS User type**| **R (Base)** | **RStudio Desktop**
 ------------ | ------------- | -------------
-Windows | [**R-4.2.3-win.exe**](https://cran.ma.imperial.ac.uk/bin/windows/base/old/4.2.3/R-4.2.3-win.exe)| [**RStudio-2023.06.0-421.exe**](https://download1.rstudio.org/electron/windows/RStudio-2023.06.0-421.exe)
+Windows | [**R-4.4.2-win.exe**](https://cran.ma.imperial.ac.uk/bin/windows/base/R-4.4.2-win.exe)| [**RStudio-2024.12.0-427.exe**](https://download1.rstudio.org/electron/windows/RStudio-2024.12.0-467.exe)
 
-1. Download the file for **R-4.2.3-win.exe** attached in the table above. 
-2. Double-click the downloaded file (i.e., **R-4.2.3-win.exe**) and follow the steps to complete the installation.
+1. Download the file for **R-4.4.2-win.exe** attached in the table above. 
+2. Double-click the downloaded file (i.e., **R-4.4.2-win.exe**) and follow the steps to complete the installation on your system.
 3. Now, we can download the file (i.e., `.exe`) for **RStudio** from the link provided in the above table.
-4. Double-click the downloaded file (i.e., **RStudio-2023.06.0-421.exe**) and follow the steps from the installer to complete the installation.
+4. Double-click the downloaded file (i.e., **RStudio-2024.12.0-427.exe**) and follow the steps from the installer to complete the installation.
 
-**Installation of Rtools 4.2**
+**[2] Installation of Rtools 4.4.0**
 
-For Windows users, after you have completed the installation for R and RStudio, you are required to install the [**Rtools42 package**](https://cran.ma.imperial.ac.uk/bin/windows/Rtools/rtools42/rtools.html) as it contains some libraries and developer tools for the smooth functioning of Stan.
+For Windows users, after you have completed the installation for **R (Base)** and **RStudio**, you are required to install the [**RTools44 package**](https://cran.r-project.org/bin/windows/Rtools/rtools44/rtools.html) as it contains some libraries and developer tools for R function properly.
 
-1. Download the latest version of **Rtools42** by clicking on this [**LINK**](https://cran.ma.imperial.ac.uk/bin/windows/Rtools/rtools42/files/rtools42-5355-5357.exe) to initiate the download of the **Rtools42 installer**. 
-2. Double-click the downloaded **rtools42-5355-5357.exe** file and follow the steps to complete the installation.
+1. Download the latest version of **RTools44** by clicking on this [**LINK**](https://cran.ma.imperial.ac.uk/bin/windows/Rtools/rtools44/files/rtools44-6335-6327.exe) to initiate the download of the **Rtools42 installer**. 
+2. Double-click the downloaded **rtools44-6335-6327.exe** file and follow the steps to complete the installation.
 
 This completes the installation process for R and RStudio on Windows.
 
@@ -160,43 +110,40 @@ knitr::include_graphics('images/general/RStudio_Panels.png', error = FALSE)
 
 The above section is the **Menu Bar**. You can access other functions for saving, editing, and opening a new R and Stan script files for writing and compiling codes. Let us opening a new **R script** by clicking on the **File** **>** **New File** **>** **R Script**. This should open a new script file titled “**Untitled 1**”.
 
-Now we are going to latest development version of `rstan` 2.26.22. Using the `install.packages()` function, we can finally install this package. You can use the code chunk below:
+Now we are going to latest version of `rstan` 2.36.0.9000. Using the `install.packages()` function, we can finally install this package. You can use the code chunk below:
 
 ```{r, eval=FALSE}
-install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+install.packages("rstan", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
 ```
 
-After installation, use the following to code chunk to test if its work:
+After installation, use the following code chunk to test if its work:
 
 ```{r, eval=FALSE}
 example(stan_model, package = "rstan", run.dontrun = TRUE)
 ```
 
-You will first see some gibberish running through your console - don't be alarmed - it means that its working. You will know `rstan` has been successfully installed and it works when you see some iterations for four chains displayed in console. You will also see the objects `fit`, `fit2`, `mod` and `stancode` stored in the **Environments** panel when its done.
+You will first see some gibberish running through your console - don't be alarmed - it means that its working. You will know `rstan` has been successfully installed, and working, when you see some iterations for four chains displayed in console. You will also see the objects `fit`, `fit2`, `mod` and `stancode` stored in the **Environments** panel when its done.
 
 This completes the installation process for `rstan`.
 
-## Installation of other relevant R-packages
-
-You will need to install the following packages ahead of next week's sessions:
+## Installation of other relevant R-packages needed in GEOG0125
 
 1. `sf`: “Simply Features” package that allows the user to load shapefiles into RStudio’s memory.
 2. `tmap`: this package gives access to various functions for users to generate maps.
-3. `devtools`: Needed to select a particular version of the `stars` package.
-4. `stars`: Needed as support for `sf` and `tmap` packages to work.
+4. `stars`: this package for handling spatiotemporal arrays, raster and vector data cubes.
 5. `SpatialEpi`: grants access to function `expected()` to calculated expected numbers.
 6. `geostan`: grants access to further functions that we need to compute the adjacency matrix that can be handled in Stan. We will use the two functions `shape2mat()` and `prep_icar_data()` to create the adjacency matrix as nodes and edges.
 7. `tidybayes`: grants access to further functions for managing posterior estimates. We will need it calculating the exceedance probabilities. Load this alongside `tidyverse` package.
+8. `loo`: this package allows the user to perform model validation and comparison
 
 ```{r, eval=FALSE}
-install.packages("devtools")
-devtools::install_version("stars", version = "0.5.3", repos = "http://cran.us.r-project.org")
 install.packages("sf")
 install.packages("tmap")
 install.packages("SpatialEpi")
 install.packages("geostan")
+install.packages("loo")
 install.packages("tidybayes")
 install.packages("tidyverse")
 ```
 
-This concludes the installation section and sets you computer up for the course. If you encounter any problems please contact me ahead of next week.
+This concludes the installation section and sets you computer up for the course. If you encounter any problems please contact me.
