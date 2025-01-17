@@ -175,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#learning-outcomes"><i class="fa fa-check"></i><b>2.2.1</b> Learning outcomes</a></li>
 <li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#demonstration-recording-length-3826-minutes"><i class="fa fa-check"></i><b>2.2.2</b> Demonstration recording (Length: 38:26 minutes)</a></li>
 <li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#datasets-setting-up-the-work-directory"><i class="fa fa-check"></i><b>2.2.3</b> Datasets &amp; setting up the work directory</a></li>
-<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#loading-and-installing-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#loading-the-appropriate-packages"><i class="fa fa-check"></i><b>2.2.4</b> Loading the appropriate packages</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-inference.html"><a href="introduction-to-bayesian-inference.html#basic-building-blocks-i-about-stan-programming"><i class="fa fa-check"></i><b>2.3</b> Basic building blocks I: About Stan Programming</a>
 <ul>
@@ -242,9 +242,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p><a href="https://youtu.be/5k1pxhmqWtI">[<strong>Watch on YouTube</strong>]</a></p>
-<div class="note">
-<p><strong>Important Notes:</strong> If this or any subsequent video don’t play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this <a href="https://web.microsoftstream.com/video/e70853ca-4452-4363-9474-539547a238f9"><strong>[LINK]</strong></a>. Access to Microsoft Steams to these videos will require use of your UCL institutional login details.</p>
-</div>
 </div>
 <div id="datasets-setting-up-the-work-directory" class="section level3 hasAnchor" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Datasets &amp; setting up the work directory<a href="introduction-to-bayesian-inference.html#datasets-setting-up-the-work-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -254,17 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For MAC, the code for setting the work directory will be:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-bayesian-inference.html#cb5-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/AccountName/Desktop/GEOG0125/Week 1&quot;</span>)</span></code></pre></div>
 </div>
-<div id="loading-and-installing-packages" class="section level3 hasAnchor" number="2.2.4">
-<h3><span class="header-section-number">2.2.4</span> Loading and installing packages<a href="introduction-to-bayesian-inference.html#loading-and-installing-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To start writing scripts for Bayesian analysis, we will need to install a package called <code>rstan</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-bayesian-inference.html#cb6-1" tabindex="-1"></a><span class="co"># setting timer over 100s to extend timeout::: just in case</span></span>
-<span id="cb6-2"><a href="introduction-to-bayesian-inference.html#cb6-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout=</span><span class="dv">100</span>)</span>
-<span id="cb6-3"><a href="introduction-to-bayesian-inference.html#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="introduction-to-bayesian-inference.html#cb6-4" tabindex="-1"></a><span class="co"># install package rstan with its dependency</span></span>
-<span id="cb6-5"><a href="introduction-to-bayesian-inference.html#cb6-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos=</span><span class="st">&quot;https://cloud.r-project.org&quot;</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-6"><a href="introduction-to-bayesian-inference.html#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="introduction-to-bayesian-inference.html#cb6-7" tabindex="-1"></a><span class="co"># Load the packages with library()</span></span>
-<span id="cb6-8"><a href="introduction-to-bayesian-inference.html#cb6-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;rstan&#39;</span>)</span></code></pre></div>
+<div id="loading-the-appropriate-packages" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Loading the appropriate packages<a href="introduction-to-bayesian-inference.html#loading-the-appropriate-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let us load the installed package called <code>rstan</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-bayesian-inference.html#cb6-1" tabindex="-1"></a><span class="co"># Load the packages with library()</span></span>
+<span id="cb6-2"><a href="introduction-to-bayesian-inference.html#cb6-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;rstan&#39;</span>)</span></code></pre></div>
 <p>Note that when you load <code>rstan</code> from cran you will see some recommendations on using multiple cores for speeding the process. For the best experience, we highly recommend using this code:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-bayesian-inference.html#cb7-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
 <span id="cb7-2"><a href="introduction-to-bayesian-inference.html#cb7-2" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
@@ -386,7 +377,7 @@ model {
 <div id="basic-building-blocks-iii-developing-our-model" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Basic building blocks III: Developing our model<a href="introduction-to-bayesian-inference.html#basic-building-blocks-iii-developing-our-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="note">
-<p><strong>PROBLEM:</strong> Last year, in the advanced GEOG0125 course, there was 13 students enrolled. It was Anwar’s first time being a teacher on the course, and hence was quite curious to know what proportion of students will pass with a distinction. Since, he has no data of the pass rates - therefore has no <strong>prior knowledge</strong>. First, he assumes that the <strong>proportion of those passing with a distinction</strong> comes from a <strong>Beta distribution</strong> that is uniform <strong>Beta(1.0, 1.0)</strong>. In term 3, after tedious marking of reports, he observes that 4 students (out of the total: 13) passed with flying colours. What is the posterior distribution of those getting a distinction for GEOG0125?</p>
+<p><strong>PROBLEM:</strong> In 2021/2022, the GEOG0125 course, there was 13 students enrolled. It was Anwar’s first time being a teacher on the course, and hence was quite curious to know what proportion of students who will pass with a distinction (70%+). Since, he had no data on the pass rates. He had no <strong>prior knowledge</strong>. First, he assumes that the <strong>proportion of those passing with a distinction</strong> came from a <strong>Beta distribution</strong> that mimics a uniform <strong>Beta(1.0, 1.0)</strong>. In term 3, after tedious marking of reports, he observes that 4 students (out of the total: 13) passed with flying colours. What is the posterior distribution of those getting a distinction for GEOG0125?</p>
 </div>
 <p>Let us build our first model that predicts the posterior distribution of those passing GEOG0125 with a distinction. In this simple for modelling proportions (or prevalence), we extract our information:</p>
 <ul>
@@ -443,7 +434,7 @@ model {
 <li><code>chains=</code> we are asking the <code>stan()</code> function to perform 3 chains (i.e., any of these algorithms can be stated in the function: i.e., <strong>MCMC</strong>, <strong>NUTS</strong> &amp; <strong>HMC</strong>)</li>
 </ul>
 <p>The resulting output can be printed with the function <code>print()</code>. Here, we are going to print the mean, standard error in mean, SD and the IQR ranges with 95% limits (i.e., 2.5% and 97.5%):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-bayesian-inference.html#cb18-1" tabindex="-1"></a><span class="fu">print</span>(predicting.passes, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-bayesian-inference.html#cb18-1" tabindex="-1"></a><span class="fu">print</span>(prediction.passes, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <p>We obtain this summary table:</p>
 <pre class="text"><code>Inference for Stan model: Predicting a proportion.
 3 chains, each with iter=3000; warmup=1500; thin=1; 
@@ -458,31 +449,42 @@ For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 <div class="note">
-<p><strong>What does it all mean?</strong> The top part states that 3 chains were run for 3000 iterations. However, the first 1500 samples generated from each chain were discarded as warm-up, meaning that only 1500 samples from each chain were kept, resulting 4500 (1500x3) total post-warm-up sample draws. The output shows the summary statistics for our <span class="math inline">\(\theta\)</span>. The <code>lp__</code> is the log-probability - which is used to quantify how well the model is for the data but, in my opinion, its not a useful estimate. Instead, use the effective sample size <code>n_eff</code> and <code>Rhat</code>. If the <code>Rhat</code> is less than 1.1 for all parameters - it means that the estimation of our parameters are fine.</p>
+<p><strong>What does it all mean?</strong> The top part states that 3 chains were run for 3000 iterations. However, the first 1500 samples generated from each chain were discarded as warm-up, meaning that only 1500 samples from each chain were kept, resulting 4500 (1500x3) total post-warm-up sample draws. The output shows the summary statistics for our <span class="math inline">\(\theta\)</span>. The <code>lp__</code> is the log-probability - which is used to quantify how well the model is for the data but, in my opinion, its not a useful estimate. Instead, use the effective sample size <code>n_eff</code> and <code>Rhat</code>. If the <code>Rhat</code> is less than 1.05 for <strong>All</strong> parameters - it means that the estimation of our parameters are fine.</p>
 </div>
 </div>
 <div id="basic-building-blocks-v-extract-posterior-samples-and-interpretation" class="section level2 hasAnchor" number="2.7">
 <h2><span class="header-section-number">2.7</span> Basic building blocks V: Extract posterior samples and interpretation<a href="introduction-to-bayesian-inference.html#basic-building-blocks-v-extract-posterior-samples-and-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>At this point, let us extract the posterior samples and graph them to understand it posterior distribution. We use the <code>extract()</code> function from the <code>rstan</code> package, and graph them:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-bayesian-inference.html#cb20-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
-<span id="cb20-2"><a href="introduction-to-bayesian-inference.html#cb20-2" tabindex="-1"></a>theta.pass_draws <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb20-2"><a href="introduction-to-bayesian-inference.html#cb20-2" tabindex="-1"></a>theta.pass_draws <span class="ot">&lt;-</span> <span class="fu">extract</span>(prediction.passes, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]]</span>
 <span id="cb20-3"><a href="introduction-to-bayesian-inference.html#cb20-3" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
 <span id="cb20-4"><a href="introduction-to-bayesian-inference.html#cb20-4" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>), </span>
-<span id="cb20-5"><a href="introduction-to-bayesian-inference.html#cb20-5" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Probability of Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
+<span id="cb20-5"><a href="introduction-to-bayesian-inference.html#cb20-5" tabindex="-1"></a>    <span class="at">main=</span> <span class="st">&quot;Posterior samples&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density (Plausibility)&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate &gt; 70%: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
 <p><img src="images/general/histogram_plot_pdy.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>You can also plot the density as opposed to generating a histogram:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-bayesian-inference.html#cb21-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(theta.pass_draws), </span>
+<span id="cb21-2"><a href="introduction-to-bayesian-inference.html#cb21-2" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb21-3"><a href="introduction-to-bayesian-inference.html#cb21-3" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate &gt; 70%: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)), </span>
+<span id="cb21-4"><a href="introduction-to-bayesian-inference.html#cb21-4" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Posterior Density (Plausibility)&quot;</span>)</span></code></pre></div>
 <p>We want to compute the posterior mean, with the 0.025 and 0.975 quantiles (these limits are referred to as <strong>95% credibility limits (95% CrI)</strong>). Here is how we compute them:</p>
 <pre class="text"><code># Calculating posterior mean (estimator)
 mean(theta.pass_draws)
 
-[1] 0.3305062
-
 # Calculating posterior intervals
-quantile(theta.pass_draws, probs=c(0.025, 0.975))
-
-2.5%     97.5% 
-0.1239263 0.5800643 </code></pre>
+quantile(theta.pass_draws, probs=c(0.025, 0.975))</code></pre>
 <div class="note">
-<p><strong>Interpretation:</strong> The predicted proportion of students passing the GEOG0125 from our sample posterior distribution was 0.3305 (33.05%). Our predictions, with 95% credibility, can be within the limits of 0.1239 and 0.5801. Formally writing as <span class="math inline">\(\theta\)</span> = 33.05% (95% CrI: 12.39-58.01%).</p>
+<p><strong>Interpretation:</strong> The predicted proportion of students passing the GEOG0125 with 70%+ from our sample posterior distribution was 0.3305 (33.05%). This means that 33% is the most plausible pass rate. Our predictions, with 95% credibility, can be within the limits of 0.1239 and 0.5801. Formally writing as <span class="math inline">\(\theta\)</span> = 33.05% (95% CrI: 12.39-58.01%).</p>
+</div>
+<p>We have predicted the most plausible value for pass rate. We can translate this into probability terms. For instance, by asking: “What is the probability that 33% of the students on GEOG0125 will pass with a distinction (70%+)?”. We can use this posterior distribution to make this estimation simply by calculating the mean our samples that is above 0.33. This is known as <strong>Exceedance Probability</strong>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-bayesian-inference.html#cb23-1" tabindex="-1"></a><span class="co"># what is the probability observing a pass rate for distinction 70%+?</span></span>
+<span id="cb23-2"><a href="introduction-to-bayesian-inference.html#cb23-2" tabindex="-1"></a><span class="fu">mean</span>(theta.pass_draws <span class="sc">&gt;=</span> <span class="fl">0.333</span>)</span>
+<span id="cb23-3"><a href="introduction-to-bayesian-inference.html#cb23-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4824444</span></span>
+<span id="cb23-4"><a href="introduction-to-bayesian-inference.html#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="introduction-to-bayesian-inference.html#cb23-5" tabindex="-1"></a><span class="co"># # what is the probability observing a 33% pass rate for distinction 70%+?</span></span>
+<span id="cb23-6"><a href="introduction-to-bayesian-inference.html#cb23-6" tabindex="-1"></a><span class="fu">mean</span>(theta.pass_draws <span class="sc">&gt;=</span> <span class="fl">0.50</span>)</span>
+<span id="cb23-7"><a href="introduction-to-bayesian-inference.html#cb23-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.09333333</span></span></code></pre></div>
+<div class="note">
+<p><strong>Interpretation:</strong> The probability for observing a pass rate of 33% for distinction on GEOG0125 was 48%. It was less likely for half the number of students getting a distinction because the chance were 9.3%.</p>
 </div>
 </div>
 <div id="basic-building-blocks-vi-updating-our-prediction-with-new-information" class="section level2 hasAnchor" number="2.8">
@@ -497,7 +499,7 @@ quantile(theta.pass_draws, probs=c(0.025, 0.975))
 <li>Let updates the codes:</li>
 </ul>
 <p><strong>Updated dataset in our RScript</strong></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction-to-bayesian-inference.html#cb22-1" tabindex="-1"></a>dataset.updated <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="dv">26</span>, <span class="at">p=</span><span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-bayesian-inference.html#cb24-1" tabindex="-1"></a>dataset.updated <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="dv">26</span>, <span class="at">p=</span><span class="dv">9</span>)</span></code></pre></div>
 <p><strong>Updated Stan script</strong></p>
 <pre class="text"><code>data {
     int&lt;lower = 0&gt; N;
@@ -513,8 +515,8 @@ model {
     theta ~ beta(5, 10);    // our prior distribution updated to alpha = 5 and beta = 10
 }</code></pre>
 <p><strong>Obtaining updated posterior samples by compiling new Stan script</strong></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-bayesian-inference.html#cb24-1" tabindex="-1"></a>predicting.passes.updated <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Predicting a proportion updated.stan&quot;</span>, <span class="at">data=</span>dataset.updated, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb24-2"><a href="introduction-to-bayesian-inference.html#cb24-2" tabindex="-1"></a><span class="fu">print</span>(predicting.passes.updated, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-bayesian-inference.html#cb26-1" tabindex="-1"></a>predicting.passes.updated <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Predicting a proportion updated.stan&quot;</span>, <span class="at">data=</span>dataset.updated, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb26-2"><a href="introduction-to-bayesian-inference.html#cb26-2" tabindex="-1"></a><span class="fu">print</span>(predicting.passes.updated, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <p><strong>Updated output summary table</strong></p>
 <pre class="text"><code>Inference for Stan model: Predicting a proportion.
 3 chains, each with iter=3000; warmup=1500; thin=1; 
@@ -529,12 +531,12 @@ For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 <p><strong>Histogram of posterior samples’ distribution</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-bayesian-inference.html#cb26-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
-<span id="cb26-2"><a href="introduction-to-bayesian-inference.html#cb26-2" tabindex="-1"></a>theta.pass_draws.new <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes.updated, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]] </span>
-<span id="cb26-3"><a href="introduction-to-bayesian-inference.html#cb26-3" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="introduction-to-bayesian-inference.html#cb26-4" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
-<span id="cb26-5"><a href="introduction-to-bayesian-inference.html#cb26-5" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws.new, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
-<span id="cb26-6"><a href="introduction-to-bayesian-inference.html#cb26-6" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples [Updated]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Probability of Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-to-bayesian-inference.html#cb28-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
+<span id="cb28-2"><a href="introduction-to-bayesian-inference.html#cb28-2" tabindex="-1"></a>theta.pass_draws.new <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes.updated, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]] </span>
+<span id="cb28-3"><a href="introduction-to-bayesian-inference.html#cb28-3" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="introduction-to-bayesian-inference.html#cb28-4" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
+<span id="cb28-5"><a href="introduction-to-bayesian-inference.html#cb28-5" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws.new, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb28-6"><a href="introduction-to-bayesian-inference.html#cb28-6" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples [Updated]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate (Distinction) Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
 <p><img src="images/general/histogram_plot_pdy2.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Obtain updated posterior proportion and 95% CrI</strong></p>
 <pre class="text"><code># Calculating posterior mean (estimator)

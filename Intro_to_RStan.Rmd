@@ -28,10 +28,6 @@ embed_youtube('5k1pxhmqWtI', height=400) %>% use_align('center')
 ```
 [[**Watch on YouTube**]](https://youtu.be/5k1pxhmqWtI)
 
-<div class="note">
-**Important Notes:** If this or any subsequent video don't play from this website, then try playing it directly from Microsoft Streams - you should be able to view it by clicking this [**[LINK]**](https://web.microsoftstream.com/video/e70853ca-4452-4363-9474-539547a238f9). Access to Microsoft Steams to these videos will require use of your UCL institutional login details.
-</div>
-
 ### Datasets & setting up the work directory 
 
 Since, this is our first practical lesson for GEOG0125, let us create a new folder **GEOG0125** at the desktop location of our computer. Now, create a sub folder called "**Week 1**" within the **GEOG0125** folder. Here, we will store all our R and Stan scripts. Set your work directory to **Week 1's** folder.
@@ -48,17 +44,11 @@ For MAC, the code for setting the work directory will be:
 setwd("/Users/AccountName/Desktop/GEOG0125/Week 1")
 ```
 
-### Loading and installing packages
+### Loading the appropriate packages
 
-To start writing scripts for Bayesian analysis, we will need to install a package called `rstan`.
+Let us load the installed package called `rstan`.
 
 ```{r, eval = FALSE}
-# setting timer over 100s to extend timeout::: just in case
-options(timeout=100)
-
-# install package rstan with its dependency
-install.packages("rstan", repos="https://cloud.r-project.org", dependencies = TRUE)
-
 # Load the packages with library()
 library('rstan')
 ```
@@ -221,7 +211,7 @@ Lastly, you can create **arrays** of variables. For example, `real p[10]` tells 
 ## Basic building blocks III: Developing our model
 
 <div class="note">
-**PROBLEM:** Last year, in the advanced GEOG0125 course, there was 13 students enrolled. It was Anwar's first time being a teacher on the course, and hence was quite curious to know what proportion of students will pass with a distinction. Since, he has no data of the pass rates - therefore has no **prior knowledge**. First, he assumes that the **proportion of those passing with a distinction** comes from a **Beta distribution** that is uniform **Beta(1.0, 1.0)**. In term 3, after tedious marking of reports, he observes that 4 students (out of the total: 13) passed with flying colours. What is the posterior distribution of those getting a distinction for GEOG0125? 
+**PROBLEM:** In 2021/2022, the GEOG0125 course, there was 13 students enrolled. It was Anwar's first time being a teacher on the course, and hence was quite curious to know what proportion of students who will pass with a distinction (70%+). Since, he had no data on the pass rates. He had no **prior knowledge**. First, he assumes that the **proportion of those passing with a distinction** came from a **Beta distribution** that mimics a uniform **Beta(1.0, 1.0)**. In term 3, after tedious marking of reports, he observes that 4 students (out of the total: 13) passed with flying colours. What is the posterior distribution of those getting a distinction for GEOG0125? 
 </div>
 
 Let us build our first model that predicts the posterior distribution of those passing GEOG0125 with a distinction. In this simple for modelling proportions (or prevalence), we extract our information:
@@ -305,7 +295,7 @@ Some notes on the above code's arguments:
 The resulting output can be printed with the function `print()`. Here, we are going to print the mean, standard error in mean, SD and the IQR ranges with 95% limits (i.e., 2.5% and 97.5%):
 
 ```{r, eval=FALSE}
-print(predicting.passes, probs=c(0.025, 0.25, 0.5, 0.75, 0.975))
+print(prediction.passes, probs=c(0.025, 0.25, 0.5, 0.75, 0.975))
 ```
 
 We obtain this summary table:
@@ -327,7 +317,7 @@ convergence, Rhat=1).
 ```
 
 <div class="note">
-**What does it all mean?** The top part states that 3 chains were run for 3000 iterations. However, the first 1500 samples generated from each chain were discarded as warm-up, meaning that only 1500 samples from each chain were kept, resulting 4500 (1500x3) total post-warm-up sample draws. The output shows the summary statistics for our $\theta$. The `lp__` is the log-probability - which is used to quantify how well the model is for the data but, in my opinion, its not a useful estimate. Instead, use the effective sample size `n_eff` and `Rhat`. If the `Rhat` is less than 1.1 for all parameters - it means that the estimation of our parameters are fine.   
+**What does it all mean?** The top part states that 3 chains were run for 3000 iterations. However, the first 1500 samples generated from each chain were discarded as warm-up, meaning that only 1500 samples from each chain were kept, resulting 4500 (1500x3) total post-warm-up sample draws. The output shows the summary statistics for our $\theta$. The `lp__` is the log-probability - which is used to quantify how well the model is for the data but, in my opinion, its not a useful estimate. Instead, use the effective sample size `n_eff` and `Rhat`. If the `Rhat` is less than 1.05 for **All** parameters - it means that the estimation of our parameters are fine.   
 </div>
 
 ## Basic building blocks V: Extract posterior samples and interpretation
@@ -336,14 +326,23 @@ At this point, let us extract the posterior samples and graph them to understand
 
 ```{r, eval=FALSE}
 # extracting the samples (it should be 4500)
-theta.pass_draws <- extract(predicting.passes, 'theta')[[1]]
+theta.pass_draws <- extract(prediction.passes, 'theta')[[1]]
 # create a graph i.e., histogram
 hist(theta.pass_draws, xlim = c(0,0.8), ylim = c(0,800), 
-		 main= "Posterior samples", ylab = "Posterior Density", xlab = expression(paste("Probability of Parameter: ", theta, " [%]")))
+	main= "Posterior samples", ylab = "Posterior Density (Plausibility)", xlab = expression(paste("Pass rate > 70%: ", theta, " [%]")))
 ```
 
 ```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE}
 knitr::include_graphics('images/general/histogram_plot_pdy.png') 
+```
+
+You can also plot the density as opposed to generating a histogram:
+
+```{r, eval=FALSE}
+plot(density(theta.pass_draws), 
+	main = "", 
+	xlab = expression(paste("Pass rate > 70%: ", theta, " [%]")), 
+	ylab = "Posterior Density (Plausibility)")
 ```
 
 We want to compute the posterior mean, with the 0.025 and 0.975 quantiles (these limits are referred to as **95% credibility limits (95% CrI)**). Here is how we compute them:
@@ -352,17 +351,28 @@ We want to compute the posterior mean, with the 0.025 and 0.975 quantiles (these
 # Calculating posterior mean (estimator)
 mean(theta.pass_draws)
 
-[1] 0.3305062
-
 # Calculating posterior intervals
 quantile(theta.pass_draws, probs=c(0.025, 0.975))
-
-2.5%     97.5% 
-0.1239263 0.5800643 
 ```
 
 <div class="note">
-**Interpretation:** The predicted proportion of students passing the GEOG0125 from our sample posterior distribution was 0.3305 (33.05%). Our predictions, with 95% credibility, can be within the limits of 0.1239 and 0.5801. Formally writing as $\theta$ = 33.05% (95% CrI: 12.39-58.01%).
+**Interpretation:** The predicted proportion of students passing the GEOG0125 with 70%+ from our sample posterior distribution was 0.3305 (33.05%). This means that 33% is the most plausible pass rate. Our predictions, with 95% credibility, can be within the limits of 0.1239 and 0.5801. Formally writing as $\theta$ = 33.05% (95% CrI: 12.39-58.01%).
+</div>
+
+We have predicted the most plausible value for pass rate. We can translate this into probability terms. For instance, by asking: "What is the probability that 33% of the students on GEOG0125 will pass with a distinction (70%+)?". We can use this posterior distribution to make this estimation simply by calculating the mean our samples that is above 0.33. This is known as **Exceedance Probability**:
+
+```{r, eval=FALSE}
+# what is the probability observing a pass rate for distinction 70%+?
+mean(theta.pass_draws >= 0.333)
+[1] 0.4824444
+
+# # what is the probability observing a 33% pass rate for distinction 70%+?
+mean(theta.pass_draws >= 0.50)
+[1] 0.09333333
+```
+
+<div class="note">
+**Interpretation:** The probability for observing a pass rate of 33% for distinction on GEOG0125 was 48%. It was less likely for half the number of students getting a distinction because the chance were 9.3%.
 </div>
 
 ## Basic building blocks VI: Updating our prediction with new information
@@ -433,7 +443,7 @@ theta.pass_draws.new <- extract(predicting.passes.updated, 'theta')[[1]]
 
 # create a graph i.e., histogram
 hist(theta.pass_draws.new, xlim = c(0,1), 
-		 main= "Posterior samples [Updated]", ylab = "Posterior Density", xlab = expression(paste("Probability of Parameter: ", theta, " [%]")))
+		 main= "Posterior samples [Updated]", ylab = "Posterior Density", xlab = expression(paste("Pass rate (Distinction) Parameter: ", theta, " [%]")))
 ```
 
 ```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE}
