@@ -489,67 +489,57 @@ quantile(theta.pass_draws, probs=c(0.025, 0.975))</code></pre>
 </div>
 <div id="basic-building-blocks-vi-updating-our-prediction-with-new-information" class="section level2 hasAnchor" number="2.8">
 <h2><span class="header-section-number">2.8</span> Basic building blocks VI: Updating our prediction with new information<a href="introduction-to-bayesian-inference.html#basic-building-blocks-vi-updating-our-prediction-with-new-information" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We can use the 0.3305 as our new prior as opposed to using a uniform again to make an updated prediction. The updated beta distribution takes a new form of <strong>Beta(5, 10)</strong> centered on 0.3305. This is an <strong>informative prior</strong> because we have information now. This was derived from multiplying the likelihood function (i.e., <strong>Binomial(13, 4)</strong>) with the prior (<strong>Beta(1,1)</strong>) results in a Beta distribution again. This is known as a <strong>conjugate</strong>.</p>
-<p>We can use this information in fact to make a prediction on the current 2022/23 cohort - hmmm, I wonder… how many of you will get a distinction in GEOG0125? Let’s see:</p>
+<p>What about if I receive a new cohort of students in 2022/23. The excellent thing about Bayesian statistics is its ability to update results as new information or data comes - this technique is known as <strong>Bayesian Updating</strong>. This technique let’s you use the same script and self calibrates the new prior from the previous result. For instance, we predicted <code>0.3305</code> as the most plausible value for people to get a distinction. So the <code>beta()</code> specification will be <code>Beta(5, 10)</code> centred on 0.33 and not uniform. We can use past result and data, with the new information to fine tune the prediction, and watch as the results evolve.</p>
+<p>Let’s have a quick go at updating this prediction with new data. Let’s see:</p>
 <ul>
-<li>Total sample size is now 26 (N)</li>
-<li>Assuming roughly a third (like last year) will probably get a distinction equates to 9 (p)</li>
-<li>Let us represent the proportion of distinction grades with some probability distribution <span class="math inline">\(\theta\)</span> with a <strong>Binomial distribution</strong> (likelihood function) [Binomial(26, 9)].</li>
-<li>We have prior knowledge of last year’s <strong>proportion</strong> (0.3305) which has a <strong>Beta distribution</strong> [Beta(5, 10)] - this is our new <strong>informative prior</strong></li>
-<li>Let updates the codes:</li>
+<li>Total sample size is now 26 students in 2022/23 (N)</li>
+<li>This time around 9 scored a distinction (p)</li>
 </ul>
+<p>Let us represent the proportion of distinction grades with some probability distribution <span class="math inline">\(\theta\)</span> with a <strong>Binomial distribution</strong> (likelihood function) [Binomial(26, 9)].
+- We have prior knowledge of last year’s <strong>proportion</strong> (0.3305) which has a <strong>Beta distribution</strong> [Beta(5, 10)] - this is our new <strong>informative prior</strong>
+- Let updates the codes:</p>
 <p><strong>Updated dataset in our RScript</strong></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-bayesian-inference.html#cb24-1" tabindex="-1"></a>dataset.updated <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span><span class="dv">26</span>, <span class="at">p=</span><span class="dv">9</span>)</span></code></pre></div>
-<p><strong>Updated Stan script</strong></p>
-<pre class="text"><code>data {
-    int&lt;lower = 0&gt; N;
-    int&lt;lower = 0&gt; p;
-}
-
-parameters {
-    real&lt;lower=0, upper=1&gt; theta;
-}
-
-model {
-    p ~ binomial(N, theta); // our likelihood function or observation model
-    theta ~ beta(5, 10);    // our prior distribution updated to alpha = 5 and beta = 10
-}</code></pre>
+<p>All we need to do is run the <code>stan()</code> function in R with out new dataset and the old model i.e., <code>prediction.passes</code> specified in the arguments.</p>
 <p><strong>Obtaining updated posterior samples by compiling new Stan script</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-bayesian-inference.html#cb26-1" tabindex="-1"></a>predicting.passes.updated <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;Predicting a proportion updated.stan&quot;</span>, <span class="at">data=</span>dataset.updated, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb26-2"><a href="introduction-to-bayesian-inference.html#cb26-2" tabindex="-1"></a><span class="fu">print</span>(predicting.passes.updated, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-bayesian-inference.html#cb25-1" tabindex="-1"></a>prediction.passes.updated <span class="ot">=</span> <span class="fu">stan</span>(<span class="at">fit=</span>prediction.passes, <span class="at">data=</span>dataset.updated, <span class="at">iter=</span><span class="dv">3000</span>, <span class="at">chains=</span><span class="dv">3</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-2"><a href="introduction-to-bayesian-inference.html#cb25-2" tabindex="-1"></a><span class="fu">print</span>(prediction.passes.updated, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <p><strong>Updated output summary table</strong></p>
-<pre class="text"><code>Inference for Stan model: Predicting a proportion.
+<pre class="text"><code>Inference for Stan model: anon_model.
 3 chains, each with iter=3000; warmup=1500; thin=1; 
 post-warmup draws per chain=1500, total post-warmup draws=4500.
 
         mean se_mean   sd   2.5%    25%    50%    75%  97.5% n_eff Rhat
-theta   0.34    0.00 0.07   0.20   0.29   0.34   0.39   0.49  1956    1
-lp__  -26.83    0.02 0.74 -28.94 -26.97 -26.54 -26.37 -26.32  1582    1
+theta   0.36    0.00 0.09   0.20   0.30   0.36   0.42   0.54  1734    1
+lp__  -18.74    0.02 0.69 -20.61 -18.91 -18.48 -18.30 -18.25  2017    1
 
-Samples were drawn using NUTS(diag_e) at Thu Jan 12 17:20:47 2023.
+Samples were drawn using NUTS(diag_e) at Fri Jan 17 10:21:26 2025.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 <p><strong>Histogram of posterior samples’ distribution</strong></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-to-bayesian-inference.html#cb28-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
-<span id="cb28-2"><a href="introduction-to-bayesian-inference.html#cb28-2" tabindex="-1"></a>theta.pass_draws.new <span class="ot">&lt;-</span> <span class="fu">extract</span>(predicting.passes.updated, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]] </span>
-<span id="cb28-3"><a href="introduction-to-bayesian-inference.html#cb28-3" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="introduction-to-bayesian-inference.html#cb28-4" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
-<span id="cb28-5"><a href="introduction-to-bayesian-inference.html#cb28-5" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws.new, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
-<span id="cb28-6"><a href="introduction-to-bayesian-inference.html#cb28-6" tabindex="-1"></a>         <span class="at">main=</span> <span class="st">&quot;Posterior samples [Updated]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate (Distinction) Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-bayesian-inference.html#cb27-1" tabindex="-1"></a><span class="co"># extracting the samples (it should be 4500)</span></span>
+<span id="cb27-2"><a href="introduction-to-bayesian-inference.html#cb27-2" tabindex="-1"></a>theta.pass_draws.new <span class="ot">&lt;-</span> <span class="fu">extract</span>(prediction.passes.updated, <span class="st">&#39;theta&#39;</span>)[[<span class="dv">1</span>]] </span>
+<span id="cb27-3"><a href="introduction-to-bayesian-inference.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="introduction-to-bayesian-inference.html#cb27-4" tabindex="-1"></a><span class="co"># create a graph i.e., histogram</span></span>
+<span id="cb27-5"><a href="introduction-to-bayesian-inference.html#cb27-5" tabindex="-1"></a><span class="fu">hist</span>(theta.pass_draws.new, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb27-6"><a href="introduction-to-bayesian-inference.html#cb27-6" tabindex="-1"></a>    <span class="at">main=</span> <span class="st">&quot;Posterior samples [Updated]&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Posterior Density (Plausibility)&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate (Distinction) Parameter: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)))</span>
+<span id="cb27-7"><a href="introduction-to-bayesian-inference.html#cb27-7" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="introduction-to-bayesian-inference.html#cb27-8" tabindex="-1"></a><span class="co"># create a graph i.e., density</span></span>
+<span id="cb27-9"><a href="introduction-to-bayesian-inference.html#cb27-9" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(theta.pass_draws.new), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Pass rate &gt; 70%: &quot;</span>, theta, <span class="st">&quot; [%]&quot;</span>)) , <span class="at">ylab =</span> <span class="st">&quot;Posterior Density (Plausibility)&quot;</span>)</span></code></pre></div>
 <p><img src="images/general/histogram_plot_pdy2.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Obtain updated posterior proportion and 95% CrI</strong></p>
 <pre class="text"><code># Calculating posterior mean (estimator)
 mean(theta.pass_draws.new)
 
-[1] 0.3420825
+[1] 0.3587437
 
 # Calculating posterior intervals
 quantile(theta.pass_draws.new, probs=c(0.025, 0.975))
-     2.5%     97.5% 
-0.2027673 0.4935101 </code></pre>
+            2.5%     97.5% 
+0.2027673 0.4935101</code></pre>
 <div class="note">
-<p><strong>Interpretation:</strong> For the current cohort, the predicted proportion of students passing the GEOG0125 from our updated posterior distribution was 0.3421 (34.21%). Our predictions, with 95% credibility, can be within the limits of 0.2027 and 0.4935. We can formally write this as <span class="math inline">\(\theta\)</span> = 34.21% (95% CrI: 20.27-49.35%).</p>
+<p><strong>Interpretation:</strong> For the current cohort, the predicted proportion of students passing the GEOG0125 with a distinction from our updated posterior distribution was 0.3587 (36%). Our predictions, with 95% credibility, can be within the limits of 0.2027 and 0.4935. We can formally write this as <span class="math inline">\(\theta\)</span> = 35.87% (95% CrI: 20.27-49.35%).</p>
 </div>
 </div>
 <div id="tasks" class="section level2 hasAnchor" number="2.9">
