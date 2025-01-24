@@ -1,26 +1,17 @@
 # Bayesian Generalised Linear Models (GLMs)
 
-## Lecture recording (Length: TBC)
+## Lecture recording (Length: 1:00:02 minutes)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_youtube('_U-FfIPowhE', height=400) %>% use_align('center')
+```
+[[**Watch on YouTube**]](https://youtu.be/_U-FfIPowhE)
 
 ## Introduction
 
-This week we will learn how to perform Generalised Linear Modelling (GLMs) within a **Bayesian** framework. We will use quantitative data focused on crime victimization in Nigeria which have resulted in a number of interesting publications and see its application to a real study problem. Recall, the all forms of linear models only take continuous outcome as a dependent variable, this feature of a linear model can be limiting when have data following either a binary, count or categorical structure. A GLM typically consist of three components which allows a user to fit different dependent variable types:
+This week we will learn how to perform Generalised Linear Regression Model (GLMs) within a **Bayesian** framework. We will use quantitative data focused on crime victimisation in Nigeria to examine how street accessibility measures such as distance, connectivity, choice and integration are associated with reported counts residential burglaries at a street level. The focus will be on **Poisson-based regression models** with both continuous and categorical independent variables.
 
-- A **probability distribution** to specify the dependent variable's **conditional distribution**;
-- A **linear predictor**, which is the function of the predictors (or **independent variables**);
-- A **link function** that connects point 1 to point 2.
-
-These models are often applied within a frequentist way of thinking; however, these are also easily estimated in a Bayesian setting. We going to take it a step further and show you how one can use [**Stan**](https://mc-stan.org) to encode various regression model types from a **Bayesian** perspective. We will specifically focus on models with likelihood functions that follows either a **Binomial** or **Poisson** distribution as they are used for risk assessments. 
-
-### Learning outcomes
-
-Today’s session aims to formally introduce you to **Stan** programming for **Bayesian regression models**. By the end of this session, you should be able to perform the following:
-
-- How to select the appropriate **likelihood function** specification for the **Bayesian** regression model i.e., **binomial** or **Poisson** to model either **binary**, or **count** outcomes respectively;
-- How to fully develop **Stan** code for such regression models with the appropriate **prior (i.e., uninformative, weak or informative) specification** for various parameters; 
-- How to interpret the various types of coefficients e.g., **Odds Ratios (OR)** and **Risk Ratios (RR)**;
-
-You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.
+Let us begin.
 
 ### Demonstration recording (Length: TBC)
 
@@ -40,25 +31,28 @@ For MAC, the code for setting the work directory will be:
 setwd("/Users/AccountName/Desktop/GEOG0125/Week 2")
 ```
 
-The dataset for this practical are:
+The dataset for this practical:
 
 - `Street Burglary Data in Nigeria.csv`
-- `Household victimisation data in Nigeria.csv`
-- `London LSOA 2015 data.csv`
 
-<div class="note">
-**Context about the dataset:** Conventional analyses of crime, based on European research models, are often poorly suited to assessing the specific dimensions of criminality in Africa. The data used in today's practical is an anonymised excerpt from the [**Development Frontiers in Crime, Livelihoods and Urban Poverty in Nigeria (FCLP)**](https://www.urbantransformations.ox.ac.uk/project/development-frontiers-in-crime-livelihoods-and-urban-poverty-in-nigeria-fclp/) project that aimed to provide an alternative framework for understanding the specific drivers of criminality in a West African urban context. This research project used a mixed-methods approach for combining statistical modeling, geovisualisation and ethnography, and attempted to situate insecurity and crime against a broader backdrop of rapid urban growth, seasonal migration, youth unemployment and informality. The study typically provided researchers both in Nigeria and internationally a richer and more nuanced evidence base on the particular dynamics of crime from an African perspective resulting a number of publications: [**[1]**](https://www.sciencedirect.com/science/article/abs/pii/S0143622818311949), [**[2]**](https://link.springer.com/article/10.1007/s10940-019-09448-3) and [**[3]**](https://academic.oup.com/edited-volume/34642/chapter-abstract/295177150?redirectedFrom=fulltext&login=false) .
-</div>
+The datasets for the task at the end of the practical:
+
+- `Obesity and Fastfoods in MSOAs data.csv`
+- `London LSOA 2015 data.csv`
 
 ### Loading and installing packages
 
-We will need to load the following packages from previous practicals:
+We will need to load the following packages for this practical:
 
 - `rstan`: a package that enables `R` to interface with `Stan`. It provides R the functions to code, parse, compile, test, estimate, and analyze Bayesian models through `Stan` in R.
+- `loo`: this package allows the user to perform model validation and comparison.
+- `MASS`: Gives us access to `glm.nb()` to estimate the dispersion parameter for use in Bayesian model
 
 ```{r, eval = FALSE}
 # Load the packages with library()
 library('rstan')
+library("loo")
+library("MASS")
 ```
 
 Note that when you load `rstan` from cran you will see some recommendations on using multiple cores for speeding the process. For the best experience, we highly recommend using this code:
@@ -72,7 +66,7 @@ This tells RStudio to use multiple core for parallel process whenever Stan is be
 
 ## Poisson Regression Modelling
 
-We are going to fit a Poisson-type model on some an outcome that contain discrete counts of households reporting to have been victims of burglary. Let us load the data into RStudio can call the object `burglaryDataset`.
+We are going to fit a Poisson-type model on some an outcome that contain counts of households reporting to have been victims of burglary. Let us load the data into RStudio can call the object `burglaryDataset`.
 
 ```{r, eval=FALSE}
 # Set your own directory using setwd() function
@@ -89,471 +83,449 @@ There are three different types of Poisson models:
 - Negative Binomial Poisson regression
 - Zero-Inflated Poisson regression
 
-The implementation of one of these models are highly dependent on how the frequency distribution of the count response variable are displayed. If it resembles a normal curve - then use the standard version. Otherwise, use the **Negative Binomial Poisson regression** if there is any evidence of over-dispersion. When there is a an inflation of zero counts in the dataset, you will have to use the **Zero-Inflated model** to account for the problem.
+The implementation of one of these models are highly dependent on how the frequency distribution of the count response variable are displayed. If it resembles a normal curve - then use the standard version. Otherwise, use the **Negative Binomial Poisson regression** if there is any evidence of over-dispersion. When there is a an inflation of zero counts in the dataset, you will have to use the **Zero-Inflated Poisson model** to account for that problem.
 
 ```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
 knitr::include_graphics('images/general/Plot_test_poisson.png') 
 ```
 
-Let's check the frequency distribution of the outcome variable `Burglary` which corresponds to the number of reported instances a property on a street was burgled. You can simply use a histogram to examine its distribution:
+Let's check the frequency distribution of the outcome variable `burglary` which corresponds to the number of reported instances a property on a street was burgled. You can simply use a histogram to examine its distribution:
 
 ```{r, eval=FALSE}
-hist(burglaryDataset$Burglary, breaks=20)
+# see lowest count
+min(burglaryDataset$burglary)
+# see highest count 
+max(burglaryDataset$burglary)
+
+# visual distribution
+hist(burglaryDataset$burglary, breaks=20, xlim = c(0, 25), ylim = c(0, 600),
+	xlab = "Report number of burglaries on a street segment",
+	ylab = "Frequency",
+	main = "Distribution of Burglary counts")
 ```
 
-The plot show evidence of over-dispersion. It indicates that streets in Kaduna have less frequency of burglaries. Here, we consider using a **Negative Binomial Poisson regression model** over the standard and zero-inflated versions (i.e., scenario 1 and 3). Now, that we know the model type, let prepare the dataset of our independent variables.
+```{r echo=FALSE, out.width = "100%", fig.align='center', cache=TRUE,}
+knitr::include_graphics('images/general/Burglary_counts.png') 
+```
+
+The plot show evidence of over-dispersion. It indicates that streets in Kaduna have less frequency of burglaries. Here, we consider using a **Negative Binomial Poisson regression model** over the standard and zero-inflated versions (i.e., scenario 1 and 3). 
+
+Now, that we know the model type, let us estimate the over-dispersion parameter using the `glm.nb()` function.
+
+```{r, eval=FALSE}
+# Fit negative binomial regression null model
+nb_model <- glm.nb(burglary ~ 1, data = burglaryDataset)
+# Extract theta
+theta <- nb_model$theta
+
+theta
+[1] 0.3161472
+```
+
+The estimated over-dispersion parameter is 0.3161472, which is small, this suggests that residential burglaries exhibits substantial over-dispersion. We will use this value in our Bayesian model when we code it in Stan.
 
 ### Data preparation and set-up for Bayesian analysis in Stan
 
-**Stan** is able to handle continuous variable nicely; but for some strange reasons it's absolutely terrible with categorical variables! It can only handle them as dummy variables - meaning that the categorical variable must be split into a series of binary variables. You will see what I mean in a second. The following variables: `choice`, `integration`, `business activities` and `socioeconomic deprivation`, at a street-level are examples of categorical variables which needs to be converted to dummy variables. 
-
-They need to be make as a factor using the `as.factor()` function before implementing the `model.matrix()` to apply the conversion. Here is the code:
+Let begin with a model that only contains independent variables that are continuous measures i.e., distance and connectivity. We can prepare the dataset into `list()` object:
 
 ```{r, eval=FALSE}
-# change the variable from numeric to a factor variable using the as.factor() function
-burglaryDataset$choice_q<- as.factor(burglaryDataset$choice_q)
-burglaryDataset$integ_q <- as.factor(burglaryDataset$integ_q)
-burglaryDataset$business_q <- as.factor(burglaryDataset$business_q)
-burglaryDataset$socioeconomic_q <- as.factor(burglaryDataset$socioeconomic_q)
-```
-
-Next, we use the `model.matrix()` function to apply the conversion:
-
-```{r, eval=FALSE}
-# extract all the important independent variables to be used in model
-SelectedVariables <- burglaryDataset[,c(4,5,6,7,8,9)]
-# convert only variable that are factor variables
-X <- model.matrix(~ 0 + connectivity + choice_q + integ_q + business_q + socioeconomic_q, data = SelectedVariables)
-# see conversion
-View(X)
-```
-
-Drop any column that is the first category - i.e., for instance choice_q1 is present. This needs to be dropped as its the referent category.
-
-```{r, eval=FALSE}
-# drop the column that has choice_q1 i.e., column three only
-X <- X[,-3]
-```
-
-Our independent variables are stored in the matrix `X`. Will use this specify this in the models when programming it in **Stan**. Now, we need to define our dependent variable `y` i.e., number of reported burglaries on a street, as well as the total numbers of houses on a street as an offset - these two quantities will also need to be specified in our `Stan` code.
-
-```{r, eval=FALSE}
-# declare the dependent variable 
-y <- burglaryDataset$burglary
-# declare totalhouse column as the denominators to be imputed as an offset in the model
-denominators <- burglaryDataset$totalhouses
-```
-
-Now, we need to condense this information into list() object as our data for **Stan** to read:
-
-```{r, eval=FALSE}
-stan.negbin.dataset <- list(N=length(y), X=X, k=ncol(X), phi_scale=0.9, y=y, denominators=denominators)
+stan_dataset_model1 <- list(N = nrow(burglaryDataset),
+	burg = burglaryDataset$burglary, 
+	dist = burglaryDataset$distance,
+	conn = burglaryDataset$connectivity,
+	offset = log(burglaryDataset$totalhouses),
+	phi = 0.31614)
 ```
 
 <div class="note">
-**Important Notes:** 
+**Important Notes:** The list object `stan_dataset_model1` from RStudio is passed into the Stan.
 
-- `N = length(y)` we are extracting the number of observations instead of fully typing the number. Here, `N` is `743`
-- `X=X`: This is the set of independent variables we created earlier on with the dummy variables etc., It should contain 16 columns.
-- `k=ncol(X)`: We are extracting the number of columns from `X`
-- `phi_scale = 0.9`: Here, we specify our over-dispersion parameter as `1`
-- `y=y`: Here, we defined the outcome variable (i.e., counts of burglaries) as `y`
-- `denominators=denominators`: Here, we define the `totalhouse` to be the denominators in the model 
+- `N = nrow(burglaryDataset)` we are extracting the number of observations present in the dataset. Note that this a smart way instead of hard coding the number. Note that here, `N` is `743`, meaning there 743 street segments.
+- `burg = burglaryDataset$burglary`: Here, we defined the outcome variable (i.e., counts of burglaries) as `burg`.
+- `dist = burglaryDataset$distance`: Independent variable for distance.
+- `conn = burglaryDataset$connectivity`: Independent variable for connectivity.
+- `offset = log(burglaryDataset$totalhouses)`: Here, the `offset` is calculated from taking the log-transform of the `totalhouses`, which is the denominators used for expressing the residential burglaries as a crime rate per capita.
+- `phi = 0.31614`: We specify the over-dispersion parameter as calculated from `glm.nb()`.
 </div>
 
-At this point, the dataset is fully prepared are ready to go. Let's create our **Stan script** for running a **Negative Binomial Poisson regression** within a Bayesian framework.
+Let's create our **Stan script** for running a **Negative Binomial Poisson regression** within a Bayesian framework.
 
 ### Creating a script to run a Negative Binomial Poisson regression in Stan
 
-A typical **Stan** program for a regression onsist of the following 5 **blocks**:
+A typical **Stan** program for a regression consist of the following 5 **blocks**:
 
 1. Data
-2. Transformed data
-3. Parameters
-4. Transformed parameters
-5. Model
-6. Generated quantities
+2. Parameters
+3. Model
+4. Generated quantities
 
-The `Data`, `Parameters` and `Model` block **must** be specified for the regression to work. But there will be additional things that we need to transform such as the inputted data, parameters and our estimated coefficients for our relative risk (RR). Let's start with the `data` block:
+The `Data`, `Parameters` and `Model` block **must** be specified for the regression to work. But there will be additional block that we will need to transform the resultant parameters (i.e., coefficients) into relative risk (RR) inside the `Generated quantities` block. 
 
-**FIRST STEP:** We specify the total number of observations `int N` as well as the number of independent variables `int k` as an integer in the **data** block. We define our `y` as a `vector` of size `N` holding all the values for our dependent variable. We also define our independent variables a matrix `X` with `N` rows and `k` columns (i.e, `matrix[N, k] X`). Lastly, we define our overdispersion parameter as a real number `real` and call it `phi_scale`. We need to define the `denominators` as a `vector`:
+Let's start with the `data` block:
+
+**FIRST STEP:** We specify the total number of observations `N` as an `integer`, as well as the information we defined in our list object `stan_dataset_model1` to be passed to Stan. This information is specified in the `data` block:
 
 ```{r, eval=FALSE, highlight=FALSE}
+
 data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
+	int<lower=0> N;                    // declare the overall number of data points to be passed into model
+	int<lower=0> burg[N];              // define as an array and specify it as an integer for counts
+	vector[N] dist;                    // continuous variable
+	vector[N] conn;                    // continuous variable
+	vector[N] offset;                  // offset variable for the denominators (total households on a stree segment)
+	real<lower=0> phi;                 // fixed value to account for overdispersion in the crime counts
 }
+
 ```
 
-Next we need to apply a `log()` transformation on to the `denominators` to change it as an offset for the model. Here, we are making a direct change to the data; hence, we can use the `transformed data` block:
+**SECOND STEP:** For the `parameters` block, here we will need to specify the name of the regression intercept `alpha`, which is baseline risk of residential burglaries, and the two coefficients i.e., `beta[1]` and `beta[2]` for our two independent variables `dist` and `conn` respectively.
 
 ```{r, eval=FALSE, highlight=FALSE}
+
 data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
-}
-
-transformed data {
-	vector[N] offset = log(denominators);
-}
-```
-
-**SECOND STEP:** For the **parameters** block, here we will need to specify the name of the regression intercept `alpha` and the coefficients for all our independent variables. Here, we call defined it as a vector of size `k`. The `reciporcal_phi` is a precision estimate which we will need as a prior in our model. 
-```{r, eval=FALSE, highlight=FALSE}
-data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
-}
-
-transformed data {
-	vector[N] offset = log(denominators);
+	int<lower=0> N;                    // declare the overall number of data points to be passed into model
+	int<lower=0> burg[N];              // define as an array and specify it as an integer for counts
+	vector[N] dist;                    // continuous variable
+	vector[N] conn;                    // continuous variable
+	vector[N] offset;                  // offset variable for the denominators (total households on a stree segment)
+	real<lower=0> phi;                 // fixed value to account for overdispersion in the crime counts
 }
 
 parameters {
-	real alpha;          // intercept i.e., overall risk of burglary in population
-	vector[k] beta;      // regression coefficients
-	real reciporcal_phi; // overdispersion 
+	real alpha;
+	vector[2] beta;
 }
+
 ```
 
-**THIRD STEP:** We define our regression model in the **transformed parameters** block. `mu` represents the predicted number of burglaries, which is a vector of `N` size (i.e., each street). The `alpha + beta*X` is the regression model. `phi` is the over-dispersion parameter accounted for in the model:
+**THIRD STEP:** We build our likelihood function and specify the priors for each parameter under the `model` block. For all parameters - the priors have been centred around 0, meaning that broadly, these variables have no effect on residential burglaries, and if any, these effects may range from ±1 (so in risk terms 0.36 to 2.71). The regression model is `neg_binomial_2_log(formula, Overdispersion)`:
 
 ```{r, eval=FALSE, highlight=FALSE}
-data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
-}
 
-transformed data {
-	vector[N] offset = log(denominators);
+data {
+	int<lower=0> N;                    // declare the overall number of data points to be passed into model
+	int<lower=0> burg[N];              // define as an array and specify it as an integer for counts
+	vector[N] dist;                    // continuous variable
+	vector[N] conn;                    // continuous variable
+	vector[N] offset;                  // offset variable for the denominators (total households on a stree segment)
+	real<lower=0> phi;                 // fixed value to account for overdispersion in the crime counts
 }
 
 parameters {
-	real alpha;          // intercept i.e., overall risk of burglary in population
-	vector[k] beta;      // regression coefficients
-	real reciporcal_phi; // overdispersion 
-}
-
-transformed parameters {
-	vector[N] mu;                    // create mu our estimator for model
-	real phi;                        // define precision parameter
-	mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
-	phi = 1./reciporcal_phi;         // precision (akin to variation)
-}
-```
-
-**FOURTH STEP:** We build our likelihood function and specify the priors for each parameter under the **model** block:
-
-```{r, eval=FALSE, highlight=FALSE}
-data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
-}
-
-transformed data {
-	vector[N] offset = log(denominators);
-}
-
-parameters {
-	real alpha;          // intercept i.e., overall risk of burglary in population
-	vector[k] beta;      // regression coefficients
-	real reciporcal_phi; // overdispersion 
-}
-
-transformed parameters {
-	vector[N] mu;                    // create mu our estimator for model
-	real phi;                        // define precision parameter
-	mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
-	phi = 1./reciporcal_phi;         // precision (akin to variation)
+	real alpha;
+	vector[2] beta;
 }
 
 model {
-	reciporcal_phi ~ cauchy(0, phi_scale);  // prior for reciporcal_phi using half-cauchy
-	alpha ~ normal(0, 10);                  // prior for intercept i.e., normal with mean 0 and ±10 variance
-	beta ~ normal(0, 2.5);                  // prior for beta i.e., normal with mean 0 and ±2.5 variance
-	y ~ neg_binomial_2_log(mu, phi);        // likelihood function for burglaries neg_binomial_2_log()
+	// prior specification for our parameters
+	alpha ~ normal(0, 1);               
+	beta[1] ~ normal(0, 1);
+	beta[2] ~ normal(0, 1);
+	
+	// likelihood function i.e., statistical model
+	for (i in 1:N) {
+		burg[i] ~ neg_binomial_2_log(alpha + beta[1]*dist[i] + beta[2]*conn[i] + offset[i], phi);
+	}
 }
+
 ```
 
-**LAST STEP:** We instruct Stan on the parameters we want to report. We want them a **relative risk ratio (RR)** or should we say a **crime risk ratio (CRR)**. We use the **generated quantities** block to obtain the estimates we need i.e., exponentiation pf the intercept and coefficients:
+**LAST STEP:** We instruct Stan to `generated quantitites` to calculate the **relative risk ratio (RRs)** by converting the estimated coefficients by using `exp()`. We ask it to calculate the log likelihood for model validation:
 
 ```{r, eval=FALSE, highlight=FALSE}
-data {
-	int<lower = 1> N;    // Number of observations
-	int<lower = 1> k;    // Number of columns in X matrix contain independent variables and intercept column
-	int y[N];            // Dependent variable - Number of reported burglaries on a street segment
-	matrix[N,k] X;       // Model matrix for our independent variables
-	real phi_scale;
-	vector<lower = 1>[N] denominators;
-}
 
-transformed data {
-	vector[N] offset = log(denominators);
+data {
+	int<lower=0> N;                    // declare the overall number of data points to be passed into model
+	int<lower=0> burg[N];              // define as an array and specify it as an integer for counts
+	vector[N] dist;                    // continuous variable
+	vector[N] conn;                    // continuous variable
+	vector[N] offset;                  // offset variable for the denominators (total households on a stree segment)
+	real<lower=0> phi;                 // fixed value to account for overdispersion in the crime counts
 }
 
 parameters {
-	real alpha;          // intercept i.e., overall risk of burglary in population
-	vector[k] beta;      // regression coefficients
-	real reciporcal_phi; // overdispersion 
-}
-
-transformed parameters {
-	vector[N] mu;                    // create mu our estimator for model
-	real phi;                        // define precision parameter
-	mu = offset + alpha + X*beta;    // linear predictor for mu i.e., predicted burden of burglaries
-	phi = 1./reciporcal_phi;         // precision (akin to variation)
+	real alpha;
+	vector[2] beta;
 }
 
 model {
-	reciporcal_phi ~ cauchy(0, phi_scale);  // prior for reciporcal_phi using half-cauchy
-	alpha ~ normal(0, 10);                  // prior for intercept i.e., normal with mean 0 and ±10 variance
-	beta ~ normal(0, 2.5);                  // prior for beta i.e., normal with mean 0 and ±2.5 variance
-	y ~ neg_binomial_2_log(mu, phi);        // likelihood function for burglaries neg_binomial_2_log()
+	// prior specification for our parameters
+	alpha ~ normal(0, 1);               
+	beta[1] ~ normal(0, 1);
+	beta[2] ~ normal(0, 1);
+	
+	// likelihood function i.e., statistical model
+	for (i in 1:N) {
+		burg[i] ~ neg_binomial_2_log(alpha + beta[1]*dist[i] + beta[2]*conn[i] + offset[i], phi);
+	}
 }
 
 generated quantities {
-	vector[N] eta;            // vector containing our predicted number of burglaries for each street
-	vector[k] crr;            // vector containing our estimated crime risk ratios for each variable
-	real alpha_crr;      
-	alpha_crr = exp(alpha);
-	eta = exp(mu);            // overall risk ratio
-	crr = exp(beta);          // risk ratio for each variable
+	// report crime risk ratios
+	real baselineCrimeRR;
+	vector[2] CrimeRR;
+	baselineCrimeRR = exp(alpha);
+	CrimeRR = exp(beta);
+	
+	// model validation and comparison
+	vector[N] log_lik;                 
+	for (i in 1:N) {
+		log_lik[i] = neg_binomial_2_log_lpmf(burg[i] | alpha + beta[1]*dist[i] + beta[2]*conn[i] + offset[i], phi);
+	}
 }
+
 ```
 
-<div class="note">
-**COMPLIMENTS:** Well done - you are doing well. You have coded your first Bayesian regression. Let's save the script, and then compile and run it through RStudio to get our crime risk ratio (**CRR**) results. 
-</div>
-
-### Compiling our Stan code in RStudio
+### Compiling our Stan code in RStudio and Results
 
 Now, let us turn our attention to RStudio. Using the `stan()` to compile and obtain the posterior estimation of the overall risk and crime risk ratios (CRR) for the each independent variable:
 
 ```{r, eval = FALSE}
 # the directory needs to be set to where you saved the dataset and Stan script
-crr.negbin.model = stan("Script for NegBin model.stan", data=stan.negbin.dataset, iter=5000, chains=3, verbose = FALSE)
-# take roughly 1-2 minutes to compile
+crr.negbin.model1 = stan("Week_2_Cont_Model.stan", data=stan_dataset_model1, iter=3000, chains=6, verbose = FALSE)
 ```
 
 We can print the results accordingly:
 
 ```{r, eval = FALSE}
-# reports the crime rate ratio (relative risk)
-print(crr.negbin.model, probs=c(0.025, 0.975), pars = c("alpha_crr", "crr", "lp__"))
-# take roughly 1-2 minutes to compile
+# reports all results
+print(crr.negbin.model1, pars = c("alpha", "beta", "baselineCrimeRR", "CrimeRR"), probs = c(0.025, 0.975))
 ```
 
 **Output summary table**
 ```{r, eval=FALSE, highlight=FALSE}
+
 Inference for Stan model: anon_model.
-3 chains, each with iter=5000; warmup=2500; thin=1; 
-post-warmup draws per chain=2500, total post-warmup draws=7500.
+6 chains, each with iter=3000; warmup=1500; thin=1; 
+post-warmup draws per chain=1500, total post-warmup draws=9000.
 
-              mean se_mean   sd     2.5%    97.5% n_eff Rhat
-alpha_crr     0.12    0.00 0.04     0.07     0.21  3289    1
-crr[1]        1.00    0.00 0.00     1.00     1.00 10232    1
-crr[2]        1.07    0.00 0.03     1.01     1.13  5844    1
-crr[3]        0.96    0.00 0.21     0.60     1.44  5245    1
-crr[4]        1.03    0.00 0.25     0.63     1.60  4469    1
-crr[5]        0.85    0.00 0.28     0.44     1.52  4323    1
-crr[6]        0.99    0.00 0.22     0.64     1.48  5065    1
-crr[7]        0.90    0.00 0.20     0.57     1.36  4608    1
-crr[8]        0.85    0.00 0.21     0.51     1.34  4607    1
-crr[9]        0.93    0.00 0.25     0.53     1.50  4888    1
-crr[10]       0.70    0.00 0.17     0.42     1.10  4924    1
-crr[11]       1.15    0.00 0.27     0.71     1.78  4700    1
-crr[12]       1.21    0.00 0.29     0.73     1.88  4495    1
-crr[13]       1.23    0.00 0.29     0.76     1.88  3971    1
-crr[14]       0.95    0.00 0.22     0.59     1.46  4427    1
-crr[15]       0.95    0.00 0.24     0.56     1.49  4366    1
-crr[16]       1.25    0.01 0.32     0.74     1.98  4097    1
-lp__      -1023.04    0.06 3.03 -1029.81 -1018.04  2670    1
+                 mean se_mean   sd  2.5% 97.5% n_eff Rhat
+alpha           -2.16       0 0.13 -2.42 -1.91  3282    1
+beta[1]          0.00       0 0.00  0.00  0.00  4237    1
+beta[2]          0.06       0 0.02  0.02  0.11  3216    1
+baselineCrimeRR  0.12       0 0.02  0.09  0.15  3225    1
+CrimeRR[1]       1.00       0 0.00  1.00  1.00  4236    1
+CrimeRR[2]       1.07       0 0.02  1.02  1.11  3215    1
 
-Samples were drawn using NUTS(diag_e) at Thu Jan 19 22:33:08 2023.
+Samples were drawn using NUTS(diag_e) at Fri Jan 24 02:30:42 2025.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).
+
 ```
 
-Here is the messing part - **interpretation**. Before anything, note that `alpha_crr` corresponds to the intercept. Each `crr[1]`, `crr[2]`,... and so on corresponds to the ordering of the columns' in `X` matrix containing the independent variables. If you run this code of `colnames(X)` - it will print this list of names:
+Here is the messing part - **interpretation**. Before anything, note that `alpha`, `beta[1]` and `beta[2]` corresponds to the intercept, and coefficients for distance and connectivity, respectively. These are on the log-scale! 
+
+The risk ratios from `alpha`, `beta[1]` and `beta[2]` which, in turn, corresponds to the intercept, and coefficients for distance and connectivity, respectively, are the `baselineCrimeRR`, `CrimeRR[1]` and `CrimeRR[2]`. For instance, the significant result is for connectivity, which shows for every unit increase in the number to street connections on a segment in the network, the risk of residential burglaries increase by 1.07 (7%), which is significant based on its 95% Credibility Interval (95 CrI: 1.02-1.11).
+
+We can compute exceedance probabilities i.e., that such risk concerning connectivity are greater than 1 (meaning there's an excess risk):
 
 ```{r, eval=FALSE}
-colnames(X)
+# Here, we can extract the simulated sample for CrimeRR[2]
+conn_draws <- extract(crr.negbin.model1, 'CrimeRR[2]')[[1]]
+
+mean(conn_draws > 1.00)
+[1] 0.9977778
 ```
 
-**Output**
-```{r, eval=FALSE, highlight=FALSE}
- [1] "distance"         "connectivity"     "choice_q2"        "choice_q3"        "choice_q4"       
- [6] "integ_q2"         "integ_q3"         "integ_q4"         "business_q2"      "business_q3"     
-[11] "business_q4"      "business_q5"      "socioeconomic_q2" "socioeconomic_q3" "socioeconomic_q4"
-[16] "socioeconomic_q5"
-```
+This indicates a strong chance (99.7%) that streets with more connections to other street segments in the network will certainly increase the risk of residential burglaries.
 
-- `alpha_crr` is the risk ratio for the intercept
-- `crr[1]` corresponds to the continuous distance variable 
-- `crr[2]` corresponds to the continuous connectivity variable 
-- `crr[3]`, `crr[4]` and `crr[5]` corresponds to the 2nd, 3rd, 4th categories for `choice` variable
-- `crr[6]`, `crr[7]` and `crr[8]` corresponds to the 2nd, 3rd, 4th categories for `integration` variable
-- `crr[9]`, `crr[10]`, `crr[11]` and `crr[12]` corresponds to the 2nd, 3rd, 4th and 5th categories for `business activities` variable
-- `crr[13]`, `crr[14]`, `crr[15]` and `crr[16]` corresponds to the 2nd, 3rd, 4th and 5th categories for `socioeconomic deprivation` variable
-
-<div class="note">
-**Interpretation of interesting coefficients**:
-
-1. **Connectivity (cont.)**: For a unit increase in the number of connections on a street segment significantly increases the risk of burglaries by 7% (CRR 1.07, 95% CrI: 1.01–1.13). or you can say the risk for burglaries in relation to a unit increase in the number of connections on a street are 1.07 times higher.
-
-2. **Business activities (cat.)**: Relative to street segments will lower levels of business activities, streets that are in the highest quintiles (i.e., higher levels of commerce) are more likely to report burglaries (4th category: CRR 1.15, 95% CrI: 0.71-1.78; 5th category: CRR 1.21, 95% CrI: 0.73-1.88)
-</div>
-
-## Logistic Regression Modelling
-
-### Data preparation and set-up for Bayesian analysis in Stan
-
-Running a logistic regression is very easy. It has household-level information regarding the security status of a property and victimisation (i.e., victim of burglary). Here are the list of variables:
-
-- `Gate`: Is the property gated? (1 = yes, 0 = no) 
-- `Garage`: Does the property contains a garage? (1 = yes, 0 = no) 
-- `Outdoor_sitting`: Does property have an outdoor sitting? (1 = yes, 0 = no) 
-- `Security_lights`: Are security lights attached to property? (1 = yes, 0 = no)
-- `BurglaryStatus`: Whether the household has been a victim of burglary (1 = yes, 0 = no) - outcome variable. 
-
-Let's load this dataset i.e., `Household victimisation data in Nigeria.csv` and attempt to implement a logistic regression model using the `Bernoulli` likelihood function on a binary dependent variable that is `BurglaryStatus` to assess the impacts of properties protected by some form of security.
-
-Let's get straight to the preparing the dataset for **Stan**:
+Lastly, we will assess the validity of our model using a test called **Leave-One-Out Cross-Validation**. The estimate from this test **Expected Log Predictive Density (ELPD)** quantifies how well a model performs and so higher values of **ELPD** indicates better predictive performance. While, it can be interpreted on its own, its primary value lies in model comparison rather than as an absolute measure.
 
 ```{r, eval=FALSE}
-# load data
-houselevel.data <- read.csv("Household victimisation data in Nigeria.csv")
-
-# declare binary variables as factor variables
-houselevel.data$Gate<- as.factor(houselevel.data$Gate)
-houselevel.data$Garage <- as.factor(houselevel.data$Garage)
-houselevel.data$Outdoor_sitting <- as.factor(houselevel.data$Outdoor_sitting)
-houselevel.data$Security_lights <- as.factor(houselevel.data$Security_lights)
-
-# create a matrix for the independent variables
-X <- model.matrix(~ 0 + Gate + Garage + Outdoor_sitting + Security_lights, data = houselevel.data)
-
-# declare the dependent variable 
-y <- houselevel.data$BurglaryStatus
-
-# compile all information into list() object for Stan to compile in logistic regression script
-stan.logistic.dataset <- list(N=length(y), X=X, k=ncol(X), y=y)
+# extracting ELPD leave-one-out results from model with continuous variables only
+log_lik_with_cont <- extract_log_lik(crr.negbin.model1, merge_chains = FALSE)
+r_eff_with_cont <- relative_eff(log_lik_with_cont)
+loo_cont <- loo(log_lik_with_cont, r_eff_with_cont, cores = 6)
 ```
 
-### Creating a script to run a logistic regression in Stan
+```{r, eval=FALSE}
+print(loo_cont)
 
-Let's get straight to writing the logistic regression script in **Stan**.
+Computed from 9000 by 743 log-likelihood matrix.
+
+         Estimate   SE
+elpd_loo  -1022.1 37.7
+p_loo         2.6  0.4
+looic      2044.3 75.3
+------
+MCSE of elpd_loo is 0.0.
+MCSE and ESS estimates assume independent draws (r_eff=1).
+
+All Pareto k estimates are good (k < 0.7).
+See help('pareto-k-diagnostic') for details.
+```
+
+We take note that the ELPD is `-1022.1`
+
+### Model with categorical variables
+
+The purpose of this section is to show:
+
+- How to include categorical variables into the model
+- Perform model comparisons
+
+Let's include the following categorical variables: `integq` and `choiceq` into the regression. Each variable has four categories, we want to omit the first category as it represents the lowest exposure group, and use it a reference for the higher categories when we estimate their risk.
+
+```{r, eval=FALSE}
+
+# See table for categorical variables
+table(burglaryDataset$choiceq)
+table(burglaryDataset$integq)
+
+# Create dummy variables for choice
+burglaryDataset$choicecat2 <- ifelse(burglaryDataset$choiceq == 2, 1, 0)
+burglaryDataset$choicecat3 <- ifelse(burglaryDataset$choiceq == 3, 1, 0)
+burglaryDataset$choicecat4 <- ifelse(burglaryDataset$choiceq == 4, 1, 0)
+
+# Create dummy variables for integration
+burglaryDataset$integ2 <- ifelse(burglaryDataset$integq == 2, 1, 0)
+burglaryDataset$integ3 <- ifelse(burglaryDataset$integq == 3, 1, 0)
+burglaryDataset$integ4 <- ifelse(burglaryDataset$integq == 4, 1, 0)
+```
+
+Let expand the model to include independent variables that are both continuous and categorical measures i.e., distance and connectivity, choice and integration, and the new information into a `list()` object:
+
+```{r, eval=FALSE}
+stan_dataset_model2 <- list(N = nrow(burglaryDataset),
+	burg = burglaryDataset$burglary, 
+	dist = burglaryDataset$distance,
+	conn = burglaryDataset$connectivity,
+	chcat2 = burglaryDataset$choicecat2,
+	chcat3 = burglaryDataset$choicecat3,
+	chcat4 = burglaryDataset$choicecat4,
+	intcat2 = burglaryDataset$integ2,
+	intcat3 = burglaryDataset$integ3,
+	intcat4 = burglaryDataset$integ4,
+	offset = log(burglaryDataset$totalhouses),
+	phi = 0.31614)
+```
+
+The amended Stan code will look something as follows:
 
 ```{r, eval=FALSE, highlight=FALSE}
-// Stan script for running logistic regression model
 
 data {
-	int<lower = 1> N;
-	int<lower = 1> k;
-	int<lower = 0, upper = 1> y [N];      // Burglary status 1 = yes, 0 = no
-	matrix[N, k] X;
+	int<lower=0> N;                    // declare the overall number of data points to be passed into model
+	int<lower=0> burg[N];              // define as an array and specify it as an integer for counts
+	vector[N] dist;                    // continuous variable
+	vector[N] conn;                    // continuous variable
+	int<lower=0, upper=1> chcat2[N];
+	int<lower=0, upper=1> chcat3[N];
+	int<lower=0, upper=1> chcat4[N];
+	int<lower=0, upper=1> intcat2[N];
+	int<lower=0, upper=1> intcat3[N];
+	int<lower=0, upper=1> intcat4[N];
+	vector[N] offset;                  // offset variable for the denominators (total households on a stree segment)
+	real<lower=0> phi;                 // fixed value to account for overdispersion in the crime counts
 }
 
 parameters {
 	real alpha;
-	vector[k] beta;
+	vector[2] beta;
+	vector[3] chcq;
+	vector[3] intq;
 }
 
 model {
-	y ~ bernoulli_logit(alpha + X*beta);   // fit a logistic regression using a bernoulli_logit()
-	alpha ~ normal(0, 10);
-	beta ~ normal(0, 2.5);
+	// prior specification for our parameters
+	alpha ~ normal(0, 1);               
+	beta ~ normal(0, 1);
+	chcq  ~ normal(0, 1);
+	intq  ~ normal(0, 1);
+	
+	// likelihood function i.e., statistical model
+	for (i in 1:N) {
+		burg[i] ~ neg_binomial_2_log(alpha + beta[1]*dist[i] + beta[2]*conn[i] + chcq[1]*chcat2[i] + chcq[2]*chcat3[i] + chcq[3]*chcat4[i] + intq[1]*intcat2[i] + intq[2]*intcat3[i] + intq[3]*intcat4[i] + offset[i], phi);
+	}
 }
 
 generated quantities {
-	vector[k] orr;
-	real alpha_orr;
-	alpha_orr = exp(alpha);
-	orr = exp(beta);
+	// report crime risk ratios
+	real baselineCrimeRR;
+	vector[2] betaRR;
+	vector[3] chcqRR;
+	vector[3] intqRR;
+	baselineCrimeRR = exp(alpha);
+	betaRR = exp(beta);
+	chcqRR = exp(chcq);
+	intqRR = exp(intq);
+	
+	// model validation and comparison
+	vector[N] log_lik;                 
+	for (i in 1:N) {
+		log_lik[i] = neg_binomial_2_log_lpmf(burg[i] | alpha + beta[1]*dist[i] + beta[2]*conn[i] + chcq[1]*chcat2[i] + chcq[2]*chcat3[i] + chcq[3]*chcat4[i] + intq[1]*intcat2[i] + intq[2]*intcat3[i] + intq[3]*intcat4[i] + offset[i], phi);
+	}
 }
+
 ```
 
-Now, save the script with an appropriate name, and we can compile the code in RStudio with `stan()` function:
+We can use the `stan()` to compile the updated code to obtain the posterior estimation accordingly:
 
-```{r, eval=FALSE}
-orr.logistic.model = stan("Script for logit model.stan", data=stan.logistic.dataset, iter=5000, chains=3, verbose = FALSE)
+```{r, eval = FALSE}
+# the directory needs to be set to where you saved the dataset and Stan script
+crr.negbin.model2 = stan("Week_2_Cat_Model.stan", data=stan_dataset_model2, iter=3000, chains=6, verbose = FALSE)
 ```
 
-Print the results for risk of burglaries in relation to target hardening security features:
+We can print the results accordingly:
 
-```{r, eval=FALSE}
-# reports the odds ratios (OR)
-print(orr.logistic.model, probs=c(0.025, 0.975), pars = c("alpha_orr", "orr", "lp__"))
+```{r, eval = FALSE}
+# reports all results
+print(crr.negbin.model2, pars = c("baselineCrimeRR", "betaRR", "chcqRR", "intqRR"), probs = c(0.025, 0.975))
 ```
 
 **Output summary table**
-
 ```{r, eval=FALSE, highlight=FALSE}
+
 Inference for Stan model: anon_model.
-3 chains, each with iter=5000; warmup=2500; thin=1; 
-post-warmup draws per chain=2500, total post-warmup draws=7500.
+6 chains, each with iter=3000; warmup=1500; thin=1; 
+post-warmup draws per chain=1500, total post-warmup draws=9000.
 
-              mean se_mean   sd     2.5%    97.5% n_eff Rhat
-alpha_orr     0.16    0.00 0.01     0.13     0.19  4591    1
-orr[1]        1.06    0.00 0.12     0.85     1.31  5589    1
-orr[2]        1.04    0.00 0.23     0.64     1.56  6729    1
-orr[3]        1.08    0.00 0.13     0.85     1.35  6637    1
-orr[4]        1.22    0.00 0.13     0.99     1.49  5937    1
-lp__      -1268.99    0.03 1.60 -1272.95 -1266.93  3375    1
+                mean se_mean   sd 2.5% 97.5% n_eff Rhat
+baselineCrimeRR 0.13       0 0.03 0.09  0.20  4190    1
+betaRR[1]       1.00       0 0.00 1.00  1.00 11128    1
+betaRR[2]       1.08       0 0.03 1.03  1.14  5524    1
+chcqRR[1]       0.95       0 0.21 0.60  1.44  4692    1
+chcqRR[2]       0.94       0 0.23 0.57  1.46  4593    1
+chcqRR[3]       0.86       0 0.29 0.44  1.55  4266    1
+intqRR[1]       0.94       0 0.20 0.61  1.39  5311    1
+intqRR[2]       0.84       0 0.18 0.54  1.25  5119    1
+intqRR[3]       0.81       0 0.19 0.49  1.24  5302    1
 
-Samples were drawn using NUTS(diag_e) at Fri Jan 20 00:35:46 2023.
+Samples were drawn using NUTS(diag_e) at Fri Jan 24 03:34:39 2025.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).
+
 ```
 
-Here is the messing part again - **interpretation**. Before anything, note that `alpha_orr` corresponds to the intercept. Each `orr[1]`, `orr[2]`,... and so on corresponds to the ordering of the columns' in `X` matrix containing the independent variables. If you run`colnames(X)` it will print this list:
+We can compare this model against the previous one to see which one highest ELPD value for better predictive performance.
 
 ```{r, eval=FALSE}
-colnames(X)
+# extracting ELPD leave-one-out results from model with both continuous and categorical variables
+log_lik_with_cat <- extract_log_lik(crr.negbin.model2, merge_chains = FALSE)
+r_eff_with_cat <- relative_eff(log_lik_with_cat)
+loo_cat <- loo(log_lik_with_cat, r_eff_with_cat, cores = 6)
 ```
-
-**Printing list of variable names in X matrix**
 
 ```{r, eval=FALSE}
-[1] "Gate" "Garage" "Outdoor_sitting" "Security_lights"
+print(loo_cat)
+
+Computed from 9000 by 743 log-likelihood matrix.
+
+         Estimate   SE
+elpd_loo  -1026.7 37.7
+p_loo         7.7  1.0
+looic      2053.4 75.4
+------
+MCSE of elpd_loo is 0.0.
+MCSE and ESS estimates assume independent draws (r_eff=1).
+
+All Pareto k estimates are good (k < 0.7).
+See help('pareto-k-diagnostic') for details.
 ```
 
-- `alpha_orr` is the odds ratio for the intercept
-- `orr[1]` corresponds to the category in `Gate = 1` that means it has a gate 
-- `orr[2]` corresponds to the category in `Garage = 1` that means it has a garage 
-- `orr[3]` corresponds to the category in `Outdoor_sitting = 1` that means it has a outdoor settings to property 
-- `orr[4]` corresponds to the category in `Security lights = 1` that means it has a security lights outside its property 
-
-<div class="note">
-**Interpretation of interesting coefficients**:
-
-1. **Gated properties (cat.)**: Compared to properties without gates, those with this security feature are targeted and hence 6% more likely to be a victim of burglary (OR: 1.06, 95% CrI 0.85-1.31).
-2. **Properties with Garages (cat.)**: Compared to properties without garages, those with this feature are targeted and hence 4% more likely to be a victim of burglary (OR: 1.04, 95% CrI 0.64-1.56).
-3. **Properties with Outdoor sittings (cat.)**: Compared to properties with no outdoor features, those with this feature are targeted and hence 8% more likely to be a victim of burglary (OR: 1.08, 95% CrI 0.85-1.35).
-4. **Properties with Security lightings (cat.)**: Compared to properties with no secruity lights, those with this feature are targeted and hence 22% more likely to be a victim of burglary (OR: 1.22, 95% CrI 0.99-1.49).
-</div>
+This first model's ELPD was `-1022.1`, and full model's show `-1026.7`. Based on this result, it is clear that the first model is better in terms of predictive performance since its **ELPD** is higher (i.e., `-1022.1` vs `-1026.7`). So its best to stick with the first model, unless there is a strong theoretical reason to use second model (i.e., accounting for confounding).
 
 ## Tasks
 
@@ -573,7 +545,7 @@ Accessibility to junk food restaurants in young adolescents especially after sch
 - `IMDMSOA`: Area-level socioeconomic deprivation score (higher scores means higher deprivation and vice versa)
 - `RESTCAT`: Categorical variable for classifying an MSOA in terms of density of junk/cheap fast food outlets restaurants: `1 = 1 to 10`, `2= 11 to 25`, `3= 26 to 50` and `4= 51 to 300`. 
 
-**HINT**: You might want to consider using the following functions: `binomial_logit()` or `binomial()` in the **model** block and reporting the **odd ratios** using the **generated quantities** block. Also, use the `as.factor()` for independent variables that are categorical. You can put all independent variables into a matrix using the code using the `model.matrix()` function. You might want to consider computing the exceedance probabilities for the **odd ratios** using the threshold of 1.
+**HINT**: You might want to consider using the following functions: `binomial_logit()` or `binomial()` in the **model** block and reporting the **odd ratios** using the **generated quantities** block. You might want to consider computing the exceedance probabilities for the **odd ratios** using the threshold of 1.
 
 ### Task 2 - Factors affecting house prices in London (2015)
 

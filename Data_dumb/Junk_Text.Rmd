@@ -1,0 +1,46 @@
+**Stan** is able to handle continuous variable nicely; but for some strange reasons it's absolutely terrible with categorical variables! It can only handle them as dummy variables - meaning that the categorical variable must be split into a series of binary variables. You will see what I mean in a second. The following variables: `choice`, `integration`, `business activities` and `socioeconomic deprivation`, at a street-level are examples of categorical variables which needs to be converted to dummy variables. 
+
+They need to be make as a factor using the `as.factor()` function before implementing the `model.matrix()` to apply the conversion. Here is the code:
+
+```{r, eval=FALSE}
+# change the variable from numeric to a factor variable using the as.factor() function
+burglaryDataset$choice_q<- as.factor(burglaryDataset$choice_q)
+burglaryDataset$integ_q <- as.factor(burglaryDataset$integ_q)
+burglaryDataset$business_q <- as.factor(burglaryDataset$business_q)
+burglaryDataset$socioeconomic_q <- as.factor(burglaryDataset$socioeconomic_q)
+```
+
+Next, we use the `model.matrix()` function to apply the conversion:
+
+```{r, eval=FALSE}
+# extract all the important independent variables to be used in model
+SelectedVariables <- burglaryDataset[,c(4,5,6,7,8,9)]
+# convert only variable that are factor variables
+X <- model.matrix(~ 0 + connectivity + choice_q + integ_q + business_q + socioeconomic_q, data = SelectedVariables)
+# see conversion
+View(X)
+```
+
+Drop any column that is the first category - i.e., for instance choice_q1 is present. This needs to be dropped as its the referent category.
+
+```{r, eval=FALSE}
+# drop the column that has choice_q1 i.e., column three only
+X <- X[,-3]
+```
+
+Our independent variables are stored in the matrix `X`. Will use this specify this in the models when programming it in **Stan**. Now, we need to define our dependent variable `y` i.e., number of reported burglaries on a street, as well as the total numbers of houses on a street as an offset - these two quantities will also need to be specified in our `Stan` code.
+
+```{r, eval=FALSE}
+# declare the dependent variable 
+y <- burglaryDataset$burglary
+# declare totalhouse column as the denominators to be imputed as an offset in the model
+denominators <- burglaryDataset$totalhouses
+```
+
+Now, we need to condense this information into list() object as our data for **Stan** to read:
+
+```{r, eval=FALSE}
+stan.negbin.dataset <- list(N=length(y), X=X, k=ncol(X), phi_scale=0.9, y=y, denominators=denominators)
+```
+
+

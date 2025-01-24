@@ -4,7 +4,7 @@ rmd_files:
 - Readings.Rmd
 - Installation.Rmd
 - Intro_to_RStan.Rmd
-#- Intro_to_Bayesian_Regression_in_Stan.Rmd
+- Intro_to_Bayesian_Regression_in_Stan.Rmd
 #- Intro_to_Bayesian_GAMs_in_brms.Rmd
 #- Intro_to_Bayesian_Hierarchicals.Rmd
 #- Intro_to_Bayesian_ICAR_Regression.Rmd
