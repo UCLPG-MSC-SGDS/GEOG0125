@@ -9,7 +9,7 @@ introduction-to-bayesian-inference
 lecture-recording-length-10002-minutes
 introduction
 learning-outcomes
-demonstration-recording-length-3826-minutes
+demonstration-recording-length-15950-minutes
 datasets-setting-up-the-work-directory
 loading-the-appropriate-packages
 basic-building-blocks-i-about-stan-programming
@@ -26,7 +26,7 @@ task-2---body-mass-index-bmi-problem
 bayesian-generalised-linear-models-glms
 lecture-recording-length-10002-minutes-1
 introduction-1
-demonstration-recording-length-tbc
+demonstration-recording-length-15949
 datasets-setting-up-the-work-directory-1
 loading-and-installing-packages
 poisson-regression-modelling
@@ -38,3 +38,12 @@ model-with-categorical-variables
 tasks-1
 task-1---obesity-and-fastfoods-in-london
 task-2---factors-affecting-house-prices-in-london-2015
+bayesian-hierarchical-regression-models
+lecture-recording-length-10002-minutes-2
+introduction-2
+datasets-setting-up-the-work-directory-2
+loading-packages
+data-preparation-and-set-up-for-bayesian-analysis-in-stan-1
+creating-a-script-to-run-a-2-level-multilevel-linear-regression-in-stan
+compiling-our-stan-code-for-hierarchical-modelling
+task

@@ -13,7 +13,12 @@ This week we will learn how to perform Generalised Linear Regression Model (GLMs
 
 Let us begin.
 
-### Demonstration recording (Length: TBC)
+### Demonstration recording (Length: 1:59:49)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_youtube('eD0th0_UihQ', height=400) %>% use_align('center')
+```
+[[**Watch on YouTube**]](https://youtu.be/eD0th0_UihQ)
 
 ### Datasets & setting up the work directory 
 

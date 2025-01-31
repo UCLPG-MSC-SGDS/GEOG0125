@@ -21,12 +21,12 @@ Today’s session aims to introduce you to the basic Stan programming etiquette 
 
 You can follow the live walkthrough demonstration delivered in the first 1-hour of the practical, and then use the remaining half to try the practical tutorials and follow the instructions on your own.
 
-### Demonstration recording (Length: 38:26 minutes)
+### Demonstration recording (Length: 1:59:50 minutes)
 ```{r, warnings=FALSE, message=FALSE, echo=FALSE}
 library(vembedr)
-embed_youtube('5k1pxhmqWtI', height=400) %>% use_align('center')
+embed_youtube('myEsN_p7BfQ', height=400) %>% use_align('center')
 ```
-[[**Watch on YouTube**]](https://youtu.be/5k1pxhmqWtI)
+[[**Watch on YouTube**]](https://youtu.be/myEsN_p7BfQ)
 
 ### Datasets & setting up the work directory 
 
