@@ -1,5 +1,3 @@
-
-
 rm(list = ls())
 gc()
 
@@ -32,10 +30,12 @@ stan.cholera.dataset <- list(
 # Start the clock
 ptm <- proc.time()
 # compile linear regression model for now
-bayesian.hierarchical.model = stan("Cholera Script.stan", data=stan.cholera.dataset, iter=40000, chains=6, control = list(adapt_delta = 0.99), verbose = FALSE)
+bayesian.hierarchical.model = stan("Cholera Script.stan", data=stan.cholera.dataset, 
+	iter=40000, chains=6, verbose = FALSE)
 # Stop the clock
 proc.time() - ptm
 
+# control = list(adapt_delta = 0.99, max_treedepth = 15)
 
 # print full table to avoid some rows from being omitted.
 options(max.print = 100000)
@@ -92,7 +92,8 @@ names <- c("baseline", "water", "sanitation", "gdp", "rainfall", "temperature", 
 	"mal_w", "moz_w", "ner_w", "nir_w", "som_w", "tan_w", "tog_w", "ben_s", "bur_s", "drc_s", "gha_s", "ivc_s", "ken_s",
 	"mal_s", "moz_s", "ner_s", "nir_s", "som_s", "tan_s", "tog_s")
 
-results <- as.data.frame(summary(bayesian.hierarchical.model, probs=c(0.025, 0.975), pars = c("gamma00_RR" , "gamma01_RR", "gamma02_RR", "beta3_RR", "beta4_RR", "beta5_RR", "beta01_RR", "beta02_RR"))$summary)
+results <- as.data.frame(summary(bayesian.hierarchical.model, probs=c(0.025, 0.975), 
+	pars = c("gamma00_RR" , "gamma01_RR", "gamma02_RR", "beta3_RR", "beta4_RR", "beta5_RR", "beta01_RR", "beta02_RR"))$summary)
 
 results$variables <- names
 row.names(results) <- 1:nrow(results)

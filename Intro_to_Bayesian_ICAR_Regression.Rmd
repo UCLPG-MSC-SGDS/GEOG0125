@@ -472,7 +472,7 @@ convergence, Rhat=1).
 
 ### Rapid diagnostics of the rHATs
 
-Before mapping the relative risks, we must check if the any of the estimates i.e., `alpha`, `beta`, `sigma` and all `phi` exceed the **rHAT** value of 1.1. This is an indication that iterations did not perform well if an `rHAT` for a parameter is above `1.1`. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of `1`'s (Valid) and `0`'s (Not valid). We can tabulate it to see the numbers:
+Before mapping the relative risks, we must check if the any of the estimates i.e., `alpha`, `beta`, `sigma` and all `phi` exceed the **rHAT** value of **1.05**. This is an indication that the iterations did not perform well if an `rHAT` for a parameter is above `1.05`. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of `1`'s (Valid) and `0`'s (Not valid). We can tabulate it to see the numbers:
 
 ```{r, eval=FALSE, highlight=FALSE}
 # diagnostic check on the rHats - put everything into a data frame
@@ -483,10 +483,10 @@ diagnostic.checks$valid <- ifelse(diagnostic.checks$Rhat < 1.1, 1, 0)
 table(diagnostic.checks$valid)
 ```
 
-Everything is okay - all outputted parameters have an `rHAT < 1.1`. We are free to generate maps.
+Everything is okay - all outputted parameters have an `rHAT < 1.05`. We are free to generate our maps.
 
 <div class="note">
-**NOTES**: To avoid such complications, it is always to best to run about `10000`, `15000` or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.1.
+**NOTES**: To avoid such complications, it is always to best to run about `10000`, `15000` or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.05.
 </div>
 
 ### Extraction of the area-specific relative risks

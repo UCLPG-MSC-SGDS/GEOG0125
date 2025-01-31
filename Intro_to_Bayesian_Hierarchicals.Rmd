@@ -9,7 +9,16 @@ embed_youtube('qMHmGwBFDY8', height=400) %>% use_align('center')
 
 ## Introduction
 
-This week we will learn how to perform Hierarchical regression modelling within a **Bayesian** framework. These models are useful and much superior to the generic regressions especially if there is an hierarchical structure to the data. This artefact must be taken into account off to ensure statistical robustness. We will focus on implementing 2-level hierarchical regressions with an example using a model that has a **varying intercept** and **varying-slope coefficients**. These models are quite simple to pull off in **Stan** once you get the gist of it. Alright, let us begin!
+This week we will learn how to perform Hierarchical regression modelling within a **Bayesian** framework. These models are useful and much superior to the generic regressions especially if there is an hierarchical structure to the data. This artefact must be taken into account off to ensure statistical robustness. We will focus on implementing 2-level hierarchical regressions with an example using a model that has a **varying intercept** and **varying-slope coefficients**. These models are quite simple to pull off in **Stan** once you get the gist of it. 
+
+Alright, let us begin!
+
+### Demonstration recording (Length: 1:50:34)
+```{r, warnings=FALSE, message=FALSE, echo=FALSE}
+library(vembedr)
+embed_youtube('g7TDy4JDqDU', height=400) %>% use_align('center')
+```
+[[**Watch on YouTube**]](https://youtu.be/g7TDy4JDqDU)
 
 ### Datasets & setting up the work directory 
 
@@ -123,8 +132,8 @@ data {
   real Water[N];                             // Water access variable
   real Sanitation[N];                        // Sanitation variable
   real GDP[N];                               // GDP variable
-	real Rainfall[N];                          // Rainfall variable         
-	real Temperature[N];                       // Temperature variable
+  real Rainfall[N];                          // Rainfall variable         
+  real Temperature[N];                       // Temperature variable
   real Log_Population[N];                    // Logged Population variable used as offset
   real Overdispersion_Parameter;             // Over-dispersion prior (set to 0.4)
 }

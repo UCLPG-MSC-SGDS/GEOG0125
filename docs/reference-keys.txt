@@ -41,6 +41,7 @@ task-2---factors-affecting-house-prices-in-london-2015
 bayesian-hierarchical-regression-models
 lecture-recording-length-10002-minutes-2
 introduction-2
+demonstration-recording-length-15034
 datasets-setting-up-the-work-directory-2
 loading-packages
 data-preparation-and-set-up-for-bayesian-analysis-in-stan-1

@@ -221,8 +221,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-10002-minutes-2"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 1:00:02 minutes)</a></li>
 <li class="chapter" data-level="4.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
-<li class="chapter" data-level="4.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>4.2.2</b> Loading packages</a></li>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#demonstration-recording-length-15034"><i class="fa fa-check"></i><b>4.2.1</b> Demonstration recording (Length: 1:50:34)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.2</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>4.2.3</b> Loading packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>4.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
 <ul>
@@ -294,9 +295,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="introduction-2" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Introduction<a href="bayesian-hierarchical-regression-models.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This week we will learn how to perform Hierarchical regression modelling within a <strong>Bayesian</strong> framework. These models are useful and much superior to the generic regressions especially if there is an hierarchical structure to the data. This artefact must be taken into account off to ensure statistical robustness. We will focus on implementing 2-level hierarchical regressions with an example using a model that has a <strong>varying intercept</strong> and <strong>varying-slope coefficients</strong>. These models are quite simple to pull off in <strong>Stan</strong> once you get the gist of it. Alright, let us begin!</p>
-<div id="datasets-setting-up-the-work-directory-2" class="section level3 hasAnchor" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Datasets &amp; setting up the work directory<a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This week we will learn how to perform Hierarchical regression modelling within a <strong>Bayesian</strong> framework. These models are useful and much superior to the generic regressions especially if there is an hierarchical structure to the data. This artefact must be taken into account off to ensure statistical robustness. We will focus on implementing 2-level hierarchical regressions with an example using a model that has a <strong>varying intercept</strong> and <strong>varying-slope coefficients</strong>. These models are quite simple to pull off in <strong>Stan</strong> once you get the gist of it.</p>
+<p>Alright, let us begin!</p>
+<div id="demonstration-recording-length-15034" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Demonstration recording (Length: 1:50:34)<a href="bayesian-hierarchical-regression-models.html#demonstration-recording-length-15034" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/g7TDy4JDqDU" width="711" height="400" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<p><a href="https://youtu.be/g7TDy4JDqDU">[<strong>Watch on YouTube</strong>]</a></p>
+</div>
+<div id="datasets-setting-up-the-work-directory-2" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Datasets &amp; setting up the work directory<a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Go to your folder <strong>GEOG0125</strong> and create a sub folder called “<strong>Week 3</strong>” within the <strong>GEOG0125</strong> folder. Here, we will store all our R &amp; Stan scripts as well as datasets. Set your work directory to <strong>Week 3’s</strong> folder.</p>
 <p>For Windows, the code for setting the work directory will be:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="bayesian-hierarchical-regression-models.html#cb55-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/AccountName/Desktop/GEOG0125/Week 3&quot;</span>)</span></code></pre></div>
@@ -314,8 +325,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="bayesian-hierarchical-regression-models.html#cb57-1" tabindex="-1"></a><span class="co"># load up the data</span></span>
 <span id="cb57-2"><a href="bayesian-hierarchical-regression-models.html#cb57-2" tabindex="-1"></a>WHO_AFRO_Cholera <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;WHO-AFRO Cholera 2000-17.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="loading-packages" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Loading packages<a href="bayesian-hierarchical-regression-models.html#loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="loading-packages" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Loading packages<a href="bayesian-hierarchical-regression-models.html#loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We need to load the installed packages including <code>rstan</code> and <code>tidybayes</code>:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="bayesian-hierarchical-regression-models.html#cb58-1" tabindex="-1"></a><span class="co"># load up packages</span></span>
 <span id="cb58-2"><a href="bayesian-hierarchical-regression-models.html#cb58-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstan&quot;</span>)</span>
@@ -378,8 +389,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   real Water[N];                             // Water access variable
   real Sanitation[N];                        // Sanitation variable
   real GDP[N];                               // GDP variable
-    real Rainfall[N];                          // Rainfall variable         
-    real Temperature[N];                       // Temperature variable
+  real Rainfall[N];                          // Rainfall variable         
+  real Temperature[N];                       // Temperature variable
   real Log_Population[N];                    // Logged Population variable used as offset
   real Overdispersion_Parameter;             // Over-dispersion prior (set to 0.4)
 }</code></pre>

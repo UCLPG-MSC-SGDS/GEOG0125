@@ -221,8 +221,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#lecture-recording-length-10002-minutes-2"><i class="fa fa-check"></i><b>4.1</b> Lecture recording (Length: 1:00:02 minutes)</a></li>
 <li class="chapter" data-level="4.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#introduction-2"><i class="fa fa-check"></i><b>4.2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.1</b> Datasets &amp; setting up the work directory</a></li>
-<li class="chapter" data-level="4.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>4.2.2</b> Loading packages</a></li>
+<li class="chapter" data-level="4.2.1" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#demonstration-recording-length-15034"><i class="fa fa-check"></i><b>4.2.1</b> Demonstration recording (Length: 1:50:34)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#datasets-setting-up-the-work-directory-2"><i class="fa fa-check"></i><b>4.2.2</b> Datasets &amp; setting up the work directory</a></li>
+<li class="chapter" data-level="4.2.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#loading-packages"><i class="fa fa-check"></i><b>4.2.3</b> Loading packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#data-preparation-and-set-up-for-bayesian-analysis-in-stan-1"><i class="fa fa-check"></i><b>4.3</b> Data preparation and set-up for Bayesian analysis in Stan</a>
 <ul>
@@ -653,16 +654,16 @@ convergence, Rhat=1).</code></pre>
 </div>
 <div id="rapid-diagnostics-of-the-rhats" class="section level3 hasAnchor" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Rapid diagnostics of the rHATs<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Before mapping the relative risks, we must check if the any of the estimates i.e., <code>alpha</code>, <code>beta</code>, <code>sigma</code> and all <code>phi</code> exceed the <strong>rHAT</strong> value of 1.1. This is an indication that iterations did not perform well if an <code>rHAT</code> for a parameter is above <code>1.1</code>. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of <code>1</code>’s (Valid) and <code>0</code>’s (Not valid). We can tabulate it to see the numbers:</p>
+<p>Before mapping the relative risks, we must check if the any of the estimates i.e., <code>alpha</code>, <code>beta</code>, <code>sigma</code> and all <code>phi</code> exceed the <strong>rHAT</strong> value of <strong>1.05</strong>. This is an indication that the iterations did not perform well if an <code>rHAT</code> for a parameter is above <code>1.05</code>. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of <code>1</code>’s (Valid) and <code>0</code>’s (Not valid). We can tabulate it to see the numbers:</p>
 <pre class="text"><code># diagnostic check on the rHats - put everything into a data frame
 diagnostic.checks &lt;- as.data.frame(summary(icar_poisson_fit, pars=c(&quot;alpha&quot;, &quot;beta&quot;, &quot;sigma&quot;, &quot;phi&quot;, &quot;lp__&quot;), probs=c(0.025, 0.5, 0.975))$summary)
 # create binary variable
 diagnostic.checks$valid &lt;- ifelse(diagnostic.checks$Rhat &lt; 1.1, 1, 0)
 # tabulate it
 table(diagnostic.checks$valid)</code></pre>
-<p>Everything is okay - all outputted parameters have an <code>rHAT &lt; 1.1</code>. We are free to generate maps.</p>
+<p>Everything is okay - all outputted parameters have an <code>rHAT &lt; 1.05</code>. We are free to generate our maps.</p>
 <div class="note">
-<p><strong>NOTES</strong>: To avoid such complications, it is always to best to run about <code>10000</code>, <code>15000</code> or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.1.</p>
+<p><strong>NOTES</strong>: To avoid such complications, it is always to best to run about <code>10000</code>, <code>15000</code> or more iterations. Usually, shorter iterations yield low effective sample sizes after thinning/warm-up samples are discarded, which in turn, may lead to complications that may cause the rHAT to be above 1.05.</p>
 </div>
 </div>
 <div id="extraction-of-the-area-specific-relative-risks" class="section level3 hasAnchor" number="5.5.3">
