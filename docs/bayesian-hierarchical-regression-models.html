@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="bayesian-generalised-linear-models-glms.html"/>
-
+<link rel="next" href="bayesian-spatial-modelling-for-areal-data-in-stan.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,6 +230,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#compiling-our-stan-code-for-hierarchical-modelling"><i class="fa fa-check"></i><b>4.3.2</b> Compiling our Stan code for Hierarchical Modelling</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="bayesian-hierarchical-regression-models.html"><a href="bayesian-hierarchical-regression-models.html#task"><i class="fa fa-check"></i><b>4.4</b> Task</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html"><i class="fa fa-check"></i><b>5</b> Bayesian Spatial Modelling for Areal Data in Stan</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#learning-outcomes-1"><i class="fa fa-check"></i><b>5.2</b> Learning outcomes</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#loading-and-installing-packages-1"><i class="fa fa-check"></i><b>5.2.1</b> Loading and installing packages</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#datasets-setting-up-the-work-directory-3"><i class="fa fa-check"></i><b>5.2.2</b> Datasets &amp; setting up the work directory</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-preparation-in-rstudio"><i class="fa fa-check"></i><b>5.3</b> Data preparation in RStudio</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#calculation-for-expected-numbers"><i class="fa fa-check"></i><b>5.3.1</b> Calculation for expected numbers</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#converting-the-spatial-adjacency-matrix-to-nodes-edges"><i class="fa fa-check"></i><b>5.3.2</b> Converting the spatial adjacency matrix to nodes &amp; edges</a></li>
+<li class="chapter" data-level="5.3.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#create-the-dataset-to-be-compiled-in-stan"><i class="fa fa-check"></i><b>5.3.3</b> Create the dataset to be compiled in Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#creating-the-script-for-the-spatial-icar-model"><i class="fa fa-check"></i><b>5.4</b> Creating the script for the Spatial ICAR model</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#data-block"><i class="fa fa-check"></i><b>5.4.1</b> Data block</a></li>
+<li class="chapter" data-level="5.4.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-data-block"><i class="fa fa-check"></i><b>5.4.2</b> Transformed data block</a></li>
+<li class="chapter" data-level="5.4.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#parameters-block"><i class="fa fa-check"></i><b>5.4.3</b> Parameters block</a></li>
+<li class="chapter" data-level="5.4.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#transformed-parameters-block"><i class="fa fa-check"></i><b>5.4.4</b> Transformed parameters block</a></li>
+<li class="chapter" data-level="5.4.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#model-block"><i class="fa fa-check"></i><b>5.4.5</b> Model block</a></li>
+<li class="chapter" data-level="5.4.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#generated-quantities-block"><i class="fa fa-check"></i><b>5.4.6</b> Generated quantities block</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#compiling-stan-code-for-the-spatial-icar-risk-modelling"><i class="fa fa-check"></i><b>5.5</b> Compiling Stan code for the Spatial ICAR risk modelling</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results"><i class="fa fa-check"></i><b>5.5.1</b> Printing of the global results</a></li>
+<li class="chapter" data-level="5.5.2" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats"><i class="fa fa-check"></i><b>5.5.2</b> Rapid diagnostics of the rHATs</a></li>
+<li class="chapter" data-level="5.5.3" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extraction-of-the-area-specific-relative-risks"><i class="fa fa-check"></i><b>5.5.3</b> Extraction of the area-specific relative risks</a></li>
+<li class="chapter" data-level="5.5.4" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#mapping-of-rr-and-significance"><i class="fa fa-check"></i><b>5.5.4</b> Mapping of RR and significance</a></li>
+<li class="chapter" data-level="5.5.5" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#extracting-and-mapping-of-the-exceedance-probabilities"><i class="fa fa-check"></i><b>5.5.5</b> Extracting and mapping of the exceedance probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="bayesian-spatial-modelling-for-areal-data-in-stan.html"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#task-1"><i class="fa fa-check"></i><b>5.6</b> Task</a></li>
 </ul></li>
 </ul>
 
@@ -911,8 +944,8 @@ convergence, Rhat=1).</code></pre>
           </div>
         </div>
       </div>
-<a href="bayesian-generalised-linear-models-glms.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="bayesian-generalised-linear-models-glms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

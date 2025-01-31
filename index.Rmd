@@ -29,10 +29,10 @@ You can download the lecture notes and data sets for the practical lesson from t
 |1 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%201%20Lecture%20-%20Introduction%20to%20Bayesian%20Statistics.pdf) | Introduction to Bayesian Inference |
 |2 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%202%20Lecture%20-%20Bayesian%20GLMs.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%202.zip) | Bayesian Generalised Linear Models (GLMs) |
 |3 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%207%20Lecture%20-%20Bayesian%20Hierarchical%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%203.zip) | Bayesian Hierarchical Models |
-|4 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%208.zip) | Spatial Risk Models |
+|4 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%208%20Lecture%20-%20Spatial%20Bayesian%20Risk%20Models.pdf)  [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%204.zip) | Spatial Risk Models |
 |5 | [**[Lecture Notes]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Lecture_notes/GEOG0125%20Week%209%20Lecture%20-%20Spatial%20temporal%20Models%20and%20Bayesian%20Updating.pdf) [**[Datasets]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Dataset%20for%20Week%209.zip) | Spatiotemproal Risk Models & Bayesian Updating |
 
-**Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | **[Week 2]** | **[Week 3]** | **[Week 4]** | **[Week 5]**
+**Solutions**: [**[Week 1]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%201%20Solutions%20for%20Task%201%20and%202.zip) | [**[Week 2]**](https://github.com/UCLPG-MSC-SGDS/GEOG0125/raw/main/Week%202%20Solutions%20for%20Tasks%201%20and%202.zip) | **[Week 3]** | **[Week 4]** | **[Week 5]**
 
 ## Timetable and key locations {-}
 

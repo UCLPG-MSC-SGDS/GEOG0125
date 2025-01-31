@@ -53,18 +53,18 @@ This tells RStudio to use the multiple cores in your computer for parallel proce
 
 ### Datasets & setting up the work directory 
 
-Go to your folder **GEOG0125** and create a sub folder called "**Week 8**" within the **GEOG0125** folder. Here, we will store all our R & Stan scripts as well as datasets. Set your work directory to **Week 8's** folder.
+Go to your folder **GEOG0125** and create a sub folder called "**Week 4**" within the **GEOG0125** folder. Here, we will store all our R & Stan scripts as well as datasets. Set your work directory to **Week 4's** folder.
 
 For Windows, the code for setting the work directory will be:
 
 ```{r, eval = FALSE}
-setwd("C:/Users/AccountName/Desktop/GEOG0125/Week 8")
+setwd("C:/Users/AccountName/Desktop/GEOG0125/Week 4")
 ```
 
 For MAC, the code for setting the work directory will be:
 
 ```{r, eval = FALSE}
-setwd("/Users/AccountName/Desktop/GEOG0125/Week 8")
+setwd("/Users/AccountName/Desktop/GEOG0125/Week 4")
 ```
 
 The dataset for this practical are:
