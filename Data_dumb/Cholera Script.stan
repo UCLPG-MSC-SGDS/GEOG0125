@@ -1,37 +1,37 @@
 data {
-  int<lower=1> N;                            // Number of observations
-  int<lower=1> Country;                      // Number of countries
-  int<lower=1, upper=Country> CountryID[N];  // Country IDs 
-  int<lower=0> Cholera[N];                   // Cholera cases
-  real Water[N];                             // Water access variable
-  real Sanitation[N];                        // Sanitation variable
-  real GDP[N];                               // GDP variable
-	real Rainfall[N];                          // Rainfall variable         
-	real Temperature[N];                       // Temperature variable
-  real Log_Population[N];                    // Logged Population variable used as offset
-  real Overdispersion_Parameter;             // Over-dispersion set to 0.4 as the initiate value
+  int<lower=1> N;                                  // Number of observations
+  int<lower=1> Country;                            // Number of countries
+  array[N] int<lower=1, upper=Country> CountryID;  // Country IDs 
+  array[N] int<lower=0> Cholera;                   // Cholera cases
+  array[N] real Water;                             // Water access variable
+  array[N] real Sanitation;                        // Sanitation variable
+  array[N] real GDP;                               // GDP variable
+	array[N] real Rainfall;                          // Rainfall variable         
+	array[N] real Temperature;                       // Temperature variable
+  array[N] real Log_Population;                    // Logged Population variable used as offset
+  real<lower=0> Overdispersion_Parameter;          // Over-dispersion set to 2 as the initiate value
 }
 
 parameters {
-  real gamma00;                              // Overall intercept
-  real gamma01;                              // Overall effect of Water
-  real gamma02;                              // Overall effect of Sanitation
-  real beta3;                                // overall fixed effects relationship with GDP
-	real beta4;                                // overall fixed effects relationship with rainfall
-	real beta5;                                // overall fixed effects relationship with temperature
-  real random_intercept[Country];            // Country-specific random intercepts
-  real random_slope_water[Country];          // Country-specific random slopes for Water
-  real random_slope_sanitation[Country];     // Country-specific random slopes for Sanitation
-  real<lower=0> group_intercept_sd;          // SD of random intercepts
-  real<lower=0> group_slope_water_sd;        // SD of random slopes for Water
-  real<lower=0> group_slope_sanitation_sd;   // SD of random slopes for Sanitation
-  real<lower=0> phi;                         // Use phi to create a distribution around the Overdispersion_Parameter
+  real gamma00;                                    // Overall intercept
+  real gamma01;                                    // Overall effect of Water
+  real gamma02;                                    // Overall effect of Sanitation
+  real beta3;                                      // overall fixed effects relationship with GDP
+	real beta4;                                      // overall fixed effects relationship with rainfall
+	real beta5;                                      // overall fixed effects relationship with temperature
+  array[Country] real random_intercept;            // Country-specific random intercepts
+  array[Country] real random_slope_water;          // Country-specific random slopes for Water
+  array[Country] real random_slope_sanitation;     // Country-specific random slopes for Sanitation
+  real<lower=0> group_intercept_sd;                // SD of random intercepts
+  real<lower=0> group_slope_water_sd;              // SD of random slopes for Water
+  real<lower=0> group_slope_sanitation_sd;         // SD of random slopes for Sanitation
+  real<lower=0> phi;                               // Use phi to create a distribution around the Overdispersion_Parameter
 }
   
 transformed parameters {
-  real beta00[Country];
-  real beta01[Country];
-  real beta02[Country];
+  array[Country] real beta00;
+  array[Country] real beta01;
+  array[Country] real beta02;
 
   for (j in 1:Country) {
     beta00[j] = gamma00 + random_intercept[j];           // Random intercept per country - overall risks of cholera varying by country
@@ -87,36 +87,13 @@ generated quantities {
   beta5_RR = exp(beta5);
 		
 	// report the varying slopes as relative risk ratios
-  vector[13] beta01_RR;
-  beta01_RR[1] = exp(beta01[1]);
-  beta01_RR[2] = exp(beta01[2]);
-  beta01_RR[3] = exp(beta01[3]);
-  beta01_RR[4] = exp(beta01[4]);
-  beta01_RR[5] = exp(beta01[5]);
-  beta01_RR[6] = exp(beta01[6]);
-  beta01_RR[7] = exp(beta01[7]);
-  beta01_RR[8] = exp(beta01[8]);
-  beta01_RR[9] = exp(beta01[9]);
-  beta01_RR[10] = exp(beta01[10]);
-  beta01_RR[11] = exp(beta01[11]);
-  beta01_RR[12] = exp(beta01[12]);
-  beta01_RR[13] = exp(beta01[13]);
-    
-  vector[13] beta02_RR;
-  beta02_RR[1] = exp(beta02[1]);
-  beta02_RR[2] = exp(beta02[2]);
-  beta02_RR[3] = exp(beta02[3]);
-  beta02_RR[4] = exp(beta02[4]);
-  beta02_RR[5] = exp(beta02[5]);
-  beta02_RR[6] = exp(beta02[6]);
-  beta02_RR[7] = exp(beta02[7]);
-  beta02_RR[8] = exp(beta02[8]);
-  beta02_RR[9] = exp(beta02[9]);
-  beta02_RR[10] = exp(beta02[10]);
-  beta02_RR[11] = exp(beta02[11]);
-  beta02_RR[12] = exp(beta02[12]);
-  beta02_RR[13] = exp(beta02[13]);
+  array[Country] real beta00_RR;
+  array[Country] real beta01_RR;
+  array[Country] real beta02_RR;
+  
+  beta00_RR = exp(beta00);
+  beta01_RR = exp(beta01);
+  beta02_RR = exp(beta02);
 }
 // end script
-
 

@@ -170,7 +170,7 @@ Now, we create our dataset for Stan:
 
 ```{r, eval=FALSE}
 # put all components into a list object
-stan.spatial.dataset <- list(N=n, N_edges=n_edges, node1=nod1, node2=nod2, Y=y, X=x, Offset=e)
+stan.spatial.dataset <- list(N=n, N_edges=n_edges, node1=nod1, node2=nod2, Y=y, X=x, Off_set=e)
 ```
 
 The above information is going to be passed to Stan in the `data block`. Now, we are in the position to develop our **spatial intrinsic conditional autoregressive (ICAR) model**. Now open your Stan script and we begin.
@@ -200,7 +200,7 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 ```
 
@@ -219,11 +219,11 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 ```
 
@@ -249,11 +249,11 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -279,11 +279,11 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -314,11 +314,11 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -361,11 +361,11 @@ data {
   array[N_edges] int<lower=1, upper=N> node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int<lower=0> Y;                                               // dependent variable
   vector<lower=0>[N] X;                                                  // Single independent variable
-  vector<lower=0>[N] Offset;                                             // offset variable
+  vector<lower=0>[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -413,7 +413,13 @@ Well done! You have coded your first spatial risk model. Alright, let us save th
 Now, let us turn our attention to RStudio. Using the `stan()` to compile the saved script to obtain the posterior estimation of the parameters from our model:
 
 ```{r, eval=FALSE}
+# Start the clock
+ptm <- proc.time()
+
 icar_poisson_fit = stan("icar_poisson_model.stan", data=stan.spatial.dataset, iter=20000, control = list(max_treedepth = 12), chains=6, verbose = FALSE)
+
+# Stop the clock
+proc.time() - ptm
 ```
 
 We can see our estimated results for `alpha`, `beta` and `sigma`:
@@ -443,13 +449,16 @@ Note, we can view the **spatial effects** i.e., `phi` for each area using this c
 
 ```{r, eval=FALSE}
 # show first 6 rows only instead of the full 307
-head(summary(icar_poisson_fit, pars=c("phi"), probs=c(0.025, 0.975))$summary)
+summary(icar_poisson_fit, pars=c("phi"), probs=c(0.025, 0.975))$summary
 ```
 
 Alternatively, you can use the `print()` function to get a detailed output:
 
 ```{r, eval=FALSE}
-print(icar_poisson_fit, pars=c("alpha", "beta", "sigma"), probs=c(0.025, 0.975))
+# print full table to avoid some rows from being omitted.
+options(max.print = 100000)
+# print the results
+print(icar_poisson_fit, pars=c("alpha", "beta", "rr_alpha", "rr_beta", "rr_mu", "sigma"), probs=c(0.025, 0.975))
 ```
 
 **Output from print() function:**
@@ -476,9 +485,9 @@ Before mapping the relative risks, we must check if the any of the estimates i.e
 
 ```{r, eval=FALSE, highlight=FALSE}
 # diagnostic check on the rHats - put everything into a data frame
-diagnostic.checks <- as.data.frame(summary(icar_poisson_fit, pars=c("alpha", "beta", "sigma", "phi", "lp__"), probs=c(0.025, 0.5, 0.975))$summary)
+diagnostic.checks <- as.data.frame(summary(icar_poisson_fit, pars=c("alpha", "beta", "rr_alpha", "rr_beta", "rr_mu", "sigma", "phi", "lp__"), probs=c(0.025, 0.5, 0.975))$summary)
 # create binary variable
-diagnostic.checks$valid <- ifelse(diagnostic.checks$Rhat < 1.1, 1, 0)
+diagnostic.checks$valid <- ifelse(diagnostic.checks$Rhat < 1.05, 1, 0)
 # tabulate it
 table(diagnostic.checks$valid)
 ```

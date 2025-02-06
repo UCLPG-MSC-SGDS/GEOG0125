@@ -24,18 +24,27 @@ stan.cholera.dataset <- list(
 	GDP = WHO_AFRO_Cholera$gdp,
 	Rainfall = WHO_AFRO_Cholera$rainfall,
 	Temperature = WHO_AFRO_Cholera$temperature,
-	Overdispersion_Parameter = 0.4
+	Overdispersion_Parameter = 2
 )
 
 # Start the clock
 ptm <- proc.time()
+
 # compile linear regression model for now
-bayesian.hierarchical.model = stan("Cholera Script.stan", data=stan.cholera.dataset, 
-	iter=40000, chains=6, verbose = FALSE)
+bayesian.hierarchical.model = stan(
+	"Cholera Script.stan", 
+	data=stan.cholera.dataset, 
+	iter=100000,
+	warmup=70000,
+	chains=6, 
+	#control = list(
+		#adapt_delta = 0.99, 
+		#max_treedepth = 15
+		#)
+	)
+
 # Stop the clock
 proc.time() - ptm
-
-# control = list(adapt_delta = 0.99, max_treedepth = 15)
 
 # print full table to avoid some rows from being omitted.
 options(max.print = 100000)

@@ -401,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb86-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb86-3" tabindex="-1"></a>e <span class="ot">&lt;-</span> spatial.data<span class="sc">$</span>ExpectedNum</span></code></pre></div>
 <p>Now, we create our dataset for Stan:</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb87-1" tabindex="-1"></a><span class="co"># put all components into a list object</span></span>
-<span id="cb87-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb87-2" tabindex="-1"></a>stan.spatial.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span>n, <span class="at">N_edges=</span>n_edges, <span class="at">node1=</span>nod1, <span class="at">node2=</span>nod2, <span class="at">Y=</span>y, <span class="at">X=</span>x, <span class="at">Offset=</span>e)</span></code></pre></div>
+<span id="cb87-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb87-2" tabindex="-1"></a>stan.spatial.dataset <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N=</span>n, <span class="at">N_edges=</span>n_edges, <span class="at">node1=</span>nod1, <span class="at">node2=</span>nod2, <span class="at">Y=</span>y, <span class="at">X=</span>x, <span class="at">Off_set=</span>e)</span></code></pre></div>
 <p>The above information is going to be passed to Stan in the <code>data block</code>. Now, we are in the position to develop our <strong>spatial intrinsic conditional autoregressive (ICAR) model</strong>. Now open your Stan script and we begin.</p>
 </div>
 </div>
@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }</code></pre>
 </div>
 <div id="transformed-data-block" class="section level3 hasAnchor" number="5.4.2">
@@ -441,11 +441,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }</code></pre>
 </div>
 <div id="parameters-block" class="section level3 hasAnchor" number="5.4.3">
@@ -467,11 +467,11 @@ transformed data {
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -493,11 +493,11 @@ parameters {
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -524,11 +524,11 @@ transformed parameters {
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -567,11 +567,11 @@ model {
   array[N_edges] int&lt;lower=1, upper=N&gt; node2;                            // list of neighbouring areas showing the connection to index spatial unit
   array[N] int&lt;lower=0&gt; Y;                                               // dependent variable
   vector&lt;lower=0&gt;[N] X;                                                  // Single independent variable
-  vector&lt;lower=0&gt;[N] Offset;                                             // offset variable
+  vector&lt;lower=0&gt;[N] Off_set;                                             // offset variable
 }
 
 transformed data {
-    vector[N] log_Offset = log(Offset);                                  // use the expected cases as an offset and add to the regression model
+    vector[N] log_Offset = log(Off_set);                                  // use the expected cases as an offset and add to the regression model
 }
 
 parameters {
@@ -616,7 +616,13 @@ generated quantities {
 <div id="printing-of-the-global-results" class="section level3 hasAnchor" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> Printing of the global results<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#printing-of-the-global-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now, let us turn our attention to RStudio. Using the <code>stan()</code> to compile the saved script to obtain the posterior estimation of the parameters from our model:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-1" tabindex="-1"></a>icar_poisson_fit <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;icar_poisson_model.stan&quot;</span>, <span class="at">data=</span>stan.spatial.dataset, <span class="at">iter=</span><span class="dv">20000</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">12</span>), <span class="at">chains=</span><span class="dv">6</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-1" tabindex="-1"></a><span class="co"># Start the clock</span></span>
+<span id="cb94-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-2" tabindex="-1"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb94-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-3" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-4" tabindex="-1"></a>icar_poisson_fit <span class="ot">=</span> <span class="fu">stan</span>(<span class="st">&quot;icar_poisson_model.stan&quot;</span>, <span class="at">data=</span>stan.spatial.dataset, <span class="at">iter=</span><span class="dv">20000</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max_treedepth =</span> <span class="dv">12</span>), <span class="at">chains=</span><span class="dv">6</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb94-5"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-5" tabindex="-1"></a></span>
+<span id="cb94-6"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-6" tabindex="-1"></a><span class="co"># Stop the clock</span></span>
+<span id="cb94-7"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb94-7" tabindex="-1"></a><span class="fu">proc.time</span>() <span class="sc">-</span> ptm</span></code></pre></div>
 <p>We can see our estimated results for <code>alpha</code>, <code>beta</code> and <code>sigma</code>:</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-1" tabindex="-1"></a><span class="co"># remove that annoying scientific notation</span></span>
 <span id="cb95-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb95-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
@@ -634,9 +640,12 @@ sigma  0.627153399 0.00078449468 0.052970350  0.538581209  0.74606811  4559.169 
 </ul>
 <p>Note, we can view the <strong>spatial effects</strong> i.e., <code>phi</code> for each area using this code:</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-1" tabindex="-1"></a><span class="co"># show first 6 rows only instead of the full 307</span></span>
-<span id="cb97-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;phi&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary)</span></code></pre></div>
+<span id="cb97-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb97-2" tabindex="-1"></a><span class="fu">summary</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;phi&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))<span class="sc">$</span>summary</span></code></pre></div>
 <p>Alternatively, you can use the <code>print()</code> function to get a detailed output:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-1" tabindex="-1"></a><span class="fu">print</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-1" tabindex="-1"></a><span class="co"># print full table to avoid some rows from being omitted.</span></span>
+<span id="cb98-2"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">max.print =</span> <span class="dv">100000</span>)</span>
+<span id="cb98-3"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-3" tabindex="-1"></a><span class="co"># print the results</span></span>
+<span id="cb98-4"><a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#cb98-4" tabindex="-1"></a><span class="fu">print</span>(icar_poisson_fit, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;rr_alpha&quot;</span>, <span class="st">&quot;rr_beta&quot;</span>, <span class="st">&quot;rr_mu&quot;</span>, <span class="st">&quot;sigma&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <p><strong>Output from print() function:</strong></p>
 <pre class="text"><code>Inference for Stan model: anon_model.
 6 chains, each with iter=20000; warmup=10000; thin=1; 
@@ -656,9 +665,9 @@ convergence, Rhat=1).</code></pre>
 <h3><span class="header-section-number">5.5.2</span> Rapid diagnostics of the rHATs<a href="bayesian-spatial-modelling-for-areal-data-in-stan.html#rapid-diagnostics-of-the-rhats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Before mapping the relative risks, we must check if the any of the estimates i.e., <code>alpha</code>, <code>beta</code>, <code>sigma</code> and all <code>phi</code> exceed the <strong>rHAT</strong> value of <strong>1.05</strong>. This is an indication that the iterations did not perform well if an <code>rHAT</code> for a parameter is above <code>1.05</code>. We can do a rapid checks to see which parameter is valid or not by creating a binary variable of <code>1</code>’s (Valid) and <code>0</code>’s (Not valid). We can tabulate it to see the numbers:</p>
 <pre class="text"><code># diagnostic check on the rHats - put everything into a data frame
-diagnostic.checks &lt;- as.data.frame(summary(icar_poisson_fit, pars=c(&quot;alpha&quot;, &quot;beta&quot;, &quot;sigma&quot;, &quot;phi&quot;, &quot;lp__&quot;), probs=c(0.025, 0.5, 0.975))$summary)
+diagnostic.checks &lt;- as.data.frame(summary(icar_poisson_fit, pars=c(&quot;alpha&quot;, &quot;beta&quot;, &quot;rr_alpha&quot;, &quot;rr_beta&quot;, &quot;rr_mu&quot;, &quot;sigma&quot;, &quot;phi&quot;, &quot;lp__&quot;), probs=c(0.025, 0.5, 0.975))$summary)
 # create binary variable
-diagnostic.checks$valid &lt;- ifelse(diagnostic.checks$Rhat &lt; 1.1, 1, 0)
+diagnostic.checks$valid &lt;- ifelse(diagnostic.checks$Rhat &lt; 1.05, 1, 0)
 # tabulate it
 table(diagnostic.checks$valid)</code></pre>
 <p>Everything is okay - all outputted parameters have an <code>rHAT &lt; 1.05</code>. We are free to generate our maps.</p>
