@@ -36,7 +36,7 @@ You can download the lecture notes and data sets for the practical lesson from t
 
 ## Timetable and key locations {-}
 
-The **Lectures** are held every week in-person on **Tuesday** from 10:00am to 11:00am at the **UCL GOSICH's Wolfson Centre in Room A (Ground Floor)** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA). The **computer practicals** will be at the **North West Wing Building in Room G07** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA) from 11:00am to 01:00pm on **Friday**.
+The **Lectures** are held every week in-person on **Thursday** from 10:00am to 11:00am at the **UCL GOSICH's Wolfson Centre in Room A (Ground Floor)** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA). The **computer practicals** will be at the **North West Wing Building in Room G07** [**[MAP]**](https://maps.app.goo.gl/ceHMM5BDNdWXLd7TA) from 11:00am to 01:00pm on **Friday**.
 
 ::: note
 **IMPORTANT NOTE**: Please bring your own laptops with you to the computer practicals on Friday.
