@@ -2,7 +2,7 @@
 
 This GitHub repository creates the computer practicals for the module [GEOG0125 Advanced Topics in Social & Geographic Data Sciences][course] at the [University College London][uni]'s [Department of Geography][dept]. It contains the tutorials for the following weeks:
 
-Week 1: Introduction to Bayesian Statistics <br/> Week 2: Bayesian Generalised Linear Models (GLMs) <br/> Week 3: Bayesian Hierarchical Regression Models <br/> Week 4: Spatial Risk Modelling (Part I) <br/> Week 5: Spatiotemporal Risk Modelling & Bayesian Updating <br/>
+Week 1: Introduction to Bayesian Inference <br/> Week 2: Bayesian Generalised Linear Models (GLMs) <br/> Week 3: Bayesian Hierarchical Regression Models <br/> Week 4: Spatial Risk Modelling <br/> Week 5: Bayesian Updating for Spatial & Temporal Problems <br/>
 
 It can be found here: https://uclpg-msc-sgds.github.io/GEOG0125/
 
