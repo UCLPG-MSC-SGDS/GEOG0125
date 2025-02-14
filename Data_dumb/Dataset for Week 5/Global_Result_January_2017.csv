@@ -1,0 +1,6 @@
+"variables","beta_95CrI","Uncertainty","ess","rhat"
+"Baseline Risk","1.467 (95% CrI: 0.1215 to 6.3608)","Prob = 0.4597",29443,1.0001
+"Temperature","0.9307 (95% CrI: 0.8295 to 1.0414)","Prob = 0.103",10581,1.0004
+"Precipitation","1.1547 (95% CrI: 1.0353 to 1.2855)","Prob = 0.9944",8654,1.0006
+"NDVI","0.929 (95% CrI: 0.6228 to 1.3344)","Prob = 0.3102",14313,1.0001
+"Urbanisation","1.1793 (95% CrI: 0.5638 to 2.1582)","Prob = 0.6279",13990,0.9999
